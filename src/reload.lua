@@ -28,6 +28,7 @@ mod.dressmap = {
 	Gilded = "Models/Melinoe/Melinoe_ArachneArmorE",
 	Moonlight = "Models/Melinoe/Melinoe_ArachneArmorG",
 	Crimson = "Models/Melinoe/Melinoe_ArachneArmorH",
+	DarkSide = "Models/Melinoe/MelinoeTransform_Color",
 	None = ""
 }
 

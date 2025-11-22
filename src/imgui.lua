@@ -16,10 +16,9 @@ rom.gui.add_to_menu_bar(function()
 end)
 
 function drawMenu()
-    local dressList = { "Lavender", "Azure", "Emerald", "Onyx", "Fuchsia", "Gilded", "Moonlight", "Crimson", "None" }
     rom.ImGui.Text("Select Dress")
     if rom.ImGui.BeginCombo("###dress", config.dress) then
-        for _, option in ipairs(dressList) do
+        for option, _ in pairs(mod.dressmap) do
             if rom.ImGui.Selectable(option, (option == config.dress)) then
                 config.dress = option
             end

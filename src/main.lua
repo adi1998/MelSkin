@@ -42,7 +42,7 @@ local function on_ready()
 	-- what to do when we are ready, but not re-do on reload.
 	if config.enabled == false then return end
 	mod = modutil.mod.Mod.Register(_PLUGIN.guid)
-
+	mod.dressvalue = ""
 	import 'ready.lua'
 end
 

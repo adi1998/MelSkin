@@ -18,9 +18,13 @@ end)
 function drawMenu()
     rom.ImGui.Text("Select Dress")
     if rom.ImGui.BeginCombo("###dress", config.dress) then
-        for option, _ in pairs(mod.dressmap) do
-            if rom.ImGui.Selectable(option, (option == config.dress)) then
-                config.dress = option
+        for _, dressPair in ipairs(mod.dressTable) do
+            local  dressName = dressPair[1]
+            local  dressValue = dressPair[2]
+            if rom.ImGui.Selectable(dressName, (dressName == config.dress)) then
+                config.dress = dressName
+                mod.dressvalue = dressValue
+                mod.SetSkin()
             end
             rom.ImGui.SetItemDefaultFocus()
         end

@@ -6,12 +6,12 @@
 -- 	so only assign to values or define things here.
 
 
-function dump(o)
+function mod.dump(o)
    if type(o) == 'table' then
       local s = '{ '
       for k,v in pairs(o) do
          if type(k) ~= 'number' then k = '"'..k..'"' end
-         s = s .. '['..k..'] = ' .. dump(v) .. ','
+         s = s .. '['..k..'] = ' .. mod.dump(v) .. ','
       end
       return s .. '} '
    else
@@ -19,27 +19,14 @@ function dump(o)
    end
 end
 
-mod.dressmap = {
-	Lavender = "Models/Melinoe/Melinoe_ArachneArmorC",
-	Azure = "Models/Melinoe/Melinoe_ArachneArmorB",
-	Emerald = "Models/Melinoe/Melinoe_ArachneArmorA",
-	Onyx = "Models/Melinoe/Melinoe_ArachneArmorF",
-	Fuchsia = "Models/Melinoe/Melinoe_ArachneArmorD",
-	Gilded = "Models/Melinoe/Melinoe_ArachneArmorE",
-	Moonlight = "Models/Melinoe/Melinoe_ArachneArmorG",
-	Crimson = "Models/Melinoe/Melinoe_ArachneArmorH",
-	DarkSide = "Models/Melinoe/MelinoeTransform_Color",
-	None = ""
-}
-
 modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
 	if args.Property == "GrannyTexture" and args.DestinationId == CurrentRun.Hero.ObjectId then
-		print(dump(args))
+		print(mod.dump(args), tostring(MapState.HostilePolymorph))
 	end
-	if args.Property == "GrannyTexture" and (args.Value == "null" or args.Value == "") and args.DestinationId == CurrentRun.Hero.ObjectId then
+	if (MapState.HostilePolymorph == false or MapState.HostilePolymorph == nil) and args.Property == "GrannyTexture" and (args.Value == "null" or args.Value == "") and args.DestinationId == CurrentRun.Hero.ObjectId then
 		arg_copy = DeepCopyTable(args)
 		-- print(dump(args))
-		arg_copy.Value = mod.dressmap[config.dress]
+		arg_copy.Value = mod.dressvalue
 		-- print(dump(arg_copy))
 		base(arg_copy)
 	else 

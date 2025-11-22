@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Added
+
+- Nightmare form now available.
+
+### Fixed
+
+- Skin now instantly changes on menu selection.
+- Handle Hecate/Chronos transform curse.
+
 ## [0.0.1] - 2025-11-22
 
 ### Added

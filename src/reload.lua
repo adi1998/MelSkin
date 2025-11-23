@@ -28,6 +28,7 @@ modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
 		-- print(dump(args))
 		arg_copy.Value = mod.dressvalue
 		-- print(dump(arg_copy))
+		mod.LoadSkinPackages()
 		base(arg_copy)
 	else 
 		base(args)

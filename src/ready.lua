@@ -19,8 +19,15 @@ mod.dressTable = {
 	{"Moonlight" , "Models/Melinoe/Melinoe_ArachneArmorG",},
 	{"Crimson" , "Models/Melinoe/Melinoe_ArachneArmorH",},
 	{"DarkSide" , "Models/Melinoe/MelinoeTransform_Color",},
+    {"Noise", "zerp-MelSkin/Noise"},
+    {"Negative", "zerp-MelSkin/Negative"},
+    {"RedMel", "zerp-MelSkin/RedMel"},
+    {"Invert2", "zerp-MelSkin/Invert2"},
 	{"None" , ""},
 }
+
+mod.skinPackageList = {}
+table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
 
 function mod.SetSkin()
     if CurrentRun ~= nil then
@@ -37,3 +44,12 @@ for _, dressPair in ipairs(mod.dressTable) do
         break
     end
 end
+
+function mod.LoadSkinPackages()
+    for _, packageName in ipairs(mod.skinPackageList) do
+        print("Loading package: " .. packageName)
+        LoadPackages({ Name = packageName })
+    end
+end
+
+mod.LoadSkinPackages()

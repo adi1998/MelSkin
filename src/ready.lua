@@ -9,7 +9,7 @@
 
 -- These are some sample code snippets of what you can do with our modding framework:
 
-mod.dressTable = {
+mod.DressData = {
 	{"Lavender" , "Models/Melinoe/Melinoe_ArachneArmorC",},
 	{"Azure" , "Models/Melinoe/Melinoe_ArachneArmorB",},
 	{"Emerald" , "Models/Melinoe/Melinoe_ArachneArmorA",},
@@ -29,18 +29,18 @@ mod.dressTable = {
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
 
-function mod.SetSkin()
+function mod.UpdateSkin()
     if CurrentRun ~= nil then
         SetThingProperty({Property = "GrannyTexture", Value = mod.dressvalue, DestinationId = CurrentRun.Hero.ObjectId})
     end
 end
 
-for _, dressPair in ipairs(mod.dressTable) do
+for _, dressPair in ipairs(mod.DressData) do
     local dressName = dressPair[1]
     local dressValue = dressPair[2]
     if dressName == config.dress then
         mod.dressvalue = dressValue
-        mod.SetSkin()
+        mod.UpdateSkin()
         break
     end
 end
@@ -52,4 +52,11 @@ function mod.LoadSkinPackages()
     end
 end
 
+function mod.PopulatePonyMenuData()
+    mod.ponyMenu = rom.mods["PonyWarrior-PonyMenu"]
+    ModUtil.Table.Merge(ScreenData,mod.DressScreenData)
+    table.insert(mod.ponyMenu.CommandData,mod.DressCommandData)
+end
+
+mod.PopulatePonyMenuData()
 mod.LoadSkinPackages()

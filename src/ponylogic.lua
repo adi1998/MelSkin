@@ -80,7 +80,10 @@ function  mod.DressSelectorLoadPage(screen)
 				OffsetY = dressData.offsetY
 			})
 			local text = dressData.key
-
+			if config.dress == text then
+				text = ">>" .. text .. "<<"
+			end
+			print(text)
 			CreateTextBox({
 				Id = screen.Components[dressKey].Id,
 				Text = text,
@@ -105,7 +108,7 @@ function mod.SetDress(screen,button)
 	print("DressValue",button.Dress[2])
 	config.dress = button.Dress[1]
 	mod.dressvalue = button.Dress[2]
-	mod.UpdateSkin()
+	mod.UpdateSkin(mod.dressvalue)
 	mod.CloseDressSelector(screen)
 end
 

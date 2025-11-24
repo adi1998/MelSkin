@@ -24,7 +24,7 @@ function drawMenu()
             if rom.ImGui.Selectable(dressName, (dressName == config.dress)) then
                 config.dress = dressName
                 mod.dressvalue = dressValue
-                mod.UpdateSkin()
+                mod.UpdateSkin(mod.dressvalue)
             end
             rom.ImGui.SetItemDefaultFocus()
         end

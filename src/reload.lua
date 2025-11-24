@@ -18,19 +18,3 @@ function mod.dump(o)
       return tostring(o)
    end
 end
-
-modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
-	if args.Property == "GrannyTexture" and args.DestinationId == CurrentRun.Hero.ObjectId then
-		print(mod.dump(args), tostring(MapState.HostilePolymorph))
-	end
-	if (MapState.HostilePolymorph == false or MapState.HostilePolymorph == nil) and args.Property == "GrannyTexture" and (args.Value == "null" or args.Value == "") and args.DestinationId == CurrentRun.Hero.ObjectId then
-		arg_copy = DeepCopyTable(args)
-		-- print(dump(args))
-		arg_copy.Value = mod.dressvalue
-		-- print(dump(arg_copy))
-		mod.LoadSkinPackages()
-		base(arg_copy)
-	else 
-		base(args)
-	end
-end)

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Add Alternate Time skin by burn
+
 ## [1.0.2] - 2025-11-24
 
 - Readme changes

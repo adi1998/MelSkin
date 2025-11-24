@@ -13,3 +13,7 @@ Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(new men
 | ![ImguiSubmenu](images/ImguiSubmenu.png) | ![ImguiWindow](images/ImguiWindow.png) |
 | :-: | :-: |
 | ![PonyInv](images/PonyInv.png) | ![PonyDressList](images/PonyDressList.png) |
+
+# Adding skins to the mod
+
+Open a PR with this template https://github.com/adi1998/MelSkin/pull/2

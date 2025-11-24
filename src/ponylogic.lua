@@ -119,3 +119,13 @@ function mod.CloseDressSelector(screen)
 	OnScreenCloseFinished(screen)
 	notifyExistingWaiters("DressSelector")
 end
+
+function mod.PopulatePonyMenuData()
+    mod.ponyMenu = rom.mods["PonyWarrior-PonyMenu"]
+    if mod.ponyMenu ~= nil and mod.ponyMenu.CommandData ~= nil then
+        ModUtil.Table.Merge(ScreenData,mod.DressScreenData)
+        table.insert(mod.ponyMenu.CommandData,mod.DressCommandData)
+    end
+end
+
+mod.PopulatePonyMenuData()

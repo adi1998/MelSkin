@@ -52,8 +52,6 @@ function mod.LoadSkinPackages()
     end
 end
 
-
-
 modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
 	if CurrentRun.Hero.SubtitleColor ~= Color.ChronosVoice and
         (MapState.HostilePolymorph == false or MapState.HostilePolymorph == nil) and
@@ -80,13 +78,3 @@ modutil.mod.Path.Wrap("SetupMap", function(base)
     mod.LoadSkinPackages()
     base()
 end)
-
-function mod.PopulatePonyMenuData()
-    mod.ponyMenu = rom.mods["PonyWarrior-PonyMenu"]
-    if mod.ponyMenu ~= nil and mod.ponyMenu.CommandData ~= nil then
-        ModUtil.Table.Merge(ScreenData,mod.DressScreenData)
-        table.insert(mod.ponyMenu.CommandData,mod.DressCommandData)
-    end
-end
-
-mod.PopulatePonyMenuData()

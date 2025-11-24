@@ -88,7 +88,7 @@ function  mod.DressSelectorLoadPage(screen)
 				Text = text,
 				FontSize = 20,
 				OffsetX = 0,
-				OffsetY = -5,
+				OffsetY = 0,
 				Width = 400,
 				Color = Color.White,
 				Font = "P22UndergroundSCMedium",

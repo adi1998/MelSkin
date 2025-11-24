@@ -6,7 +6,7 @@ schemaVersion = "0.0.1"
 namespace = "zerp"
 name = "MelSkin"
 versionNumber = "1.0.2"
-description = "Hades II mod allowing you to select a skin for Melinoe from one of Arachne's boons."
+description = "Hades II mod allowing you to select a skin for Melinoe from one of Arachne's boons and more."
 websiteUrl = "https://github.com/adi1998/MelSkin"
 containsNsfwContent = false
 

@@ -10,9 +10,9 @@ Use r2modman by ebkr from [Thunderstore](https://thunderstore.io/package/ebkr/r2
 
 Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(optional, need to install it separately) to select the dress.
 
-| ![ImguiSubmenu](https://media.githubusercontent.com/media/adi1998/MelSkin/refs/heads/main/images/ImguiSubmenu.png) | ![ImguiWindow](https://media.githubusercontent.com/media/adi1998/MelSkin/refs/heads/main/images/ImguiWindow.png) |
+| ![ImguiSubmenu](images/ImguiSubmenu.png) | ![ImguiWindow](images/ImguiWindow.png) |
 | :-: | :-: |
-| ![PonyInv](https://media.githubusercontent.com/media/adi1998/MelSkin/refs/heads/main/images/PonyInv.png) | ![PonyDressList](https://media.githubusercontent.com/media/adi1998/MelSkin/refs/heads/main/images/PonyDressList.png) |
+| ![PonyInv](images/PonyInv.png) | ![PonyDressList](images/PonyDressList.png) |
 
 # Adding skins to the mod
 

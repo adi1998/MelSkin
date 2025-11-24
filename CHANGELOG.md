@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- PonyMenu integration
+- minor bug fixes
+
 ## [0.0.2] - 2025-11-22
 
 ### Added

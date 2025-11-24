@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.1.1] - 2025-11-24
+
 ## [1.1.0] - 2025-11-24
 
 - Add Alternate Time skin by burn
@@ -34,7 +36,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.1.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.1.1...HEAD
+[1.1.1]: https://github.com/adi1998/MelSkin/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/adi1998/MelSkin/compare/1.0.2...1.1.0
 [1.0.2]: https://github.com/adi1998/MelSkin/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/adi1998/MelSkin/compare/1.0.0...1.0.1

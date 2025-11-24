@@ -8,7 +8,7 @@ Use r2modman by ebkr from [Thunderstore](https://thunderstore.io/package/ebkr/r2
 
 # Usage
 
-Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(new menu in inventory) to select the dress.
+Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(optional, need to install it separately) to select the dress.
 
 | ![ImguiSubmenu](https://media.githubusercontent.com/media/adi1998/MelSkin/refs/heads/main/images/ImguiSubmenu.png) | ![ImguiWindow](https://media.githubusercontent.com/media/adi1998/MelSkin/refs/heads/main/images/ImguiWindow.png) |
 | :-: | :-: |

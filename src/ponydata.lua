@@ -62,7 +62,7 @@ mod.DressCommandData = {
     IconPath = "GUI\\Screens\\BoonIcons\\Arachne_01",
     IconScale = 0.5,
     Name = "Select Dress",
-    Description = "Choose from all the dresses Arachne can give plus the Nightmare form",
+    Description = "Choose from all the dresses Arachne can give plus some more",
     Type = "Command",
     Function = _PLUGIN.guid .. '.' .. "OpenDressSelector"
 }

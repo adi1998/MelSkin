@@ -10,16 +10,16 @@
 -- These are some sample code snippets of what you can do with our modding framework:
 
 mod.DressData = {
-	{"Lavender" , "Models/Melinoe/Melinoe_ArachneArmorC",},
-	{"Azure" , "Models/Melinoe/Melinoe_ArachneArmorB",},
-	{"Emerald" , "Models/Melinoe/Melinoe_ArachneArmorA",},
-	{"Onyx" , "Models/Melinoe/Melinoe_ArachneArmorF",},
-	{"Fuchsia" , "Models/Melinoe/Melinoe_ArachneArmorD",},
-	{"Gilded" , "Models/Melinoe/Melinoe_ArachneArmorE",},
-	{"Moonlight" , "Models/Melinoe/Melinoe_ArachneArmorG",},
-	{"Crimson" , "Models/Melinoe/Melinoe_ArachneArmorH",},
-	{"Dark Side" , "Models/Melinoe/MelinoeTransform_Color",},
-	{"None" , ""},
+    {"Lavender" , "Models/Melinoe/Melinoe_ArachneArmorC"},
+    {"Azure" , "Models/Melinoe/Melinoe_ArachneArmorB"},
+    {"Emerald" , "Models/Melinoe/Melinoe_ArachneArmorA"},
+    {"Onyx" , "Models/Melinoe/Melinoe_ArachneArmorF"},
+    {"Fuchsia" , "Models/Melinoe/Melinoe_ArachneArmorD"},
+    {"Gilded" , "Models/Melinoe/Melinoe_ArachneArmorE"},
+    {"Moonlight" , "Models/Melinoe/Melinoe_ArachneArmorG"},
+    {"Crimson" , "Models/Melinoe/Melinoe_ArachneArmorH"},
+    {"Dark Side" , "Models/Melinoe/MelinoeTransform_Color"},
+    {"None" , ""},
 }
 
 mod.skinPackageList = {}

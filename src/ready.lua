@@ -18,11 +18,7 @@ mod.DressData = {
 	{"Gilded" , "Models/Melinoe/Melinoe_ArachneArmorE",},
 	{"Moonlight" , "Models/Melinoe/Melinoe_ArachneArmorG",},
 	{"Crimson" , "Models/Melinoe/Melinoe_ArachneArmorH",},
-	{"DarkSide" , "Models/Melinoe/MelinoeTransform_Color",},
-    {"Noise", "zerp-MelSkin/Noise"},
-    {"Negative", "zerp-MelSkin/Negative"},
-    {"RedMel", "zerp-MelSkin/RedMel"},
-    {"Invert2", "zerp-MelSkin/Invert2"},
+	{"Dark Side" , "Models/Melinoe/MelinoeTransform_Color",},
 	{"None" , ""},
 }
 

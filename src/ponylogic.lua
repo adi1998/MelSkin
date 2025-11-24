@@ -13,13 +13,12 @@ function mod.OpenDressSelector()
 	HideCombatUI(screen.Name)
 	CreateScreenFromData(screen, screen.ComponentData)
 
-	local displayedDresses = {	}
 	local index = 0
 	screen.DressList = {}
 	for k, dress in ipairs(mod.DressData) do
 		local rowOffset = 100
-		local columnOffset = 400
-		local boonsPerRow = 4
+		local columnOffset = 320
+		local boonsPerRow = 5
 		local rowsPerPage = 7
 		local rowIndex = math.floor(index / boonsPerRow)
 		local pageIndex = math.floor(rowIndex / rowsPerPage)
@@ -62,7 +61,7 @@ function  mod.DressSelectorLoadPage(screen)
 				Name = "ButtonDefault",
 				Group = "Combat_Menu_TraitTray",
 				Scale = 1.2,
-				ScaleX = 1.15,
+				ScaleX = 0.92,
 				ToDestroy = true
 			})
 			SetInteractProperty({
@@ -87,10 +86,10 @@ function  mod.DressSelectorLoadPage(screen)
 			CreateTextBox({
 				Id = screen.Components[dressKey].Id,
 				Text = text,
-				FontSize = 22,
+				FontSize = 20,
 				OffsetX = 0,
 				OffsetY = -5,
-				Width = 720,
+				Width = 400,
 				Color = Color.White,
 				Font = "P22UndergroundSCMedium",
 				ShadowBlur = 0,

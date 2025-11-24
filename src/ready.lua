@@ -77,6 +77,7 @@ modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
 	end
 end)
 
+-- TODO: this is untested
 modutil.mod.Path.Wrap("SetupFlashbackPlayerUnitChronos", function(base,source,args)
     base(source,args)
     SetThingProperty({Property = "GrannyTexture", Value = "", DestinationId = CurrentRun.Hero.ObjectId})

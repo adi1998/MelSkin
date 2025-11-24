@@ -17,3 +17,14 @@ Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(optiona
 # Adding skins to the mod
 
 Open a PR with this template https://github.com/adi1998/MelSkin/pull/2
+
+# Skin List
+
+| Lavender | Azure | Emerald | Onyx | Fuchsia | 
+| :-: | :-: | :-: | :-: | :-: |
+| ![Lavender](images/skins/Lavender.png) | ![Azure](images/skins/Azure.png) | ![Emerald](images/skins/Emerald.png) | ![Onyx](images/skins/Onyx.png) | ![Fuchsia](images/skins/Fuchsia.png) | 
+
+| Gilded | Moonlight | Crimson | DarkSide | |
+| :-: | :-: | :-: | :-: | :-: |
+| ![Gilded](images/skins/Gilded.png) | ![Moonlight](images/skins/Moonlight.png) | ![Crimson](images/skins/Crimson.png) | ![DarkSide](images/skins/DarkSide.png) |  | 
+

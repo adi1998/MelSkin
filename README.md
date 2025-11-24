@@ -26,5 +26,5 @@ Open a PR with this template https://github.com/adi1998/MelSkin/pull/2
 
 | Gilded | Moonlight | Crimson | DarkSide | |
 | :-: | :-: | :-: | :-: | :-: |
-| ![Gilded](images/skins/Gilded.png) | ![Moonlight](images/skins/Moonlight.png) | ![Crimson](images/skins/Crimson.png) | ![DarkSide](images/skins/DarkSide.png) |  | 
+| ![Gilded](images/skins/Gilded.png) | ![Moonlight](images/skins/Moonlight.png) | ![Crimson](images/skins/Crimson.png) | ![DarkSide](images/skins/Darkside.png) |  | 
 

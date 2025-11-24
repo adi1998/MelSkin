@@ -23,8 +23,6 @@ Open a PR with this template https://github.com/adi1998/MelSkin/pull/2
 | Lavender | Azure | Emerald | Onyx | Fuchsia | 
 | :-: | :-: | :-: | :-: | :-: |
 | ![Lavender](images/skins/Lavender.png) | ![Azure](images/skins/Azure.png) | ![Emerald](images/skins/Emerald.png) | ![Onyx](images/skins/Onyx.png) | ![Fuchsia](images/skins/Fuchsia.png) | 
-
-| Gilded | Moonlight | Crimson | DarkSide | |
-| :-: | :-: | :-: | :-: | :-: |
+| __Gilded__ | __Moonlight__ | __Crimson__ | __DarkSide__ | |
 | ![Gilded](images/skins/Gilded.png) | ![Moonlight](images/skins/Moonlight.png) | ![Crimson](images/skins/Crimson.png) | ![DarkSide](images/skins/Darkside.png) |  | 
 

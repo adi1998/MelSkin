@@ -14,10 +14,6 @@ Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(optiona
 | :-: | :-: |
 | ![PonyInv](images/PonyInv.png) | ![PonyDressList](images/PonyDressList.png) |
 
-# Adding skins to the mod
-
-Open a PR with this template https://github.com/adi1998/MelSkin/pull/2
-
 # Skin List
 
 | Lavender | Azure | Emerald | Onyx | Fuchsia | 
@@ -26,3 +22,10 @@ Open a PR with this template https://github.com/adi1998/MelSkin/pull/2
 | __Gilded__ | __Moonlight__ | __Crimson__ | __DarkSide__ | __Alternate Time by burn__ |
 | ![Gilded](images/skins/Gilded.png) | ![Moonlight](images/skins/Moonlight.png) | ![Crimson](images/skins/Crimson.png) | ![DarkSide](images/skins/Darkside.png) | ![Alternate Time](images/skins/Alternate%20Time.png) | 
 
+# Adding skins to the mod
+
+Open a PR with this template https://github.com/adi1998/MelSkin/pull/2
+
+# Issues
+
+Report any issues [here](https://github.com/adi1998/MelSkin/issues) or on [Discord](https://discord.gg/bKvJTAJj)

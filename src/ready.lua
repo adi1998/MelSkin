@@ -19,6 +19,7 @@ mod.DressData = {
     {"Moonlight" , "Models/Melinoe/Melinoe_ArachneArmorG"},
     {"Crimson" , "Models/Melinoe/Melinoe_ArachneArmorH"},
     {"Dark Side" , "Models/Melinoe/MelinoeTransform_Color"},
+    {"Negative", "zerp-MelSkin/Negative"},
     {"None" , ""},
 }
 

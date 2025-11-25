@@ -9,8 +9,6 @@
 
 -- These are some sample code snippets of what you can do with our modding framework:
 
-
-
 mod.DressData = {
     {"Lavender" , "Models/Melinoe/Melinoe_ArachneArmorC"},
     {"Azure" , "Models/Melinoe/Melinoe_ArachneArmorB"},
@@ -23,6 +21,17 @@ mod.DressData = {
     {"Dark Side" , "Models/Melinoe/MelinoeTransform_Color"},
     {"Alternate Time", "zerp-MelSkin/skins/Alternate Time"},
     {"None" , ""},
+}
+
+mod.CostumeDressMap = {
+    ["Models/Melinoe/Melinoe_ArachneArmorC"] = "Lavender",
+    ["Models/Melinoe/Melinoe_ArachneArmorB"] = "Azure",
+    ["Models/Melinoe/Melinoe_ArachneArmorA"] = "Emerald",
+    ["Models/Melinoe/Melinoe_ArachneArmorF"] = "Onyx",
+    ["Models/Melinoe/Melinoe_ArachneArmorD"] = "Fuchsia",
+    ["Models/Melinoe/Melinoe_ArachneArmorE"] = "Gilded",
+    ["Models/Melinoe/Melinoe_ArachneArmorG"] = "Moonlight",
+    ["Models/Melinoe/Melinoe_ArachneArmorH"] = "Crimson",
 }
 
 mod.PortraitData = {
@@ -204,22 +213,51 @@ modutil.mod.Path.Wrap("SetupMap", function(base)
     base()
 end)
 
-modutil.mod.Path.Context.Wrap("DisplayTextLine", function (base,screen, source, line, parentLine, nextLine, args)
+function mod.GetPortraitNameFromCostume(filename, name)
+    local costumes = game.GetHeroTraitValues("Costume");
+    if costumes[1] ~= nil then
+        local dress = mod.CostumeDressMap[costumes[1]]
+        if dress ~= nil then
+            local portraitData = mod.PortraitData[dress]
+            if portraitData.Portraits[filename] then
+                return dress .. "_" .. name
+            end
+        end
+    end
+    return nil
+end
+
+function mod.GetPortraitNameFromConfig(filename,name)
+    local portraitData = mod.PortraitData[config.dress]
+    if portraitData ~= nil then
+        if portraitData.Portraits[filename] then
+            return config.dress .. "_" .. name
+        end
+    end
+    return nil
+end
+
+modutil.mod.Path.Context.Wrap("PlayTextLines", function (base,source, textLines, args)
 
     modutil.mod.Path.Wrap("SetAnimation", function (base,args)
         local origname = args.Name
         local origfilename = mod.NameFileMap[origname]
         if origfilename ~= nil then
-            local portraitData = mod.PortraitData[config.dress]
-            if portraitData ~= nil then
-                if portraitData.Portraits[origfilename] then
-                    local newname = config.dress .. "_" .. origname
-                    print("Setanimation", newname)
-                    args.Name = newname
-                    base(args)
-                    return
-                end
-            end
+            -- local portraitData = mod.PortraitData[config.dress]
+            -- if portraitData ~= nil then
+            --     if portraitData.Portraits[origfilename] then
+            --         local newname = config.dress .. "_" .. origname
+            --         print("SetAnimation", newname)
+            --         args.Name = newname
+            --         base(args)
+            --         return
+            --     end
+            -- end
+            local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
+            print("SetAnimation", newname)
+            args.Name = newname
+            base(args)
+            return
         end
         base(args)
     end)

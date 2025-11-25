@@ -104,44 +104,12 @@ end
 
 udpateNameFileMap()
 
-
-
--- mod.SpriteList = {
---     Portraits_Melinoe_01 = true,
---     Portraits_Melinoe_Casual_01 = true,
---     Portraits_Melinoe_Empathetic_01 = true,
---     Portraits_Melinoe_EmpatheticFlushed_01 = true,
---     Portraits_Melinoe_Hesitant_01 = true,
---     Portraits_Melinoe_Intense_01 = true,
---     Portraits_Melinoe_Pleased_01 = true,
---     Portraits_Melinoe_PleasedFlushed_01 = true,
---     Portraits_Melinoe_Proud_01 = true,
---     Portraits_Melinoe_Vulnerable_01 = true,
--- }
-
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
 
 local guiPortraitsVFXFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\GUI_Portraits_VFX.sjson")
 local portraitprefix = "Portraits\\Melinoe\\"
 local modPortraitPrefix = "zerp-MelSkin\\portraits\\"
-
--- sjson.hook(guiPortraitsVFXFile, function(data)
---     for _, entry in ipairs(data.Animations) do
---         if entry.FilePath ~= nil then
---             local filename = string.sub(entry.FilePath,#portraitprefix+1)
-
---             if string.sub(entry.FilePath,1,#portraitprefix) == portraitprefix then
---                 print(entry.FilePath, filename)
---             end
---             if mod.PortraitData[config.dress] and mod.PortraitData[config.dress].Portraits[filename] then
---                 print(filename)
---                 entry.FilePath = modPortraitPrefix .. config.dress .. "\\" .. filename
---                 print(entry.FilePath)
---             end
---         end
---     end
--- end)
 
 sjson.hook(guiPortraitsVFXFile, function(data)
     local newdata = {}

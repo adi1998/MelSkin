@@ -243,16 +243,6 @@ modutil.mod.Path.Context.Wrap("PlayTextLines", function (base,source, textLines,
         local origname = args.Name
         local origfilename = mod.NameFileMap[origname]
         if origfilename ~= nil then
-            -- local portraitData = mod.PortraitData[config.dress]
-            -- if portraitData ~= nil then
-            --     if portraitData.Portraits[origfilename] then
-            --         local newname = config.dress .. "_" .. origname
-            --         print("SetAnimation", newname)
-            --         args.Name = newname
-            --         base(args)
-            --         return
-            --     end
-            -- end
             local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
             print("SetAnimation", newname)
             args.Name = newname

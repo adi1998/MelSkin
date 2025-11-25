@@ -124,7 +124,7 @@ sjson.hook(guiPortraitsVFXFile, function(data)
                     print("sjson old name", origname)
                     print("sjson new name", newname)
                     -- args.Name = newname
-                    local newfilepath = modPortraitPrefix .. dress .. "\\" .. origfilename
+                    local newfilepath = modPortraitPrefix .. dress .. "_" .. origfilename
                     print("sjson old path", origfilepath)
                     print("sjson new path", newfilepath)
                     local newentry = DeepCopyTable(entry)

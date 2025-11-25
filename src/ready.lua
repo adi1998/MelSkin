@@ -104,6 +104,8 @@ end
 
 udpateNameFileMap()
 
+
+
 -- mod.SpriteList = {
 --     Portraits_Melinoe_01 = true,
 --     Portraits_Melinoe_Casual_01 = true,
@@ -124,22 +126,52 @@ local guiPortraitsVFXFile = rom.path.combine(rom.paths.Content(), "Game\\Animati
 local portraitprefix = "Portraits\\Melinoe\\"
 local modPortraitPrefix = "zerp-MelSkin\\portraits\\"
 
-sjson.hook(guiPortraitsVFXFile, function(data)
-    for _, entry in ipairs(data.Animations) do
-        if entry.FilePath ~= nil then
-            local filename = string.sub(entry.FilePath,#portraitprefix+1)
+-- sjson.hook(guiPortraitsVFXFile, function(data)
+--     for _, entry in ipairs(data.Animations) do
+--         if entry.FilePath ~= nil then
+--             local filename = string.sub(entry.FilePath,#portraitprefix+1)
 
-            if string.sub(entry.FilePath,1,#portraitprefix) == portraitprefix then
-                print(entry.FilePath, filename)
-            end
-            if mod.PortraitData[config.dress] and mod.PortraitData[config.dress].Portraits[filename] then
-                print(filename)
-                entry.FilePath = modPortraitPrefix .. config.dress .. "\\" .. filename
-                print(entry.FilePath)
+--             if string.sub(entry.FilePath,1,#portraitprefix) == portraitprefix then
+--                 print(entry.FilePath, filename)
+--             end
+--             if mod.PortraitData[config.dress] and mod.PortraitData[config.dress].Portraits[filename] then
+--                 print(filename)
+--                 entry.FilePath = modPortraitPrefix .. config.dress .. "\\" .. filename
+--                 print(entry.FilePath)
+--             end
+--         end
+--     end
+-- end)
+
+sjson.hook(guiPortraitsVFXFile, function(data)
+    local newdata = {}
+    for _, entry in ipairs(data.Animations) do
+        local origname = entry.Name
+        local origfilepath = entry.FilePath
+        local origfilename = mod.NameFileMap[origname]
+        if origfilename ~= nil then
+            for dress,portraitData in pairs(mod.PortraitData) do
+                if portraitData ~= nil and portraitData.Portraits ~= nil and portraitData.Portraits[origfilename] then
+                    local newname = dress .. "_" .. origname
+                    print("sjson old name", origname)
+                    print("sjson new name", newname)
+                    -- args.Name = newname
+                    local newfilepath = modPortraitPrefix .. dress .. "\\" .. origfilename
+                    print("sjson old path", origfilepath)
+                    print("sjson new path", newfilepath)
+                    local newentry = DeepCopyTable(entry)
+                    newentry.Name = newname
+                    newentry.FilePath = newfilepath
+                    table.insert(newdata,newentry)
+                end
             end
         end
     end
+    for _, entry in ipairs(newdata) do
+        table.insert(data.Animations,entry)
+    end
 end)
+
 
 function mod.UpdateSkin(dress)
     if CurrentRun ~= nil then
@@ -204,7 +236,7 @@ modutil.mod.Path.Wrap("SetupMap", function(base)
     base()
 end)
 
-modutil.mod.Path.Wrap.Context("DisplayTextLine", function (base,screen, source, line, parentLine, nextLine, args)
+modutil.mod.Path.Context.Wrap("DisplayTextLine", function (base,screen, source, line, parentLine, nextLine, args)
 
     modutil.mod.Path.Wrap("SetAnimation", function (base,args)
         local origname = args.Name
@@ -215,7 +247,7 @@ modutil.mod.Path.Wrap.Context("DisplayTextLine", function (base,screen, source, 
                 if portraitData.Portraits[origfilename] then
                     local newname = config.dress .. "_" .. origname
                     print("Setanimation", newname)
-                    -- args.Name = newname
+                    args.Name = newname
                     base(args)
                     return
                 end

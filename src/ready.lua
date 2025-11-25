@@ -79,18 +79,43 @@ mod.PortraitData = {
     },
 }
 
-mod.SpriteList = {
-    Portraits_Melinoe_01 = true,
-    Portraits_Melinoe_Casual_01 = true,
-    Portraits_Melinoe_Empathetic_01 = true,
-    Portraits_Melinoe_EmpatheticFlushed_01 = true,
-    Portraits_Melinoe_Hesitant_01 = true,
-    Portraits_Melinoe_Intense_01 = true,
-    Portraits_Melinoe_Pleased_01 = true,
-    Portraits_Melinoe_PleasedFlushed_01 = true,
-    Portraits_Melinoe_Proud_01 = true,
-    Portraits_Melinoe_Vulnerable_01 = true,
+mod.NameFileMap = {
+    Portrait_Mel_Default_01 = "Portraits_Melinoe_01",
+    Portrait_Mel_Proud_01 = "Portraits_Melinoe_Proud_01",
+    Portrait_Mel_Intense_01 = "Portraits_Melinoe_Intense_01",
+    Portrait_Mel_Vulnerable_01 = "Portraits_Melinoe_Vulnerable_01",
+    Portrait_Mel_Empathetic_01 = "Portraits_Melinoe_Empathetic_01",
+    Portrait_Mel_EmpatheticFlushed_01 = "Portraits_Melinoe_EmpatheticFlushed_01",
+    Portrait_Mel_Hesitant_01 = "Portraits_Melinoe_Hesitant_01",
+    Portrait_Mel_Casual_01 = "Portraits_Melinoe_Casual_01",
+    Portrait_Mel_Pleased_01 = "Portraits_Melinoe_Pleased_01",
+    Portrait_Mel_PleasedFlushed_01 = "Portraits_Melinoe_PleasedFlushed_01",
 }
+
+function udpateNameFileMap()
+    local tempMap = {}
+    for k,v in pairs(mod.NameFileMap) do
+        tempMap[k .. "_Exit"] = v
+    end
+    for k,v in pairs(tempMap) do
+        mod.NameFileMap[k] = v
+    end
+end
+
+udpateNameFileMap()
+
+-- mod.SpriteList = {
+--     Portraits_Melinoe_01 = true,
+--     Portraits_Melinoe_Casual_01 = true,
+--     Portraits_Melinoe_Empathetic_01 = true,
+--     Portraits_Melinoe_EmpatheticFlushed_01 = true,
+--     Portraits_Melinoe_Hesitant_01 = true,
+--     Portraits_Melinoe_Intense_01 = true,
+--     Portraits_Melinoe_Pleased_01 = true,
+--     Portraits_Melinoe_PleasedFlushed_01 = true,
+--     Portraits_Melinoe_Proud_01 = true,
+--     Portraits_Melinoe_Vulnerable_01 = true,
+-- }
 
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
@@ -164,4 +189,26 @@ end)
 modutil.mod.Path.Wrap("SetupMap", function(base)
     mod.LoadSkinPackages()
     base()
+end)
+
+modutil.mod.Path.Wrap.Context("DisplayTextLine", function (base,screen, source, line, parentLine, nextLine, args)
+
+    modutil.mod.Path.Wrap("SetAnimation", function (base,args)
+        local origname = args.Name
+        local origfilename = mod.NameFileMap[origname]
+        if origfilename ~= nil then
+            local portraitData = mod.PortraitData[config.dress]
+            if portraitData ~= nil then
+                if portraitData.Portraits[origfilename] then
+                    local newname = config.dress .. "_" .. origname
+                    print("Setanimation", newname)
+                    -- args.Name = newname
+                    base(args)
+                    return
+                end
+            end
+        end
+        base(args)
+    end)
+
 end)

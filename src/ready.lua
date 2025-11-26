@@ -194,7 +194,11 @@ modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
         args.DestinationId == CurrentRun.Hero.ObjectId then
             print("Base args:",mod.dump(args))
             args_copy = DeepCopyTable(args)
-            args_copy.Value = mod.dressvalue
+            local dress = mod.dressvalue
+            if config.random_each_run then
+                dress = CurrentRun.Hero.ModDressData
+            end
+            args_copy.Value = dress
             print("Mod args:",mod.dump(args_copy))
             base(args_copy)
 	else
@@ -228,7 +232,7 @@ function mod.GetPortraitNameFromCostume(filename, name)
 end
 
 function mod.GetPortraitNameFromConfig(filename,name)
-    dress = config.dress
+    local dress = config.dress
     if config.random_each_run then
         dress = CurrentRun.Hero.ModDressData
     end

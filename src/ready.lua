@@ -156,15 +156,19 @@ function mod.UpdateSkin(dress)
     end
 end
 
-for _, dressPair in ipairs(mod.DressData) do
-    local dressName = dressPair[1]
-    local dressValue = dressPair[2]
-    if dressName == config.dress then
-        mod.dressvalue = dressValue
-        mod.UpdateSkin(mod.dressvalue)
-        break
+function mod.GetDressValue(inputDress)
+    for _, dressPair in ipairs(mod.DressData) do
+        local dressName = dressPair[1]
+        local dressValue = dressPair[2]
+        if dressName == inputDress then
+            return dressValue
+        end
     end
+    return ""
 end
+
+mod.dressvalue = mod.GetDressValue(config.dress)
+mod.UpdateSkin(mod.dressvalue)
 
 function mod.LoadSkinPackages()
     for _, packageName in ipairs(mod.skinPackageList) do
@@ -196,7 +200,8 @@ modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
             args_copy = DeepCopyTable(args)
             local dress = mod.dressvalue
             if config.random_each_run then
-                dress = CurrentRun.Hero.ModDressData
+                dress = mod.GetDressValue(CurrentRun.Hero.ModDressData)
+                print("skin random", dress)
             end
             args_copy.Value = dress
             print("Mod args:",mod.dump(args_copy))
@@ -235,6 +240,7 @@ function mod.GetPortraitNameFromConfig(filename,name)
     local dress = config.dress
     if config.random_each_run then
         dress = CurrentRun.Hero.ModDressData
+        print("portrait random", dress)
     end
     local portraitData = mod.PortraitData[dress]
     if portraitData ~= nil then
@@ -262,11 +268,13 @@ modutil.mod.Path.Context.Wrap("PlayTextLines", function (base,source, textLines,
 end)
 
 modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
-    base(prevRun,args)
+    local retValue = base(prevRun,args)
     if config.random_each_run then
-        mod.random_dress = game.GetRandomValue(mod.DressData)[0]
+        mod.random_dress = game.GetRandomArrayValue(mod.DressData)[1]
+        print("Random dress", mod.random_dress)
         CurrentRun.Hero.ModDressData = mod.random_dress
     else
         CurrentRun.Hero.ModDressData = nil
     end
+    return retValue
 end)

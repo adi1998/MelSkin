@@ -228,10 +228,14 @@ function mod.GetPortraitNameFromCostume(filename, name)
 end
 
 function mod.GetPortraitNameFromConfig(filename,name)
-    local portraitData = mod.PortraitData[config.dress]
+    dress = config.dress
+    if config.random_each_run then
+        dress = CurrentRun.Hero.ModDressData
+    end
+    local portraitData = mod.PortraitData[dress]
     if portraitData ~= nil then
         if portraitData.Portraits[filename] then
-            return config.dress .. "_" .. name
+            return dress .. "_" .. name
         end
     end
     return nil
@@ -251,5 +255,14 @@ modutil.mod.Path.Context.Wrap("PlayTextLines", function (base,source, textLines,
         end
         base(args)
     end)
+end)
 
+modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
+    base(prevRun,args)
+    if config.random_each_run then
+        mod.random_dress = game.GetRandomValue(mod.DressData)[0]
+        CurrentRun.Hero.ModDressData = mod.random_dress
+    else
+        CurrentRun.Hero.ModDressData = nil
+    end
 end)

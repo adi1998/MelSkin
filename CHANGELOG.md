@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Add Murderrrrr skin by burn
+
 ## [1.2.0] - 2025-11-27
 
 - Add portraits based on Arachne dresses by punishedmat

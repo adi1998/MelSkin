@@ -46,9 +46,7 @@ jobs:
       - name: Rotate version in Thunderstore CLI config
         shell: pwsh
         run: |
-          (Get-Content $env:thunderstore-config) -replace 'versionNumber = ".*"', "versionNumber = "${{ inputs.tag }}"" |
-            Set-Content $env:thunderstore-config
-
+          (Get-Content $env:thunderstore-config -Raw) -replace 'versionNumber = ".*?"', "versionNumber = `"$env:inputs_tag`"" | Set-Content $env:thunderstore-config
           (Get-Content README.md) -replace 'images', 'https://media.githubusercontent.com/media/adi1998/MelSkin/refs/heads/main/images' |
             Set-Content README.md
 

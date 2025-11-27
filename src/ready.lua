@@ -9,6 +9,8 @@
 
 -- These are some sample code snippets of what you can do with our modding framework:
 
+
+-- for model texture swap
 mod.DressData = {
     {"Lavender" , "Models/Melinoe/Melinoe_ArachneArmorC"},
     {"Azure" , "Models/Melinoe/Melinoe_ArachneArmorB"},
@@ -23,6 +25,7 @@ mod.DressData = {
     {"None" , ""},
 }
 
+-- for portraitprefix based on Arachne boon
 mod.CostumeDressMap = {
     ["Models/Melinoe/Melinoe_ArachneArmorC"] = "Lavender",
     ["Models/Melinoe/Melinoe_ArachneArmorB"] = "Azure",
@@ -34,57 +37,54 @@ mod.CostumeDressMap = {
     ["Models/Melinoe/Melinoe_ArachneArmorH"] = "Crimson",
 }
 
+-- list of supported Portraits
+mod.Portraits = 
+{
+    Portraits_Melinoe_01 = true,
+    Portraits_Melinoe_Proud_01 = true,
+    Portraits_Melinoe_Intense_01 = true,
+    Portraits_Melinoe_Vulnerable_01 = true,
+    Portraits_Melinoe_Empathetic_01 = true,
+    Portraits_Melinoe_EmpatheticFlushed_01 = true,
+    Portraits_Melinoe_Hesitant_01 = true,
+    Portraits_Melinoe_Casual_01 = true,
+    Portraits_Melinoe_Pleased_01 = true,
+    Portraits_Melinoe_PleasedFlushed_01 = true,
+}
+
+-- for getting available portraits for a dress
 mod.PortraitData = {
     Emerald =
     {
-        Portraits = {
-            Portraits_Melinoe_01 = true,
-            Portraits_Melinoe_Proud_01 = true,
-            Portraits_Melinoe_Casual_01 = true,
-            Portraits_Melinoe_Empathetic_01 = true,
-            Portraits_Melinoe_EmpatheticFlushed_01 = true,
-            Portraits_Melinoe_Hesitant_01 = true,
-            Portraits_Melinoe_Vulnerable_01 = true,
-        }
+        Portraits = DeepCopyTable(mod.Portraits)
     },
     Lavender =
     {
-        Portraits = {}
+        Portraits = DeepCopyTable(mod.Portraits)
     },
     Azure =
     {
-        Portraits = {}
+        Portraits = DeepCopyTable(mod.Portraits)
     },
     Onyx =
     {
-        Portraits = {
-            Portraits_Melinoe_01 = true,
-            Portraits_Melinoe_Casual_01 = true,
-        }
+        Portraits = DeepCopyTable(mod.Portraits)
     },
     Fuchsia =
     {
-        Portraits = {
-            Portraits_Melinoe_01 = true,
-            Portraits_Melinoe_Casual_01 = true,
-        }
+        Portraits = DeepCopyTable(mod.Portraits)
     },
     Gilded =
     {
-        Portraits = {}
+        Portraits = DeepCopyTable(mod.Portraits)
     },
     Moonlight =
     {
-        Portraits = {
-            Portraits_Melinoe_01 = true,
-        }
+        Portraits = DeepCopyTable(mod.Portraits)
     },
     Crimson =
     {
-        Portraits = {
-            Portraits_Melinoe_01 = true,
-            Portraits_Melinoe_Casual_01 = true,
-        }
+        Portraits = DeepCopyTable(mod.Portraits)
     },
 }
 
@@ -133,7 +133,7 @@ sjson.hook(guiPortraitsVFXFile, function(data)
                     print("sjson old name", origname)
                     print("sjson new name", newname)
                     -- args.Name = newname
-                    local newfilepath = modPortraitPrefix .. dress .. "_" .. origfilename
+                    local newfilepath = modPortraitPrefix .. dress .. "\\" .. origfilename
                     print("sjson old path", origfilepath)
                     print("sjson new path", newfilepath)
                     local newentry = DeepCopyTable(entry)
@@ -251,20 +251,30 @@ function mod.GetPortraitNameFromConfig(filename,name)
     return nil
 end
 
-modutil.mod.Path.Context.Wrap("PlayTextLines", function (base,source, textLines, args)
-
-    modutil.mod.Path.Wrap("SetAnimation", function (base,args)
-        local origname = args.Name
-        local origfilename = mod.NameFileMap[origname]
-        if origfilename ~= nil then
-            local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
-            print("SetAnimation", newname)
-            args.Name = newname
-            base(args)
-            return
-        end
+function mod.SetAnimationWrap(base,args)
+    local origname = args.Name
+    local origfilename = mod.NameFileMap[origname]
+    print("play text line", origname, origfilename)
+    if origfilename ~= nil then
+        local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
+        print("SetAnimation", origname, newname)
+        args.Name = newname
         base(args)
-    end)
+        return
+    end
+    base(args)
+end
+
+function mod.SetAnimationWrap2(base,args)
+    return mod.SetAnimationWrap(base,args)
+end
+
+modutil.mod.Path.Context.Wrap("PlayTextLines", function (source, textLines, args)
+    modutil.mod.Path.Wrap("SetAnimation", mod.SetAnimationWrap)
+end)
+
+modutil.mod.Path.Context.Wrap("PlayEmoteAnimFromSource", function (source, args, screen, lines)
+    modutil.mod.Path.Wrap("SetAnimation", mod.SetAnimationWrap)
 end)
 
 modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)

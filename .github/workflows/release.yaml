@@ -16,7 +16,7 @@ permissions:
 
 env:
   changelog: CHANGELOG.md
-  thunderstore-config: thunderstore.toml
+  thunderstoreconfig: thunderstore.toml
   build-dir: build
   artifact-content-type: application/zip
 
@@ -46,7 +46,7 @@ jobs:
       - name: Rotate version in Thunderstore CLI config
         shell: pwsh
         run: |
-          (Get-Content $env:thunderstore-config -Raw) -replace 'versionNumber = ".*?"', "versionNumber = `"$env:inputs_tag`"" | Set-Content $env:thunderstore-config
+          (Get-Content $env:thunderstoreconfig -Raw) -replace 'versionNumber = ".*?"', "versionNumber = `"$env:inputs_tag`"" | Set-Content $env:thunderstoreconfig
           (Get-Content README.md) -replace 'images', 'https://media.githubusercontent.com/media/adi1998/MelSkin/refs/heads/main/images' |
             Set-Content README.md
 
@@ -87,7 +87,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add $env:changelog $env:thunderstore-config
+          git add $env:changelog $env:thunderstoreconfig
           git commit -m "Release ${{ inputs.tag }}"
           git tag ${{ inputs.tag }} -a -m "Release ${{ inputs.tag }}"
           git push origin HEAD:${{ github.ref_name }} --tags

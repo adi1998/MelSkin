@@ -30,4 +30,19 @@ function drawMenu()
         end
         rom.ImGui.EndCombo()
     end
+
+    rom.ImGui.Separator()
+
+    local value, checked = rom.ImGui.Checkbox("Random Dress Each Run", config.random_each_run)
+    if checked then
+        config.random_each_run = value
+        if value then
+            
+        else
+            mod.ClearRunDressData()
+        end
+    end
+
+
+
 end

@@ -237,19 +237,28 @@ function mod.GetPortraitNameFromConfig(filename,name)
     return nil
 end
 
-modutil.mod.Path.Context.Wrap("PlayTextLines", function (base,source, textLines, args)
-
-    modutil.mod.Path.Wrap("SetAnimation", function (base,args)
-        local origname = args.Name
-        local origfilename = mod.NameFileMap[origname]
-        if origfilename ~= nil then
-            local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
-            print("SetAnimation", newname)
-            args.Name = newname
-            base(args)
-            return
-        end
+function mod.SetAnimationWrap(base,args)
+    local origname = args.Name
+    local origfilename = mod.NameFileMap[origname]
+    print("play text line", origname, origfilename)
+    if origfilename ~= nil then
+        local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
+        print("SetAnimation", origname, newname)
+        args.Name = newname
         base(args)
-    end)
+        return
+    end
+    base(args)
+end
 
+function mod.SetAnimationWrap2(base,args)
+    return mod.SetAnimationWrap(base,args)
+end
+
+modutil.mod.Path.Context.Wrap("PlayTextLines", function (source, textLines, args)
+    modutil.mod.Path.Wrap("SetAnimation", mod.SetAnimationWrap)
+end)
+
+modutil.mod.Path.Context.Wrap("PlayEmoteAnimFromSource", function (source, args, screen, lines)
+    modutil.mod.Path.Wrap("SetAnimation", mod.SetAnimationWrap)
 end)

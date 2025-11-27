@@ -28,7 +28,7 @@ Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(new sub
 
 ## Adding skins to the mod
 
-Open a PR with this template https://github.com/adi1998/MelSkin/pull/2
+Open a PR with this template https://github.com/adi1998/MelSkin/pull/10
 
 ## Contributors
 

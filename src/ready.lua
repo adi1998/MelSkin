@@ -23,6 +23,7 @@ mod.DressData = {
     {"Dark Side" , "Models/Melinoe/MelinoeTransform_Color"},
     {"Alternate Time", "zerp-MelSkin/skins/Alternate Time"},
     {"Murderrrrr", "zerp-MelSkin/skins/Halloween 2025"},
+    {"Void", "zerp-MelSkin/skins/Void"},
     {"None" , ""},
 }
 
@@ -87,6 +88,10 @@ mod.PortraitData = {
     {
         Portraits = DeepCopyTable(mod.Portraits)
     },
+    Void = 
+    {
+        Portraits = DeepCopyTable(mod.Portraits)
+    }
 }
 
 mod.NameFileMap = {

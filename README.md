@@ -23,8 +23,8 @@ Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(new sub
 | ![Lavender](images/skins/Lavender.png) | ![Azure](images/skins/Azure.png) | ![Emerald](images/skins/Emerald.png) | ![Onyx](images/skins/Onyx.png) | ![Fuchsia](images/skins/Fuchsia.png) | 
 | __Gilded__ | __Moonlight__ | __Crimson__ | __DarkSide__ | __Alternate Time by burn__ |
 | ![Gilded](images/skins/Gilded.png) | ![Moonlight](images/skins/Moonlight.png) | ![Crimson](images/skins/Crimson.png) | ![DarkSide](images/skins/Darkside.png) | ![Alternate Time](images/skins/Alternate%20Time.png) | 
-| __Murderrrrr by burn__ | | | | |
-| ![Murderrrrr](images/skins/Murderrrrr.png) | | | | |
+| __Murderrrrr by burn__ | __Void by adi1998__ | | | |
+| ![Murderrrrr](images/skins/Murderrrrr.png) | ![void](images/skins/Void.png) | | | |
 
 ## Adding skins to the mod
 

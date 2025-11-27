@@ -1,14 +1,14 @@
-# Mel Skin Selector
+## Mel Skin Selector
 
 Hades II mod allowing you to select a skin for Melinoe from one of Arachne's boons and some more.
 
 Also includes portrait replacements for the Arachne skins with optional support for custom skin related portraits.
 
-# Installation
+## Installation
 
 Use r2modman by ebkr from [Thunderstore](https://thunderstore.io/package/ebkr/r2modman/) or [GitHub](https://github.com/ebkr/r2modmanPlus/releases/latest).
 
-# Usage
+## Usage
 
 Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(new submenu in inventory) to select the dress.
 
@@ -16,7 +16,7 @@ Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(new sub
 | :-: | :-: |
 | ![PonyInv](images/PonyInv.png) | ![PonyDressList](images/PonyDressList.png) |
 
-# Skin List
+## Skins
 
 | Lavender | Azure | Emerald | Onyx | Fuchsia | 
 | :-: | :-: | :-: | :-: | :-: |
@@ -26,15 +26,15 @@ Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(new sub
 | __Murderrrrr by burn__ | | | | |
 | ![Murderrrrr](images/skins/Murderrrrr.png) | | | | |
 
-# Adding skins to the mod
+## Adding skins to the mod
 
 Open a PR with this template https://github.com/adi1998/MelSkin/pull/2
 
-# Contributors
+## Contributors
 
 - @burn on [Discord](https://discord.gg/bKvJTAJj), custom skins
 - @punishedmat on [Discord](https://discord.gg/bKvJTAJj), portrait replacements
 
-# Issues
+## Issues
 
 Report any issues [here](https://github.com/adi1998/MelSkin/issues) or on [Discord](https://discord.gg/bKvJTAJj)

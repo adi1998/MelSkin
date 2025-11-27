@@ -269,11 +269,11 @@ function mod.SetAnimationWrap2(base,args)
     return mod.SetAnimationWrap(base,args)
 end
 
-modutil.mod.Path.Context.Wrap("PlayTextLines", function (source, textLines, args)
+modutil.mod.Path.Static.Wrap("PlayTextLines", function (source, textLines, args)
     modutil.mod.Path.Wrap("SetAnimation", mod.SetAnimationWrap)
 end)
 
-modutil.mod.Path.Context.Wrap("PlayEmoteAnimFromSource", function (source, args, screen, lines)
+modutil.mod.Path.Static.Wrap("PlayEmoteAnimFromSource", function (source, args, screen, lines)
     modutil.mod.Path.Wrap("SetAnimation", mod.SetAnimationWrap)
 end)
 

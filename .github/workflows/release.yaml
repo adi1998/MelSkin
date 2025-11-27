@@ -58,6 +58,12 @@ jobs:
         shell: pwsh
         run: pip install deppth2 scipy pillow lz4 PyTexturePacker
 
+      - name: build packages
+        shell: pwsh
+        run: |
+          deppth2 hpk -c BC7 -s .\textures\ -t .\data\zerp-MelSkin
+          rm data/zerp-MelSkin
+
       - name: Add .NET tools to PATH
         shell: pwsh
         run: echo "$env:USERPROFILE\.dotnet\tools" | Out-File -FilePath $env:GITHUB_PATH -Append

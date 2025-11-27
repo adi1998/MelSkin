@@ -2,6 +2,8 @@
 
 Hades II mod allowing you to select a skin for Melinoe from one of Arachne's boons and some more.
 
+Also includes portrait replacements for the Arachne skins with optional support for custom skin related portraits.
+
 # Installation
 
 Use r2modman by ebkr from [Thunderstore](https://thunderstore.io/package/ebkr/r2modman/) or [GitHub](https://github.com/ebkr/r2modmanPlus/releases/latest).
@@ -22,9 +24,18 @@ Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(optiona
 | __Gilded__ | __Moonlight__ | __Crimson__ | __DarkSide__ | __Alternate Time by burn__ |
 | ![Gilded](images/skins/Gilded.png) | ![Moonlight](images/skins/Moonlight.png) | ![Crimson](images/skins/Crimson.png) | ![DarkSide](images/skins/Darkside.png) | ![Alternate Time](images/skins/Alternate%20Time.png) | 
 
+# Portrait samples
+
+
+
 # Adding skins to the mod
 
 Open a PR with this template https://github.com/adi1998/MelSkin/pull/2
+
+# Contributors
+
+- @burn on [Discord](https://discord.gg/bKvJTAJj), custom skins
+- @punishedmat on [Discord](https://discord.gg/bKvJTAJj), portrait replacements
 
 # Issues
 

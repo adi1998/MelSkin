@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.2.0] - 2025-11-27
+
 - Add portraits based on Arachne dresses by punishedmat
 
 ## [1.1.2] - 2025-11-25
@@ -44,7 +46,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.1.2...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/adi1998/MelSkin/compare/1.1.2...1.2.0
 [1.1.2]: https://github.com/adi1998/MelSkin/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/adi1998/MelSkin/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/adi1998/MelSkin/compare/1.0.2...1.1.0

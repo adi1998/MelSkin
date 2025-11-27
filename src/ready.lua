@@ -151,7 +151,7 @@ end)
 
 
 function mod.UpdateSkin(dress)
-    if CurrentRun ~= nil then
+    if CurrentRun ~= nil and game.GetHeroTraitValues("Costume")[1] == nil then
         SetThingProperty({Property = "GrannyTexture", Value = dress, DestinationId = CurrentRun.Hero.ObjectId})
     end
 end
@@ -277,12 +277,16 @@ modutil.mod.Path.Context.Wrap("PlayEmoteAnimFromSource", function (source, args,
     modutil.mod.Path.Wrap("SetAnimation", mod.SetAnimationWrap)
 end)
 
+function mod.SetRandomDress()
+    mod.random_dress = game.GetRandomArrayValue(mod.DressData)[1]
+    print("Random dress", mod.random_dress)
+    CurrentRun.Hero.ModDressData = mod.random_dress
+end
+
 modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
     local retValue = base(prevRun,args)
     if config.random_each_run then
-        mod.random_dress = game.GetRandomArrayValue(mod.DressData)[1]
-        print("Random dress", mod.random_dress)
-        CurrentRun.Hero.ModDressData = mod.random_dress
+        mod.SetRandomDress()
     else
         CurrentRun.Hero.ModDressData = nil
     end

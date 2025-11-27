@@ -23,6 +23,7 @@ function drawMenu()
             local  dressValue = dressPair[2]
             if rom.ImGui.Selectable(dressName, (dressName == config.dress)) then
                 config.dress = dressName
+                config.random_each_run = false
                 mod.dressvalue = dressValue
                 mod.UpdateSkin(mod.dressvalue)
             end
@@ -34,15 +35,17 @@ function drawMenu()
     rom.ImGui.Separator()
 
     local value, checked = rom.ImGui.Checkbox("Random Dress Each Run", config.random_each_run)
+    print("value", tostring(value), "checked", tostring(checked))
     if checked then
         config.random_each_run = value
         if value then
-            
+            if CurrentRun.Hero.ModDressData == nil or CurrentRun.Hero.ModDressData == "" then
+                  mod.SetRandomDress()
+            end
+            mod.UpdateSkin(mod.GetDressValue(mod.random_dress))
         else
-            mod.ClearRunDressData()
+            -- mod.ClearRunDressData()
+            mod.UpdateSkin(mod.GetDressValue(config.dress))
         end
     end
-
-
-
 end

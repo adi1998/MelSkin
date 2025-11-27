@@ -22,6 +22,7 @@ mod.DressData = {
     {"Crimson" , "Models/Melinoe/Melinoe_ArachneArmorH"},
     {"Dark Side" , "Models/Melinoe/MelinoeTransform_Color"},
     {"Alternate Time", "zerp-MelSkin/skins/Alternate Time"},
+    {"Murderrrrr", "zerp-MelSkin/skins/Halloween 2025"},
     {"None" , ""},
 }
 

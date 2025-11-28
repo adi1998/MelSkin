@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Add option to randomize dress at run start
+
 ## [1.2.1] - 2025-11-27
 
 - Add Murderrrrr skin by burn

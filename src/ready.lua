@@ -201,7 +201,8 @@ modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
             args_copy = DeepCopyTable(args)
             local dress = mod.dressvalue
             if config.random_each_run then
-                dress = mod.GetDressValue(CurrentRun.Hero.ModDressData)
+                mod.random_dress = mod.GetCurrentRunRandomDress()
+                dress = mod.GetDressValue(mod.random_dress)
                 print("skin random", dress)
             end
             args_copy.Value = dress
@@ -240,7 +241,7 @@ end
 function mod.GetPortraitNameFromConfig(filename,name)
     local dress = config.dress
     if config.random_each_run then
-        dress = CurrentRun.Hero.ModDressData
+        dress = mod.GetCurrentRunRandomDress()
         print("portrait random", dress)
     end
     local portraitData = mod.PortraitData[dress]
@@ -282,6 +283,14 @@ function mod.SetRandomDress()
     mod.random_dress = game.GetRandomArrayValue(mod.DressData)[1]
     print("Random dress", mod.random_dress)
     CurrentRun.Hero.ModDressData = mod.random_dress
+end
+
+function mod.GetCurrentRunRandomDress()
+    if CurrentRun.Hero.ModDressData == nil or CurrentRun.Hero.ModDressData == "" then
+        mod.SetRandomDress()
+    end
+    mod.random_dress = CurrentRun.Hero.ModDressData
+    return CurrentRun.Hero.ModDressData
 end
 
 modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)

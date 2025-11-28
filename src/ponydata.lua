@@ -39,6 +39,33 @@ mod.DressScreenData = {
                 },
 
                 Children = {
+
+                    RandomDressButton =
+                    {
+                        Name = "ButtonDefault",
+                        Group = "Combat_Menu_TraitTray",
+                        Scale = 1.2,
+                        ScaleX = 1.15,
+                        OffsetX = 0,
+                        OffsetY = 420,
+                        Text = "Randomize Dress Each Run",
+                        TextArgs =
+                        {
+                            FontSize = 22,
+                            Width = 720,
+                            Color = Color.White,
+                            Font = "P22UndergroundSCMedium",
+                            ShadowBlur = 0,
+                            ShadowColor = { 0, 0, 0, 1 },
+                            ShadowOffset = { 0, 2 },
+                            Justification = "Center"
+                        },
+                        Data = {
+                            OnPressedFunctionName = _PLUGIN.guid .. '.' .. 'ToggleRandomDressSelection',
+                            RandomButtonId = "RandomButtonId"
+                        },
+                    },
+
                     CloseButton =
                     {
                         Graphic = "ButtonClose",

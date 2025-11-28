@@ -39,9 +39,7 @@ function drawMenu()
     if checked then
         config.random_each_run = value
         if value then
-            if CurrentRun.Hero.ModDressData == nil or CurrentRun.Hero.ModDressData == "" then
-                  mod.SetRandomDress()
-            end
+            mod.GetCurrentRunRandomDress()
             mod.UpdateSkin(mod.GetDressValue(mod.random_dress))
         else
             -- mod.ClearRunDressData()

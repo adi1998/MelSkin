@@ -51,6 +51,7 @@ mod.Portraits =
     Portraits_Melinoe_Casual_01 = true,
     Portraits_Melinoe_Pleased_01 = true,
     Portraits_Melinoe_PleasedFlushed_01 = true,
+    BoonSelectMelIn = true,
     BoonSelectMelIn0015 = true
 }
 
@@ -58,6 +59,7 @@ mod.Portraits =
 mod.PortraitData = {
     Emerald =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
     Lavender =
@@ -66,18 +68,22 @@ mod.PortraitData = {
     },
     Azure =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
     Onyx =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
     Fuchsia =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
     Gilded =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
     Moonlight =
@@ -86,12 +92,15 @@ mod.PortraitData = {
     },
     Crimson =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
 }
 
 mod.PortraitData.Moonlight.BoonSelectMelIn0015 = false
 mod.PortraitData.Lavender.BoonSelectMelIn0015 = false
+mod.PortraitData.Moonlight.BoonSelectMelIn = false
+mod.PortraitData.Lavender.BoonSelectMelIn = false
 
 mod.NameFileMap = {
     Portrait_Mel_Default_01 = "Portraits_Melinoe_01",
@@ -118,12 +127,15 @@ end
 
 udpateNameFileMap()
 
+mod.NameFileMap.BoonSelectMelIn = "BoonSelectMelIn"
 mod.NameFileMap.BoonSelectMelStatic = "BoonSelectMelIn0015"
 
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
 
 local guiPortraitsVFXFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\GUI_Portraits_VFX.sjson")
+local guiScreensVFXFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\GUI_Screens_VFX.sjson")
+local guiFile = rom.path.combine(rom.paths.Content(), "Game\\Obstacles\\GUI.sjson")
 local portraitprefix = "Portraits\\Melinoe\\"
 local modPortraitPrefix = "zerp-MelSkin\\portraits\\"
 
@@ -156,6 +168,65 @@ sjson.hook(guiPortraitsVFXFile, function(data)
     end
 end)
 
+mod.BoonSjson = {
+    {
+        {
+            Name = "BoonSelectMelIn",
+            FilePath = "",
+            Material = "Unlit",
+            OffsetX = -640,
+            VisualFx = "BoonSelectMelFxLoop",
+            VisualFxIntervalMin = 0.5,
+            VisualFxIntervalMax = 0.5,
+            VisualFxCap = 1,
+	    },
+        {
+            Name = "BoonSelectMelOut",
+            FilePath = "",
+            HoldLastFrame = false,
+        }
+    },
+}
+
+mod.BoonObstacle = 
+{
+    Name = "BoonSelectMel",
+    InheritFrom = "1_BaseGUIObstacle",
+    DisplayInEditor = false,
+    Thing =
+    {
+        EditorOutlineDrawBounds = false,
+        Graphic = "BoonSelectMelIn",
+    }
+}
+
+sjson.hook(guiScreensVFXFile, function (data)
+    for _, entry in ipairs(mod.BoonSjson) do
+        local origname = entry.Name
+        for dress,portraitData in pairs(mod.PortraitData) do
+            if portraitData.BoonPortrait then
+                local newname = dress .. "_" .. origname
+                local newfilepath = modPortraitPrefix .. dress .. "\\" .. "BoonSelectMelIn0015"
+                local newentry = DeepCopyTable(entry)
+                newentry.Name = newname
+                newentry.FilePath = newfilepath
+                table.insert(data.Animations,newentry)
+            end
+        end
+    end
+end)
+
+sjson.hook(guiFile,function (data)
+    local origname = mod.BoonObstacle.Name
+    for dress,portraitData in pairs(mod.PortraitData) do
+        if portraitData.BoonPortrait then
+            local newname = dress .. "_" .. origname
+            local newentry = DeepCopyTable(mod.BoonObstacle)
+            newentry.Name = newname
+            newentry.Thing.Graphic = dress .. "_" .. newentry.Thing.Graphic
+        end
+    end
+end)
 
 function mod.UpdateSkin(dress)
     if CurrentRun ~= nil then

@@ -51,6 +51,7 @@ mod.Portraits =
     Portraits_Melinoe_Casual_01 = true,
     Portraits_Melinoe_Pleased_01 = true,
     Portraits_Melinoe_PleasedFlushed_01 = true,
+    BoonSelectMelIn0015 = true
 }
 
 -- for getting available portraits for a dress
@@ -89,6 +90,9 @@ mod.PortraitData = {
     },
 }
 
+mod.PortraitData.Moonlight.BoonSelectMelIn0015 = false
+mod.PortraitData.Lavender.BoonSelectMelIn0015 = false
+
 mod.NameFileMap = {
     Portrait_Mel_Default_01 = "Portraits_Melinoe_01",
     Portrait_Mel_Proud_01 = "Portraits_Melinoe_Proud_01",
@@ -113,6 +117,8 @@ function udpateNameFileMap()
 end
 
 udpateNameFileMap()
+
+mod.NameFileMap.BoonSelectMelStatic = "BoonSelectMelIn0015"
 
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")

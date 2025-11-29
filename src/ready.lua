@@ -244,16 +244,13 @@ modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
     local dress = mod.GetCurrentDress()
     print("get current dress:", dress)
     local portraitData = mod.PortraitData[dress]
-    if portraitData ~= nil then
-        if portraitData.BoonPortrait then
-            ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonObstacle.Name
-            print("open boon", dress .. "_" .. mod.BoonObstacle.Name)
-        end
-    else
-        -- resetting old value incase of missing portrait
-        ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonObstacle.Name
+    if portraitData ~= nil and portraitData.BoonPortrait then
+        ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonObstacle.Name
+        print("open boon", dress .. "_" .. mod.BoonObstacle.Name)
     end
     base(source,args)
+    -- resetting base value
+    ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonObstacle.Name
 end)
 
 modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, button)

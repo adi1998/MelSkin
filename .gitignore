@@ -15,4 +15,4 @@ tcli.exe
 /data/zerp-MelSkin
 
 # ignore psd files
-**/*.psd
+*.psd

@@ -4,7 +4,7 @@ Hades II mod allowing you to select a skin for Melinoe from one of Arachne's boo
 
 Includes portrait replacements for the Arachne skins with optional support for custom skin related portraits.
 
-Option to select random dress on run start.
+Option to randomize dress on run start.
 
 ## Installation
 

@@ -31,11 +31,10 @@ function drawMenu()
         end
         rom.ImGui.EndCombo()
     end
-
+    
     rom.ImGui.Separator()
 
     local value, checked = rom.ImGui.Checkbox("Random Dress Each Run", config.random_each_run)
-    print("value", tostring(value), "checked", tostring(checked))
     if checked then
         config.random_each_run = value
         if value then

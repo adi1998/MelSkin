@@ -175,6 +175,7 @@ mod.BoonSjson = {
     {
         Name = "BoonSelectMelOut",
         FilePath = "",
+        ChainTo = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" -- this fixes the single frame of mel in the middle
     }
 }
 

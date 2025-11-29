@@ -99,11 +99,6 @@ mod.PortraitData = {
     },
 }
 
-mod.PortraitData.Moonlight.BoonSelectMelIn0015 = false
-mod.PortraitData.Lavender.BoonSelectMelIn0015 = false
-mod.PortraitData.Moonlight.BoonSelectMelIn = false
-mod.PortraitData.Lavender.BoonSelectMelIn = false
-
 mod.NameFileMap = {
     Portrait_Mel_Default_01 = "Portraits_Melinoe_01",
     Portrait_Mel_Proud_01 = "Portraits_Melinoe_Proud_01",
@@ -129,16 +124,12 @@ end
 
 udpateNameFileMap()
 
-mod.NameFileMap.BoonSelectMelIn = "BoonSelectMelIn"
-mod.NameFileMap.BoonSelectMelStatic = "BoonSelectMelIn0015"
-
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
 
 local guiPortraitsVFXFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\GUI_Portraits_VFX.sjson")
 local guiScreensVFXFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\GUI_Screens_VFX.sjson")
 local guiFile = rom.path.combine(rom.paths.Content(), "Game\\Obstacles\\GUI.sjson")
-local portraitprefix = "Portraits\\Melinoe\\"
 local modPortraitPrefix = "zerp-MelSkin\\portraits\\"
 
 sjson.hook(guiPortraitsVFXFile, function(data)

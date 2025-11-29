@@ -10,6 +10,8 @@ Option to randomize dress on run start.
 
 Use r2modman by ebkr from [Thunderstore](https://thunderstore.io/package/ebkr/r2modman/) or [GitHub](https://github.com/ebkr/r2modmanPlus/releases/latest).
 
+While the mod has been tested decently well it is recommended to backup your save from `%USERPROFILE%\Saved Games\Hades II\Profile*.sav` in case there are issues.
+
 ## Usage
 
 Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(new submenu in inventory) to select the dress.

@@ -64,6 +64,7 @@ mod.PortraitData = {
     },
     Lavender =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
     Azure =
@@ -88,6 +89,7 @@ mod.PortraitData = {
     },
     Moonlight =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
     Crimson =
@@ -170,22 +172,21 @@ end)
 
 mod.BoonSjson = {
     {
-        {
-            Name = "BoonSelectMelIn",
-            FilePath = "",
-            Material = "Unlit",
-            OffsetX = -640,
-            VisualFx = "BoonSelectMelFxLoop",
-            VisualFxIntervalMin = 0.5,
-            VisualFxIntervalMax = 0.5,
-            VisualFxCap = 1,
-	    },
-        {
-            Name = "BoonSelectMelOut",
-            FilePath = "",
-            HoldLastFrame = false,
-        }
+        Name = "BoonSelectMelIn",
+        FilePath = "",
+        Material = "Unlit",
+        OffsetX = -640,
+        VisualFx = "BoonSelectMelFxLoop",
+        VisualFxIntervalMin = 0.5,
+        VisualFxIntervalMax = 0.5,
+        VisualFxCap = 1,
     },
+    {
+        Name = "BoonSelectMelOut",
+        FilePath = "",
+        HoldLastFrame = false,
+    }
+
 }
 
 mod.BoonObstacle = 
@@ -201,6 +202,7 @@ mod.BoonObstacle =
 }
 
 sjson.hook(guiScreensVFXFile, function (data)
+    local newdata = {}
     for _, entry in ipairs(mod.BoonSjson) do
         local origname = entry.Name
         for dress,portraitData in pairs(mod.PortraitData) do
@@ -210,13 +212,18 @@ sjson.hook(guiScreensVFXFile, function (data)
                 local newentry = DeepCopyTable(entry)
                 newentry.Name = newname
                 newentry.FilePath = newfilepath
-                table.insert(data.Animations,newentry)
+                table.insert(newdata,newentry)
+                print(mod.dump(newentry))
             end
         end
+    end
+    for _, entry in ipairs(newdata) do
+        table.insert(data.Animations,entry)
     end
 end)
 
 sjson.hook(guiFile,function (data)
+    local newdata = {}
     local origname = mod.BoonObstacle.Name
     for dress,portraitData in pairs(mod.PortraitData) do
         if portraitData.BoonPortrait then
@@ -224,8 +231,32 @@ sjson.hook(guiFile,function (data)
             local newentry = DeepCopyTable(mod.BoonObstacle)
             newentry.Name = newname
             newentry.Thing.Graphic = dress .. "_" .. newentry.Thing.Graphic
+            table.insert(newdata,newentry)
+            print(mod.dump(newentry))
         end
     end
+    for _, entry in ipairs(newdata) do
+        table.insert(data.Obstacles,entry)
+    end
+end)
+
+modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
+    local dress = config.dress
+    local portraitData = mod.PortraitData[config.dress]
+    local costumes = game.GetHeroTraitValues("Costume")
+    if costumes[1] ~= nil then
+        dress = mod.CostumeDressMap[costumes[1]]
+        if dress ~= nil then
+            portraitData = mod.PortraitData[dress]
+        end
+    end
+    if portraitData ~= nil then
+        if portraitData.BoonPortrait then
+            ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonObstacle.Name
+            print("open boon", dress .. "_" .. mod.BoonObstacle.Name)
+        end
+    end
+    base(source,args)
 end)
 
 function mod.UpdateSkin(dress)

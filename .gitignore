@@ -13,3 +13,6 @@ tcli.exe
 
 # ignore unpacked package contents
 /data/zerp-MelSkin
+
+# ignore psd files
+**/*.psd

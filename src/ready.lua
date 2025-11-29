@@ -184,9 +184,7 @@ mod.BoonSjson = {
     {
         Name = "BoonSelectMelOut",
         FilePath = "",
-        HoldLastFrame = false,
     }
-
 }
 
 mod.BoonObstacle = 
@@ -240,23 +238,44 @@ sjson.hook(guiFile,function (data)
     end
 end)
 
-modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
-    local dress = config.dress
-    local portraitData = mod.PortraitData[config.dress]
+function mod.GetCurrentDress()
     local costumes = game.GetHeroTraitValues("Costume")
     if costumes[1] ~= nil then
-        dress = mod.CostumeDressMap[costumes[1]]
+        local dress = mod.CostumeDressMap[costumes[1]]
         if dress ~= nil then
-            portraitData = mod.PortraitData[dress]
+            return dress
         end
     end
+    return config.dress
+end
+
+modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
+    local dress = mod.GetCurrentDress()
+    print("get current dress:", dress)
+    local portraitData = mod.PortraitData[dress]
     if portraitData ~= nil then
         if portraitData.BoonPortrait then
             ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonObstacle.Name
             print("open boon", dress .. "_" .. mod.BoonObstacle.Name)
         end
+    else
+        -- resetting old value incase of missing portrait
+        ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonObstacle.Name
     end
     base(source,args)
+end)
+
+modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, button)
+    modutil.mod.Path.Wrap("SetAnimation", function (base,args)
+        if args.Name == "BoonSelectMelOut" then
+            local dress = mod.GetCurrentDress()
+            local portraitData = mod.PortraitData[dress]
+            if portraitData ~= nil and portraitData.BoonPortrait then
+                args.Name = dress .. "_" .. args.Name
+            end
+        end
+        base(args)
+    end)
 end)
 
 function mod.UpdateSkin(dress)

@@ -237,7 +237,11 @@ function mod.GetCurrentDress()
             return dress
         end
     end
-    return config.dress
+    local dress = config.dress
+    if config.random_each_run then
+        dress = mod.GetCurrentRunRandomDress()
+    end
+    return dress
 end
 
 modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
@@ -401,6 +405,7 @@ function mod.SetRandomDress()
 end
 
 function mod.GetCurrentRunRandomDress()
+    -- if this is called, it means random is enabled
     if CurrentRun.Hero.ModDressData == nil or CurrentRun.Hero.ModDressData == "" then
         mod.SetRandomDress()
     end

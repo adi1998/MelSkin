@@ -267,20 +267,24 @@ modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, butt
 end)
 
 function mod.UpdateSkin(dress)
-    if CurrentRun ~= nil then
+    if CurrentRun ~= nil and game.GetHeroTraitValues("Costume")[1] == nil then
         SetThingProperty({Property = "GrannyTexture", Value = dress, DestinationId = CurrentRun.Hero.ObjectId})
     end
 end
 
-for _, dressPair in ipairs(mod.DressData) do
-    local dressName = dressPair[1]
-    local dressValue = dressPair[2]
-    if dressName == config.dress then
-        mod.dressvalue = dressValue
-        mod.UpdateSkin(mod.dressvalue)
-        break
+function mod.GetDressValue(inputDress)
+    for _, dressPair in ipairs(mod.DressData) do
+        local dressName = dressPair[1]
+        local dressValue = dressPair[2]
+        if dressName == inputDress then
+            return dressValue
+        end
     end
+    return ""
 end
+
+mod.dressvalue = mod.GetDressValue(config.dress)
+mod.UpdateSkin(mod.dressvalue)
 
 function mod.LoadSkinPackages()
     for _, packageName in ipairs(mod.skinPackageList) do
@@ -310,7 +314,13 @@ modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
         args.DestinationId == CurrentRun.Hero.ObjectId then
             print("Base args:",mod.dump(args))
             args_copy = DeepCopyTable(args)
-            args_copy.Value = mod.dressvalue
+            local dress = mod.dressvalue
+            if config.random_each_run then
+                mod.random_dress = mod.GetCurrentRunRandomDress()
+                dress = mod.GetDressValue(mod.random_dress)
+                print("skin random", dress)
+            end
+            args_copy.Value = dress
             print("Mod args:",mod.dump(args_copy))
             base(args_copy)
 	else
@@ -344,10 +354,15 @@ function mod.GetPortraitNameFromCostume(filename, name)
 end
 
 function mod.GetPortraitNameFromConfig(filename,name)
-    local portraitData = mod.PortraitData[config.dress]
+    local dress = config.dress
+    if config.random_each_run then
+        dress = mod.GetCurrentRunRandomDress()
+        print("portrait random", dress)
+    end
+    local portraitData = mod.PortraitData[dress]
     if portraitData ~= nil then
         if portraitData.Portraits[filename] then
-            return config.dress .. "_" .. name
+            return dress .. "_" .. name
         end
     end
     return nil
@@ -371,10 +386,34 @@ function mod.SetAnimationWrap2(base,args)
     return mod.SetAnimationWrap(base,args)
 end
 
-modutil.mod.Path.Context.Wrap("PlayTextLines", function (source, textLines, args)
+modutil.mod.Path.Context.Wrap.Static("PlayTextLines", function (source, textLines, args)
     modutil.mod.Path.Wrap("SetAnimation", mod.SetAnimationWrap)
 end)
 
-modutil.mod.Path.Context.Wrap("PlayEmoteAnimFromSource", function (source, args, screen, lines)
+modutil.mod.Path.Context.Wrap.Static("PlayEmoteAnimFromSource", function (source, args, screen, lines)
     modutil.mod.Path.Wrap("SetAnimation", mod.SetAnimationWrap)
+end)
+
+function mod.SetRandomDress()
+    mod.random_dress = game.GetRandomArrayValue(mod.DressData)[1]
+    print("Random dress", mod.random_dress)
+    CurrentRun.Hero.ModDressData = mod.random_dress
+end
+
+function mod.GetCurrentRunRandomDress()
+    if CurrentRun.Hero.ModDressData == nil or CurrentRun.Hero.ModDressData == "" then
+        mod.SetRandomDress()
+    end
+    mod.random_dress = CurrentRun.Hero.ModDressData
+    return CurrentRun.Hero.ModDressData
+end
+
+modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
+    local retValue = base(prevRun,args)
+    if config.random_each_run then
+        mod.SetRandomDress()
+    else
+        CurrentRun.Hero.ModDressData = nil
+    end
+    return retValue
 end)

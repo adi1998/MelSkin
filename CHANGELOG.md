@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.3.0] - 2025-11-29
+
+- Add option to randomize dress at run start
+
 ## [1.2.1] - 2025-11-27
 
 - Add Murderrrrr skin by burn
@@ -50,7 +54,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.2.1...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.3.0...HEAD
+[1.3.0]: https://github.com/adi1998/MelSkin/compare/1.2.1...1.3.0
 [1.2.1]: https://github.com/adi1998/MelSkin/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/adi1998/MelSkin/compare/1.1.2...1.2.0
 [1.1.2]: https://github.com/adi1998/MelSkin/compare/1.1.1...1.1.2

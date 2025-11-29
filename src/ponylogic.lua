@@ -9,6 +9,11 @@ function mod.OpenDressSelector()
 	screen.CurrentPage = screen.FirstPage
 	local components = screen.Components
 
+	local randomButtonText = mod.DressScreenData.DressSelector.ComponentData.Background.Children.RandomDressButton.Text
+	if config.random_each_run then
+		screen.ComponentData.Background.Children.RandomDressButton.Text = ">>" .. randomButtonText .. "<<"
+	end
+
 	OnScreenOpened(screen)
 	HideCombatUI(screen.Name)
 	CreateScreenFromData(screen, screen.ComponentData)
@@ -97,7 +102,6 @@ function  mod.DressSelectorLoadPage(screen)
 				ShadowOffset = { 0, 2 },
 				Justification = "Center"
 			})
-
 		end
 	end
 end
@@ -106,9 +110,42 @@ function mod.SetDress(screen,button)
 	print("Dress",button.Dress[1])
 	print("DressValue",button.Dress[2])
 	config.dress = button.Dress[1]
+	config.random_each_run = false
 	mod.dressvalue = button.Dress[2]
 	mod.UpdateSkin(mod.dressvalue)
-	mod.CloseDressSelector(screen)
+	-- mod.CloseDressSelector(screen)
+	mod.DressSelectorReloadPage(screen)
+end
+
+function mod.DressSelectorReloadPage(screen)
+	local ids = {}
+	for i, component in pairs(screen.Components) do
+		if component.RandomButtonId == "RandomButtonId" then
+			print("randombuttonreload", screen.Components[i].Text)
+			screen.Components[i].Text = mod.DressScreenData.DressSelector.ComponentData.Background.Children.RandomDressButton.Text
+			ModifyTextBox({Id = screen.Components[i].Id, Text = screen.Components[i].Text})
+		end
+		if component.ToDestroy then
+			table.insert(ids, component.Id)
+		end
+	end
+	Destroy({ Ids = ids })
+	mod.DressSelectorLoadPage(screen)
+end
+
+function mod.ToggleRandomDressSelection(screen, button)
+	config.random_each_run = config.random_each_run == false
+	local randomButtonText = mod.DressScreenData.DressSelector.ComponentData.Background.Children.RandomDressButton.Text
+	if config.random_each_run then
+		randomButtonText = ">>" .. randomButtonText .. "<<"
+		mod.GetCurrentRunRandomDress()
+		mod.UpdateSkin(mod.GetDressValue(mod.random_dress))
+	else
+		mod.UpdateSkin(mod.GetDressValue(config.dress))
+	end
+	button.Text = randomButtonText
+	ModifyTextBox({Id = button.Id, Text = button.Text})
+	-- mod.DressSelectorReloadPage(screen)
 end
 
 function mod.CloseDressSelector(screen)

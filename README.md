@@ -2,11 +2,15 @@
 
 Hades II mod allowing you to select a skin for Melinoe from one of Arachne's boons and some more.
 
-Also includes portrait replacements for the Arachne skins with optional support for custom skin related portraits.
+Includes portrait replacements for the Arachne skins with optional support for custom skin related portraits.
+
+Option to randomize dress on run start.
 
 ## Installation
 
 Use r2modman by ebkr from [Thunderstore](https://thunderstore.io/package/ebkr/r2modman/) or [GitHub](https://github.com/ebkr/r2modmanPlus/releases/latest).
+
+While the mod has been tested decently well it is recommended to backup your save from `%USERPROFILE%\Saved Games\Hades II\Profile*.sav` in case there are issues.
 
 ## Usage
 

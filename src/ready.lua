@@ -173,7 +173,6 @@ mod.BoonSjson = {
     {
         Name = "BoonSelectMelOut",
         FilePath = "",
-        ChainTo = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" -- this fixes the single frame of mel in the middle
     }
 }
 
@@ -199,7 +198,9 @@ sjson.hook(guiScreensVFXFile, function (data)
                 local newfilepath = modPortraitPrefix .. dress .. "\\" .. "BoonSelectMelIn0015"
                 local newentry = DeepCopyTable(entry)
                 newentry.Name = newname
-                newentry.FilePath = newfilepath
+                if origname == "BoonSelectMelIn" then
+                    newentry.FilePath = newfilepath
+                end
                 table.insert(newdata,newentry)
                 print(mod.dump(newentry))
             end
@@ -256,7 +257,7 @@ modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
     ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonObstacle.Name
 end)
 
-modutil.mod.Path.Context.Wrap.Static("CloseUpgradeChoiceScreen", function (screen, button)
+modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, button)
     modutil.mod.Path.Wrap("SetAnimation", function (base,args)
         if args.Name == "BoonSelectMelOut" then
             local dress = mod.GetCurrentDress()

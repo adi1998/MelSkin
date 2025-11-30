@@ -39,7 +39,7 @@ mod.CostumeDressMap = {
 }
 
 -- list of supported Portraits
-mod.Portraits = 
+mod.Portraits =
 {
     Portraits_Melinoe_01 = true,
     Portraits_Melinoe_Proud_01 = true,
@@ -51,8 +51,6 @@ mod.Portraits =
     Portraits_Melinoe_Casual_01 = true,
     Portraits_Melinoe_Pleased_01 = true,
     Portraits_Melinoe_PleasedFlushed_01 = true,
-    BoonSelectMelIn = true,
-    BoonSelectMelIn0015 = true
 }
 
 -- for getting available portraits for a dress

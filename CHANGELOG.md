@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Add upgrade menu portrait
+- Update dialogue portraits for Lavender, Moonlight and Fuchsia
+
 ## [1.3.0] - 2025-11-29
 
 - Add option to randomize dress at run start

@@ -256,7 +256,7 @@ modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
     ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonObstacle.Name
 end)
 
-modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, button)
+modutil.mod.Path.Context.Wrap.Static("CloseUpgradeChoiceScreen", function (screen, button)
     modutil.mod.Path.Wrap("SetAnimation", function (base,args)
         if args.Name == "BoonSelectMelOut" then
             local dress = mod.GetCurrentDress()

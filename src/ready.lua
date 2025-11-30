@@ -39,7 +39,7 @@ mod.CostumeDressMap = {
 }
 
 -- list of supported Portraits
-mod.Portraits = 
+mod.Portraits =
 {
     Portraits_Melinoe_01 = true,
     Portraits_Melinoe_Proud_01 = true,
@@ -57,34 +57,42 @@ mod.Portraits =
 mod.PortraitData = {
     Emerald =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
     Lavender =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
     Azure =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
     Onyx =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
     Fuchsia =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
     Gilded =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
     Moonlight =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
     Crimson =
     {
+        BoonPortrait = true,
         Portraits = DeepCopyTable(mod.Portraits)
     },
 }
@@ -118,7 +126,8 @@ mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
 
 local guiPortraitsVFXFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\GUI_Portraits_VFX.sjson")
-local portraitprefix = "Portraits\\Melinoe\\"
+local guiScreensVFXFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\GUI_Screens_VFX.sjson")
+local guiFile = rom.path.combine(rom.paths.Content(), "Game\\Obstacles\\GUI.sjson")
 local modPortraitPrefix = "zerp-MelSkin\\portraits\\"
 
 sjson.hook(guiPortraitsVFXFile, function(data)
@@ -150,6 +159,115 @@ sjson.hook(guiPortraitsVFXFile, function(data)
     end
 end)
 
+mod.BoonSjson = {
+    {
+        Name = "BoonSelectMelIn",
+        FilePath = "",
+        Material = "Unlit",
+        OffsetX = -640,
+        VisualFx = "BoonSelectMelFxLoop",
+        VisualFxIntervalMin = 0.5,
+        VisualFxIntervalMax = 0.5,
+        VisualFxCap = 1,
+    },
+    {
+        Name = "BoonSelectMelOut",
+        FilePath = "",
+        ChainTo = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" -- this fixes the single frame of mel in the middle
+    }
+}
+
+mod.BoonObstacle = 
+{
+    Name = "BoonSelectMel",
+    InheritFrom = "1_BaseGUIObstacle",
+    DisplayInEditor = false,
+    Thing =
+    {
+        EditorOutlineDrawBounds = false,
+        Graphic = "BoonSelectMelIn",
+    }
+}
+
+sjson.hook(guiScreensVFXFile, function (data)
+    local newdata = {}
+    for _, entry in ipairs(mod.BoonSjson) do
+        local origname = entry.Name
+        for dress,portraitData in pairs(mod.PortraitData) do
+            if portraitData.BoonPortrait then
+                local newname = dress .. "_" .. origname
+                local newfilepath = modPortraitPrefix .. dress .. "\\" .. "BoonSelectMelIn0015"
+                local newentry = DeepCopyTable(entry)
+                newentry.Name = newname
+                newentry.FilePath = newfilepath
+                table.insert(newdata,newentry)
+                print(mod.dump(newentry))
+            end
+        end
+    end
+    for _, entry in ipairs(newdata) do
+        table.insert(data.Animations,entry)
+    end
+end)
+
+sjson.hook(guiFile,function (data)
+    local newdata = {}
+    local origname = mod.BoonObstacle.Name
+    for dress,portraitData in pairs(mod.PortraitData) do
+        if portraitData.BoonPortrait then
+            local newname = dress .. "_" .. origname
+            local newentry = DeepCopyTable(mod.BoonObstacle)
+            newentry.Name = newname
+            newentry.Thing.Graphic = dress .. "_" .. newentry.Thing.Graphic
+            table.insert(newdata,newentry)
+            print(mod.dump(newentry))
+        end
+    end
+    for _, entry in ipairs(newdata) do
+        table.insert(data.Obstacles,entry)
+    end
+end)
+
+function mod.GetCurrentDress()
+    local costumes = game.GetHeroTraitValues("Costume")
+    if costumes[1] ~= nil then
+        local dress = mod.CostumeDressMap[costumes[1]]
+        if dress ~= nil then
+            return dress
+        end
+    end
+    local dress = config.dress
+    if config.random_each_run then
+        dress = mod.GetCurrentRunRandomDress()
+    end
+    return dress
+end
+
+modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
+    local dress = mod.GetCurrentDress()
+    print("get current dress:", dress)
+    local portraitData = mod.PortraitData[dress]
+    if portraitData ~= nil and portraitData.BoonPortrait then
+        ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonObstacle.Name
+        print("open boon", dress .. "_" .. mod.BoonObstacle.Name)
+    end
+    base(source,args)
+    -- resetting base value
+    ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonObstacle.Name
+end)
+
+modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, button)
+    modutil.mod.Path.Wrap("SetAnimation", function (base,args)
+        if args.Name == "BoonSelectMelOut" then
+            local dress = mod.GetCurrentDress()
+            local portraitData = mod.PortraitData[dress]
+            if portraitData ~= nil and portraitData.BoonPortrait then
+                args.Name = dress .. "_" .. args.Name
+            end
+        end
+        base(args)
+    end)
+end)
 
 function mod.UpdateSkin(dress)
     if CurrentRun ~= nil and game.GetHeroTraitValues("Costume")[1] == nil then
@@ -286,6 +404,7 @@ function mod.SetRandomDress()
 end
 
 function mod.GetCurrentRunRandomDress()
+    -- if this is called, it means random is enabled
     if CurrentRun.Hero.ModDressData == nil or CurrentRun.Hero.ModDressData == "" then
         mod.SetRandomDress()
     end

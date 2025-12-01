@@ -29,11 +29,11 @@ modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
     local dress = mod.GetCurrentDress()
     local dressData = mod.DressData[dress]
     if dressData ~= nil and dressData.BoonPortrait then
-        ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonObstacle.Name
+        ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonSelectObstacle.Name
     end
     base(source,args)
     -- resetting base value
-    ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonObstacle.Name
+    ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonSelectObstacle.Name
 end)
 
 modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, button)

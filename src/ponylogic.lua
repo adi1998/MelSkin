@@ -82,8 +82,10 @@ function  mod.DressSelectorLoadPage(screen)
 				OffsetY = dressButtonData.offsetY
 			})
 			local text = dressButtonData.key
+			local color = Color.White
 			if config.dress == text then
 				text = ">>" .. text .. "<<"
+				color = Color.Orange
 			end
 			print(text)
 			CreateTextBox({
@@ -93,7 +95,7 @@ function  mod.DressSelectorLoadPage(screen)
 				OffsetX = 0,
 				OffsetY = 0,
 				Width = 400,
-				Color = Color.White,
+				Color = color,
 				Font = "P22UndergroundSCMedium",
 				ShadowBlur = 0,
 				ShadowColor = { 0, 0, 0, 1 },
@@ -121,7 +123,8 @@ function mod.DressSelectorReloadPage(screen)
 		if component.RandomButtonId == "RandomButtonId" then
 			print("randombuttonreload", screen.Components[i].Text)
 			screen.Components[i].Text = mod.DressScreenData.DressSelector.ComponentData.Background.Children.RandomDressButton.Text
-			ModifyTextBox({Id = screen.Components[i].Id, Text = screen.Components[i].Text})
+			screen.Components[i].Color = Color.White
+			ModifyTextBox({Id = screen.Components[i].Id, Text = screen.Components[i].Text, Color = screen.Components[i].Color})
 		end
 		if component.ToDestroy then
 			table.insert(ids, component.Id)
@@ -134,14 +137,16 @@ end
 function mod.ToggleRandomDressSelection(screen, button)
 	config.random_each_run = config.random_each_run == false
 	local randomButtonText = mod.DressScreenData.DressSelector.ComponentData.Background.Children.RandomDressButton.Text
+	local color = Color.White
 	if config.random_each_run then
 		randomButtonText = ">>" .. randomButtonText .. "<<"
+		color = Color.Orange
 		mod.UpdateSkin(mod.GetDressGrannyTexture(mod.GetCurrentRunDress()))
 	else
 		mod.UpdateSkin(mod.GetDressGrannyTexture(config.dress))
 	end
 	button.Text = randomButtonText
-	ModifyTextBox({Id = button.Id, Text = button.Text})
+	ModifyTextBox({Id = button.Id, Text = button.Text, Color = color})
 	-- mod.DressSelectorReloadPage(screen)
 end
 

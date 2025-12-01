@@ -140,12 +140,9 @@ sjson.hook(guiPortraitsVFXFile, function(data)
             for dress,portraitData in pairs(mod.PortraitData) do
                 if portraitData ~= nil and portraitData.Portraits ~= nil and portraitData.Portraits[origfilename] then
                     local newname = dress .. "_" .. origname
-                    print("sjson old name", origname)
                     print("sjson new name", newname)
                     -- args.Name = newname
                     local newfilepath = modPortraitPrefix .. dress .. "\\" .. origfilename
-                    print("sjson old path", origfilepath)
-                    print("sjson new path", newfilepath)
                     local newentry = DeepCopyTable(entry)
                     newentry.Name = newname
                     newentry.FilePath = newfilepath
@@ -246,11 +243,9 @@ end
 
 modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
     local dress = mod.GetCurrentDress()
-    print("get current dress:", dress)
     local portraitData = mod.PortraitData[dress]
     if portraitData ~= nil and portraitData.BoonPortrait then
         ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonObstacle.Name
-        print("open boon", dress .. "_" .. mod.BoonObstacle.Name)
     end
     base(source,args)
     -- resetting base value
@@ -375,7 +370,6 @@ end
 function mod.SetAnimationWrap(base,args)
     local origname = args.Name
     local origfilename = mod.NameFileMap[origname]
-    print("play text line", origname, origfilename)
     if origfilename ~= nil then
         local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
         print("SetAnimation", origname, newname)

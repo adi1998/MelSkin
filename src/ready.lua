@@ -120,7 +120,7 @@ function mod.GetPortraitNameFromCostume(filename, name)
         local dress = mod.CostumeDressMap[costumes[1]]
         if dress ~= nil then
             local dressData = mod.DressData[dress]
-            if dressData.Portraits[filename] then
+            if dressData.Portraits and dressData.Portraits[filename] then
                 return dress .. "_" .. name
             end
         end
@@ -136,7 +136,7 @@ function mod.GetPortraitNameFromConfig(filename,name)
     end
     local dressData = mod.DressData[dress]
     if dressData ~= nil then
-        if dressData.Portraits[filename] then
+        if dressData.Portraits and dressData.Portraits[filename] then
             return dress .. "_" .. name
         end
     end

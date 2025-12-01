@@ -46,6 +46,7 @@ local function on_ready()
 	import 'ponydata.lua'
 	import 'ponylogic.lua'
 	import 'data.lua'
+	import 'setupdata.lua'
 	import 'sjson.lua'
 	import 'ready.lua'
 end

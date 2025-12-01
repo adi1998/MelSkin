@@ -7,36 +7,8 @@
 -- 	so you will most likely want to have it reference
 --	values and functions later defined in `reload.lua`.
 
--- These are some sample code snippets of what you can do with our modding framework:
-
-
--- for model texture swap
-mod.DressData = {
-    {"Lavender" , "Models/Melinoe/Melinoe_ArachneArmorC"},
-    {"Azure" , "Models/Melinoe/Melinoe_ArachneArmorB"},
-    {"Emerald" , "Models/Melinoe/Melinoe_ArachneArmorA"},
-    {"Onyx" , "Models/Melinoe/Melinoe_ArachneArmorF"},
-    {"Fuchsia" , "Models/Melinoe/Melinoe_ArachneArmorD"},
-    {"Gilded" , "Models/Melinoe/Melinoe_ArachneArmorE"},
-    {"Moonlight" , "Models/Melinoe/Melinoe_ArachneArmorG"},
-    {"Crimson" , "Models/Melinoe/Melinoe_ArachneArmorH"},
-    {"Dark Side" , "Models/Melinoe/MelinoeTransform_Color"},
-    {"Alternate Time", "zerp-MelSkin/skins/Alternate Time"},
-    {"Murderrrrr", "zerp-MelSkin/skins/Halloween 2025"},
-    {"None" , ""},
-}
-
--- for portraitprefix based on Arachne boon
-mod.CostumeDressMap = {
-    ["Models/Melinoe/Melinoe_ArachneArmorC"] = "Lavender",
-    ["Models/Melinoe/Melinoe_ArachneArmorB"] = "Azure",
-    ["Models/Melinoe/Melinoe_ArachneArmorA"] = "Emerald",
-    ["Models/Melinoe/Melinoe_ArachneArmorF"] = "Onyx",
-    ["Models/Melinoe/Melinoe_ArachneArmorD"] = "Fuchsia",
-    ["Models/Melinoe/Melinoe_ArachneArmorE"] = "Gilded",
-    ["Models/Melinoe/Melinoe_ArachneArmorG"] = "Moonlight",
-    ["Models/Melinoe/Melinoe_ArachneArmorH"] = "Crimson",
-}
+-- DressName: Name displayed in the UI and the key used to retrieve DressData
+-- Portrait
 
 -- list of supported Portraits
 mod.Portraits =
@@ -53,51 +25,102 @@ mod.Portraits =
     Portraits_Melinoe_PleasedFlushed_01 = true,
 }
 
--- for getting available portraits for a dress
-mod.PortraitData = {
-    Emerald =
-    {
-        BoonPortrait = true,
-        Portraits = DeepCopyTable(mod.Portraits)
-    },
+mod.DressData = {
     Lavender =
     {
         BoonPortrait = true,
-        Portraits = DeepCopyTable(mod.Portraits)
+        GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorC",
+        Portraits = mod.Portraits
     },
     Azure =
     {
         BoonPortrait = true,
-        Portraits = DeepCopyTable(mod.Portraits)
+        GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorB",
+        Portraits = mod.Portraits
+    },
+    Emerald =
+    {
+        BoonPortrait = true,
+        GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorA",
+        Portraits = mod.Portraits
     },
     Onyx =
     {
         BoonPortrait = true,
-        Portraits = DeepCopyTable(mod.Portraits)
+        GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorF",
+        Portraits = mod.Portraits
     },
     Fuchsia =
     {
         BoonPortrait = true,
-        Portraits = DeepCopyTable(mod.Portraits)
+        GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorD",
+        Portraits = mod.Portraits
     },
     Gilded =
     {
         BoonPortrait = true,
-        Portraits = DeepCopyTable(mod.Portraits)
+        GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorE",
+        Portraits = mod.Portraits
     },
     Moonlight =
     {
         BoonPortrait = true,
-        Portraits = DeepCopyTable(mod.Portraits)
+        GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorG",
+        Portraits = mod.Portraits
     },
     Crimson =
     {
         BoonPortrait = true,
-        Portraits = DeepCopyTable(mod.Portraits)
+        GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorH",
+        Portraits = mod.Portraits
     },
+    DarkSide =
+    {
+        BoonPortrait = true,
+        GrannyTexture = "Models/Melinoe/MelinoeTransform_Color",
+    },
+    ["Alternate Time"] =
+    {
+        GrannyTexture = "zerp-MelSkin/skins/Alternate Time"
+    },
+    Murderrrrr =
+    {
+        GrannyTexture = "zerp-MelSkin/skins/Halloween 2025"
+    },
+    None =
+    {
+        GrannyTexture = ""
+    }
 }
 
-mod.NameFileMap = {
+mod.DressDisplayOrder = {
+    "Lavender" ,
+    "Azure" ,
+    "Emerald" ,
+    "Onyx" ,
+    "Fuchsia" ,
+    "Gilded" ,
+    "Moonlight" ,
+    "Crimson" ,
+    "Dark Side",
+    "Alternate Time",
+    "Murderrrrr",
+    "None",
+}
+
+-- for portraitprefix based on Arachne boon
+mod.CostumeDressMap = {
+    ["Models/Melinoe/Melinoe_ArachneArmorC"] = "Lavender",
+    ["Models/Melinoe/Melinoe_ArachneArmorB"] = "Azure",
+    ["Models/Melinoe/Melinoe_ArachneArmorA"] = "Emerald",
+    ["Models/Melinoe/Melinoe_ArachneArmorF"] = "Onyx",
+    ["Models/Melinoe/Melinoe_ArachneArmorD"] = "Fuchsia",
+    ["Models/Melinoe/Melinoe_ArachneArmorE"] = "Gilded",
+    ["Models/Melinoe/Melinoe_ArachneArmorG"] = "Moonlight",
+    ["Models/Melinoe/Melinoe_ArachneArmorH"] = "Crimson",
+}
+
+mod.PortraitNameFileMap = {
     Portrait_Mel_Default_01 = "Portraits_Melinoe_01",
     Portrait_Mel_Proud_01 = "Portraits_Melinoe_Proud_01",
     Portrait_Mel_Intense_01 = "Portraits_Melinoe_Intense_01",
@@ -110,17 +133,17 @@ mod.NameFileMap = {
     Portrait_Mel_PleasedFlushed_01 = "Portraits_Melinoe_PleasedFlushed_01",
 }
 
-function udpateNameFileMap()
+function udpatePortraitNameFileMap()
     local tempMap = {}
-    for k,v in pairs(mod.NameFileMap) do
+    for k,v in pairs(mod.PortraitNameFileMap) do
         tempMap[k .. "_Exit"] = v
     end
     for k,v in pairs(tempMap) do
-        mod.NameFileMap[k] = v
+        mod.PortraitNameFileMap[k] = v
     end
 end
 
-udpateNameFileMap()
+udpatePortraitNameFileMap()
 
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
@@ -135,10 +158,10 @@ sjson.hook(guiPortraitsVFXFile, function(data)
     for _, entry in ipairs(data.Animations) do
         local origname = entry.Name
         local origfilepath = entry.FilePath
-        local origfilename = mod.NameFileMap[origname]
+        local origfilename = mod.PortraitNameFileMap[origname]
         if origfilename ~= nil then
-            for dress,portraitData in pairs(mod.PortraitData) do
-                if portraitData ~= nil and portraitData.Portraits ~= nil and portraitData.Portraits[origfilename] then
+            for dress, dressData in pairs(mod.DressData) do
+                if dressData.Portraits ~= nil and dressData.Portraits[origfilename] then
                     local newname = dress .. "_" .. origname
                     print("sjson new name", newname)
                     -- args.Name = newname
@@ -173,7 +196,7 @@ mod.BoonSjson = {
     }
 }
 
-mod.BoonObstacle = 
+mod.BoonObstacle =
 {
     Name = "BoonSelectMel",
     InheritFrom = "1_BaseGUIObstacle",
@@ -189,8 +212,8 @@ sjson.hook(guiScreensVFXFile, function (data)
     local newdata = {}
     for _, entry in ipairs(mod.BoonSjson) do
         local origname = entry.Name
-        for dress,portraitData in pairs(mod.PortraitData) do
-            if portraitData.BoonPortrait then
+        for dress,dressData in pairs(mod.DressData) do
+            if dressData.BoonPortrait then
                 local newname = dress .. "_" .. origname
                 local newfilepath = modPortraitPrefix .. dress .. "\\" .. "BoonSelectMelIn0015"
                 local newentry = DeepCopyTable(entry)
@@ -211,8 +234,8 @@ end)
 sjson.hook(guiFile,function (data)
     local newdata = {}
     local origname = mod.BoonObstacle.Name
-    for dress,portraitData in pairs(mod.PortraitData) do
-        if portraitData.BoonPortrait then
+    for dress,dressData in pairs(mod.DressData) do
+        if dressData.BoonPortrait then
             local newname = dress .. "_" .. origname
             local newentry = DeepCopyTable(mod.BoonObstacle)
             newentry.Name = newname
@@ -236,15 +259,15 @@ function mod.GetCurrentDress()
     end
     local dress = config.dress
     if config.random_each_run then
-        dress = mod.GetCurrentRunRandomDress()
+        dress = mod.GetCurrentRunDress()
     end
     return dress
 end
 
 modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
     local dress = mod.GetCurrentDress()
-    local portraitData = mod.PortraitData[dress]
-    if portraitData ~= nil and portraitData.BoonPortrait then
+    local dressData = mod.DressData[dress]
+    if dressData ~= nil and dressData.BoonPortrait then
         ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonObstacle.Name
     end
     base(source,args)
@@ -256,8 +279,8 @@ modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, butt
     modutil.mod.Path.Wrap("SetAnimation", function (base,args)
         if args.Name == "BoonSelectMelOut" then
             local dress = mod.GetCurrentDress()
-            local portraitData = mod.PortraitData[dress]
-            if portraitData ~= nil and portraitData.BoonPortrait then
+            local dressData = mod.DressData[dress]
+            if dressData ~= nil and dressData.BoonPortrait then
                 args.Name = dress .. "_" .. args.Name
             end
         end
@@ -265,25 +288,18 @@ modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, butt
     end)
 end)
 
-function mod.UpdateSkin(dress)
+function mod.UpdateSkin(dressGrannyTexture)
     if CurrentRun ~= nil and game.GetHeroTraitValues("Costume")[1] == nil then
-        SetThingProperty({Property = "GrannyTexture", Value = dress, DestinationId = CurrentRun.Hero.ObjectId})
+        SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = CurrentRun.Hero.ObjectId})
     end
 end
 
-function mod.GetDressValue(inputDress)
-    for _, dressPair in ipairs(mod.DressData) do
-        local dressName = dressPair[1]
-        local dressValue = dressPair[2]
-        if dressName == inputDress then
-            return dressValue
-        end
+function mod.GetDressGrannyTexture(inputDress)
+    if mod.DressData[inputDress] ~= nil then
+        return mod.DressData[inputDress].GrannyTexture or ""
     end
     return ""
 end
-
-mod.dressvalue = mod.GetDressValue(config.dress)
-mod.UpdateSkin(mod.dressvalue)
 
 function mod.LoadSkinPackages()
     for _, packageName in ipairs(mod.skinPackageList) do
@@ -313,13 +329,12 @@ modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
         args.DestinationId == CurrentRun.Hero.ObjectId then
             print("Base args:",mod.dump(args))
             args_copy = DeepCopyTable(args)
-            local dress = mod.dressvalue
+            local grannyTexture = mod.GetDressGrannyTexture(config.dress)
             if config.random_each_run then
-                mod.random_dress = mod.GetCurrentRunRandomDress()
-                dress = mod.GetDressValue(mod.random_dress)
-                print("skin random", dress)
+                grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
+                print("skin random", grannyTexture)
             end
-            args_copy.Value = dress
+            args_copy.Value = grannyTexture
             print("Mod args:",mod.dump(args_copy))
             base(args_copy)
 	else
@@ -343,8 +358,8 @@ function mod.GetPortraitNameFromCostume(filename, name)
     if costumes[1] ~= nil then
         local dress = mod.CostumeDressMap[costumes[1]]
         if dress ~= nil then
-            local portraitData = mod.PortraitData[dress]
-            if portraitData.Portraits[filename] then
+            local dressData = mod.DressData[dress]
+            if dressData.Portraits[filename] then
                 return dress .. "_" .. name
             end
         end
@@ -355,12 +370,12 @@ end
 function mod.GetPortraitNameFromConfig(filename,name)
     local dress = config.dress
     if config.random_each_run then
-        dress = mod.GetCurrentRunRandomDress()
+        dress = mod.GetCurrentRunDress()
         print("portrait random", dress)
     end
-    local portraitData = mod.PortraitData[dress]
-    if portraitData ~= nil then
-        if portraitData.Portraits[filename] then
+    local dressData = mod.DressData[dress]
+    if dressData ~= nil then
+        if dressData.Portraits[filename] then
             return dress .. "_" .. name
         end
     end
@@ -369,7 +384,7 @@ end
 
 function mod.SetAnimationWrap(base,args)
     local origname = args.Name
-    local origfilename = mod.NameFileMap[origname]
+    local origfilename = mod.PortraitNameFileMap[origname]
     if origfilename ~= nil then
         local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
         print("SetAnimation", origname, newname)
@@ -393,17 +408,16 @@ modutil.mod.Path.Context.Wrap.Static("PlayEmoteAnimFromSource", function (source
 end)
 
 function mod.SetRandomDress()
-    mod.random_dress = game.GetRandomArrayValue(mod.DressData)[1]
-    print("Random dress", mod.random_dress)
-    CurrentRun.Hero.ModDressData = mod.random_dress
+    local randomDress = tostring(game.GetRandomKey(mod.DressData))
+    print("Random dress", randomDress)
+    CurrentRun.Hero.ModDressData = randomDress
 end
 
-function mod.GetCurrentRunRandomDress()
+function mod.GetCurrentRunDress()
     -- if this is called, it means random is enabled
     if CurrentRun.Hero.ModDressData == nil or CurrentRun.Hero.ModDressData == "" then
         mod.SetRandomDress()
     end
-    mod.random_dress = CurrentRun.Hero.ModDressData
     return CurrentRun.Hero.ModDressData
 end
 

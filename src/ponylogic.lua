@@ -20,7 +20,7 @@ function mod.OpenDressSelector()
 
 	local index = 0
 	screen.DressList = {}
-	for k, dress in ipairs(mod.DressData) do
+	for _, dressName in ipairs(mod.DressDisplayOrder) do
 		local rowOffset = 100
 		local columnOffset = 320
 		local boonsPerRow = 5
@@ -36,13 +36,12 @@ function mod.OpenDressSelector()
 		end
 		table.insert(screen.DressList[pageIndex],{
 			index = index,
-			dress = dress,
 			pageIndex = pageIndex,
 			offsetX = offsetX,
 			offsetY = offsetY,
-			key = dress[1]
+			key = dressName
 		})
-	end	
+	end
 
 	mod.DressSelectorLoadPage(screen)
 
@@ -59,9 +58,9 @@ function  mod.DressSelectorLoadPage(screen)
 	-- mod.BoonManagerPageButtons(screen, screen.Name)
 	local pageDress = screen.DressList[screen.CurrentPage]
 	if pageDress then
-		for i, dressData in pairs(pageDress) do
+		for i, dressButtonData in pairs(pageDress) do
 			local dressKey = "DressKey" .. dressData.index
-			dressData.dress.ObjectId = dressKey
+			dressButtonData.dress.ObjectId = dressKey
 			screen.Components[dressKey] = CreateScreenComponent({
 				Name = "ButtonDefault",
 				Group = "Combat_Menu_TraitTray",
@@ -75,13 +74,13 @@ function  mod.DressSelectorLoadPage(screen)
 				Value = 100
 			})
 			screen.Components[dressKey].OnPressedFunctionName = mod.SetDress
-			screen.Components[dressKey].Dress = dressData.dress
-			screen.Components[dressKey].Index = dressData.index
+			screen.Components[dressKey].Dress = dressButtonData.key
+			screen.Components[dressKey].Index = dressButtonData.index
 			Attach({
 				Id = screen.Components[dressKey].Id,
 				DestinationId = screen.Components.Background.Id,
-				OffsetX = dressData.offsetX,
-				OffsetY = dressData.offsetY
+				OffsetX = dressButtonData.offsetX,
+				OffsetY = dressButtonData.offsetY
 			})
 			local text = dressData.key
 			if config.dress == text then
@@ -107,12 +106,12 @@ function  mod.DressSelectorLoadPage(screen)
 end
 
 function mod.SetDress(screen,button)
-	print("Dress",button.Dress[1])
-	print("DressValue",button.Dress[2])
-	config.dress = button.Dress[1]
+	local dressGrannyTexture = mod.GetDressGrannyTexture(button.Dress)
+	print("Dress", button.Dress)
+	print("DressGrannyTexture", dressGrannyTexture)
+	config.dress = button.Dress
 	config.random_each_run = false
-	mod.dressvalue = button.Dress[2]
-	mod.UpdateSkin(mod.dressvalue)
+	mod.UpdateSkin(dressGrannyTexture)
 	-- mod.CloseDressSelector(screen)
 	mod.DressSelectorReloadPage(screen)
 end
@@ -138,10 +137,9 @@ function mod.ToggleRandomDressSelection(screen, button)
 	local randomButtonText = mod.DressScreenData.DressSelector.ComponentData.Background.Children.RandomDressButton.Text
 	if config.random_each_run then
 		randomButtonText = ">>" .. randomButtonText .. "<<"
-		mod.GetCurrentRunRandomDress()
-		mod.UpdateSkin(mod.GetDressValue(mod.random_dress))
+		mod.UpdateSkin(mod.GetDressGrannyTexture(mod.GetCurrentRunDress()))
 	else
-		mod.UpdateSkin(mod.GetDressValue(config.dress))
+		mod.UpdateSkin(mod.GetDressGrannyTexture(config.dress))
 	end
 	button.Text = randomButtonText
 	ModifyTextBox({Id = button.Id, Text = button.Text})

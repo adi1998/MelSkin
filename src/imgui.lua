@@ -18,14 +18,12 @@ end)
 function drawMenu()
     rom.ImGui.Text("Select Dress")
     if rom.ImGui.BeginCombo("###dress", config.dress) then
-        for _, dressPair in ipairs(mod.DressData) do
-            local  dressName = dressPair[1]
-            local  dressValue = dressPair[2]
+        for _, dressName in ipairs(mod.DressDisplayOrder) do
             if rom.ImGui.Selectable(dressName, (dressName == config.dress)) then
+                local  dressGrannyTexture = mod.GetDressGrannyTexture(dressName)
                 config.dress = dressName
                 config.random_each_run = false
-                mod.dressvalue = dressValue
-                mod.UpdateSkin(mod.dressvalue)
+                mod.UpdateSkin(dressGrannyTexture)
             end
             rom.ImGui.SetItemDefaultFocus()
         end
@@ -38,11 +36,11 @@ function drawMenu()
     if checked then
         config.random_each_run = value
         if value then
-            mod.GetCurrentRunRandomDress()
-            mod.UpdateSkin(mod.GetDressValue(mod.random_dress))
+            
+            mod.UpdateSkin(mod.GetDressGrannyTexture(mod.GetCurrentRunDress()))
         else
             -- mod.ClearRunDressData()
-            mod.UpdateSkin(mod.GetDressValue(config.dress))
+            mod.UpdateSkin(mod.GetDressGrannyTexture(config.dress))
         end
     end
 end

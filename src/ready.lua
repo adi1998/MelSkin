@@ -74,7 +74,7 @@ mod.DressData = {
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorH",
         Portraits = mod.Portraits
     },
-    DarkSide =
+    ["Dark Side"] =
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/MelinoeTransform_Color",

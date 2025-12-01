@@ -59,8 +59,7 @@ function  mod.DressSelectorLoadPage(screen)
 	local pageDress = screen.DressList[screen.CurrentPage]
 	if pageDress then
 		for i, dressButtonData in pairs(pageDress) do
-			local dressKey = "DressKey" .. dressData.index
-			dressButtonData.dress.ObjectId = dressKey
+			local dressKey = "DressKey" .. dressButtonData.index
 			screen.Components[dressKey] = CreateScreenComponent({
 				Name = "ButtonDefault",
 				Group = "Combat_Menu_TraitTray",
@@ -82,7 +81,7 @@ function  mod.DressSelectorLoadPage(screen)
 				OffsetX = dressButtonData.offsetX,
 				OffsetY = dressButtonData.offsetY
 			})
-			local text = dressData.key
+			local text = dressButtonData.key
 			if config.dress == text then
 				text = ">>" .. text .. "<<"
 			end

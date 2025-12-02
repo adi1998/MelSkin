@@ -57,30 +57,4 @@ function drawMenu()
             mod.UpdateSkin(mod.GetDressGrannyTexture(config.dress))
         end
     end
-
-    local index = 1
-
-    if config.fav == nil then
-        config.fav = {}
-    end
-    while mod.DressDisplayOrder[index] do
-        if config.fav == nil then
-            config.fav = {}
-        end
-        if config.fav[mod.DressDisplayOrder[index]] == nil then
-            config.fav[mod.DressDisplayOrder[index]] = true
-        end
-        local value, checked = rom.ImGui.Checkbox(mod.DressDisplayOrder[index], config.fav[mod.DressDisplayOrder[index]] )
-        if checked and value ~= previousConfig.fav[mod.DressDisplayOrder[index]] then
-            config.fav[mod.DressDisplayOrder[index]] = value
-            previousConfig.fav[mod.DressDisplayOrder[index]] = value
-        end
-        if index % 3 == 0 then
-            rom.ImGui.NewLine()
-        else
-            rom.ImGui.SameLine()
-        end
-        index = index + 1
-    end
-
 end

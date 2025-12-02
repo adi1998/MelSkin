@@ -4,12 +4,7 @@
 local previousConfig = {
     dress = nil,
     random_each_run = nil,
-    fav = {},
 }
-
-for i, dressName in ipairs(mod.DressDisplayOrder) do
-    previousConfig.fav[dressName] = nil
-end
 
 rom.gui.add_imgui(function()
     if rom.ImGui.Begin("Dress Selector") then

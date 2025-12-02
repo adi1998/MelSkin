@@ -113,9 +113,6 @@ end)
 
 modutil.mod.Path.Wrap("SetupMap", function(base)
     mod.LoadSkinPackages()
-    if game.GameState.ModRandomizeFavDress == nil then
-        game.GameState.ModRandomizeFavDress = false
-    end
     if game.GameState.ModFavoriteDressList == nil then
         game.GameState.ModFavoriteDressList = {}
     end
@@ -178,15 +175,10 @@ end)
 
 function mod.SetRandomDress()
     local randomDress = ""
-    while true do 
-        if GameState.ModRandomizeFavDress then
-            randomDress = game.GetRandomArrayValue(game.GameState.ModFavoriteDressList)
-        else
-            randomDress = tostring(game.GetRandomKey(mod.DressData))
-        end
-        if randomDress ~= CurrentRun.Hero.ModDressData then
-            break
-        end
+    if game.GameState.ModFavoriteDressList ~= nil and #game.GameState.ModFavoriteDressList > 0 then
+        randomDress = game.GetRandomArrayValue(game.GameState.ModFavoriteDressList)
+    else
+        randomDress = game.GetRandomArrayValue(mod.DressDisplayOrder)
     end
     print("Random dress", randomDress)
     CurrentRun.Hero.ModDressData = randomDress

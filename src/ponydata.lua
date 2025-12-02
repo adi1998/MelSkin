@@ -80,7 +80,7 @@ mod.DressScreenData = {
                         },
                     },
 
-                    FavoriteButton = 
+                    FavoriteButton =
                     {
                         Graphic = "ContextualActionButton",
                         GroupName = "Combat_Menu_TraitTray",
@@ -108,7 +108,6 @@ mod.DressScreenData = {
                         OffsetX = -800,
                         Data =
                         {
-                            -- Hotkey only
                             OnMouseOverFunctionName = "MouseOverContextualAction",
 		                    OnMouseOffFunctionName = "MouseOffContextualAction",
                             OnPressedFunctionName = _PLUGIN.guid .. "." .. "ResetFavorites",
@@ -126,7 +125,6 @@ mod.DressScreenData = {
                         OffsetX = -500,
                         Data =
                         {
-                            -- Hotkey only
                             OnMouseOverFunctionName = "MouseOverContextualAction",
 		                    OnMouseOffFunctionName = "MouseOffContextualAction",
                             OnPressedFunctionName = _PLUGIN.guid .. "." .. "FavoriteAll",

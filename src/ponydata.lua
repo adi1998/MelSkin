@@ -79,6 +79,44 @@ mod.DressScreenData = {
                             ControlHotkeys = { "Cancel", },
                         },
                     },
+
+                    FavoriteButton = 
+                    {
+                        Graphic = "ContextualActionButton",
+                        GroupName = "Combat_Menu_TraitTray",
+                        Alpha = 1,
+                        OffsetY = 420,
+                        OffsetX = 800,
+                        Data =
+                        {
+                            -- Hotkey only
+                            OnMouseOverFunctionName = "MouseOverContextualAction",
+		                    OnMouseOffFunctionName = "MouseOffContextualAction",
+                            OnPressedFunctionName = _PLUGIN.guid .. '.' .. "ToggleFavriteDressSelection",
+                            ControlHotkeys = { "ItemPin" }
+                        },
+                        Text = "{IP} Add/Remove Favorite",
+                        TextArgs = UIData.ContextualButtonFormatRight,
+                    },
+
+                    ResetFavoriteButton =
+                    {
+                        Graphic = "ContextualActionButton",
+                        GroupName = "Combat_Menu_TraitTray",
+                        Alpha = 1,
+                        OffsetY = 420,
+                        OffsetX = -800,
+                        Data =
+                        {
+                            -- Hotkey only
+                            OnMouseOverFunctionName = "MouseOverContextualAction",
+		                    OnMouseOffFunctionName = "MouseOffContextualAction",
+                            OnPressedFunctionName = _PLUGIN.guid .. "." .. "ResetFavorites",
+                            ControlHotkeys = { "MenuLeft" },
+                        },
+                        Text = "{ML} Reset Favorites",
+                        TextArgs = UIData.ContextualButtonFormatLeft,
+                    }
                 }
             }
         }

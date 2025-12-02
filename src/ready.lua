@@ -10,6 +10,8 @@
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
 
+
+
 function mod.GetCurrentDress()
     local costumes = game.GetHeroTraitValues("Costume")
     if costumes[1] ~= nil then
@@ -111,6 +113,12 @@ end)
 
 modutil.mod.Path.Wrap("SetupMap", function(base)
     mod.LoadSkinPackages()
+    if game.GameState.ModRandomizeFavDress == nil then
+        game.GameState.ModRandomizeFavDress = false
+    end
+    if game.GameState.ModFavoriteDressList == nil then
+        game.GameState.ModFavoriteDressList = {}
+    end
     base()
 end)
 
@@ -169,7 +177,17 @@ modutil.mod.Path.Context.Wrap.Static("PlayEmoteAnimFromSource", function (source
 end)
 
 function mod.SetRandomDress()
-    local randomDress = tostring(game.GetRandomKey(mod.DressData))
+    local randomDress = ""
+    while true do 
+        if GameState.ModRandomizeFavDress then
+            randomDress = game.GetRandomArrayValue(game.GameState.ModFavoriteDressList)
+        else
+            randomDress = tostring(game.GetRandomKey(mod.DressData))
+        end
+        if randomDress ~= CurrentRun.Hero.ModDressData then
+            break
+        end
+    end
     print("Random dress", randomDress)
     CurrentRun.Hero.ModDressData = randomDress
 end
@@ -191,3 +209,20 @@ modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
     end
     return retValue
 end)
+
+function mod.CheckDressInFavorite(dressName)
+    return game.Contains(game.GameState.ModFavoriteDressList,dressName)
+end
+
+function mod.RemoveFavoriteDress(dressName)
+    local index = game.GetIndex(GameState.ModFavoriteDressList, dressName)
+    if index == 0 then
+        print("trying to remove unknown dress")
+        return
+    end
+    game.RemoveIndexAndCollapse(GameState.ModFavoriteDressList, index)
+end
+
+function mod.AddFavoriteDress(dressName)
+    table.insert(GameState.ModFavoriteDressList, dressName)
+end

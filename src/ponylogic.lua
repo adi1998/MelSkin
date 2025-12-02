@@ -9,9 +9,8 @@ function mod.OpenDressSelector()
 	screen.CurrentPage = screen.FirstPage
 	local components = screen.Components
 
-	local randomButtonText = mod.DressScreenData.DressSelector.ComponentData.Background.Children.RandomDressButton.Text
 	if config.random_each_run then
-		screen.ComponentData.Background.Children.RandomDressButton.Text = ">>" .. randomButtonText .. "<<"
+		screen.ComponentData.Background.Children.RandomDressButton.TextArgs.Color = Color.Orange
 	end
 
 	OnScreenOpened(screen)
@@ -73,8 +72,24 @@ function  mod.DressSelectorLoadPage(screen)
 				Value = 100
 			})
 			screen.Components[dressKey].OnPressedFunctionName = mod.SetDress
+			screen.Components[dressKey].OnMouseOverFunctionName = mod.DressMouseOverButton
+			screen.Components[dressKey].OnMouseOffFunctionName = mod.DressMouseOffButton
 			screen.Components[dressKey].Dress = dressButtonData.key
 			screen.Components[dressKey].Index = dressButtonData.index
+			screen.Components[dressKey].Screen = screen
+
+			if mod.CheckDressInFavorite(dressButtonData.key) then
+				local icon = {
+					Name = "BlankObstacle",
+					Animation = "FilledHeartIcon",
+					Scale = 0.5,
+					Group = "Combat_Menu_TraitTray",
+					ToDestroy = true
+				}
+				screen.Components[dressKey.."Icon"] = CreateScreenComponent(icon)
+				screen.Components[dressKey].Icon = screen.Components[dressKey.."Icon"]
+			end
+
 			Attach({
 				Id = screen.Components[dressKey].Id,
 				DestinationId = screen.Components.Background.Id,
@@ -84,7 +99,6 @@ function  mod.DressSelectorLoadPage(screen)
 			local text = dressButtonData.key
 			local color = Color.White
 			if config.dress == text then
-				text = ">>" .. text .. "<<"
 				color = Color.Orange
 			end
 			print(text)
@@ -102,8 +116,32 @@ function  mod.DressSelectorLoadPage(screen)
 				ShadowOffset = { 0, 2 },
 				Justification = "Center"
 			})
+			if mod.CheckDressInFavorite(dressButtonData.key) then
+				Attach({
+					Id = screen.Components[dressKey .. "Icon"].Id,
+					DestinationId = screen.Components[dressKey].Id,
+					OffsetX = -140,
+					OffsetY = -30
+				})
+			end
 		end
 	end
+end
+
+function mod.DressMouseOverButton(button)
+	local screen = button.Screen
+	if screen.Closing then
+		return
+	end
+
+	game.GenericMouseOverPresentation( button )
+
+	screen.SelectedItem = button
+end
+
+function mod.DressMouseOffButton(button)
+	local screen = button.Screen
+	screen.SelectedItem = nil
 end
 
 function mod.SetDress(screen,button)
@@ -136,17 +174,14 @@ end
 
 function mod.ToggleRandomDressSelection(screen, button)
 	config.random_each_run = config.random_each_run == false
-	local randomButtonText = mod.DressScreenData.DressSelector.ComponentData.Background.Children.RandomDressButton.Text
 	local color = Color.White
 	if config.random_each_run then
-		randomButtonText = ">>" .. randomButtonText .. "<<"
 		color = Color.Orange
 		mod.UpdateSkin(mod.GetDressGrannyTexture(mod.GetCurrentRunDress()))
 	else
 		mod.UpdateSkin(mod.GetDressGrannyTexture(config.dress))
 	end
-	button.Text = randomButtonText
-	ModifyTextBox({Id = button.Id, Text = button.Text, Color = color})
+	ModifyTextBox({Id = button.Id, Color = color})
 	-- mod.DressSelectorReloadPage(screen)
 end
 
@@ -168,3 +203,23 @@ function mod.PopulatePonyMenuData()
 end
 
 mod.PopulatePonyMenuData()
+
+function mod.ToggleFavriteDressSelection(screen, button)
+	if screen.SelectedItem == nil or screen.SelectedItem.Purchased then
+		return
+	end
+	local dressName = screen.SelectedItem.Dress
+	print("favorite toggle",dressName)
+	if mod.CheckDressInFavorite(dressName) then
+		mod.RemoveFavoriteDress(dressName)
+	else
+		mod.AddFavoriteDress(dressName)
+	end
+	mod.DressSelectorReloadPage(screen)
+end
+
+function mod.ResetFavorites(screen, button)
+	game.GameState.ModFavoriteDressList = {}
+	game.GameState.ModRandomizeFavDress = false
+	mod.DressSelectorReloadPage(screen)
+end

@@ -58,6 +58,10 @@ local function on_reload()
 
 	import 'reload.lua'
 	import 'imgui.lua'
+	import 'ponydata.lua'
+	
+	ModUtil.Table.Merge(ScreenData,mod.DressScreenData)
+    
 end
 
 -- this allows us to limit certain functions to not be reloaded.

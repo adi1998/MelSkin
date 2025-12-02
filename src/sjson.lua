@@ -58,7 +58,6 @@ sjson.hook(guiPortraitsVFXFile, function(data)
 end)
 
 sjson.hook(guiScreensVFXFile, function (data)
-    local newdata = {}
     for _, entry in ipairs(mod.BoonSelectAnims) do
         local origname = entry.Name
         for dress,dressData in pairs(mod.DressData) do
@@ -70,18 +69,13 @@ sjson.hook(guiScreensVFXFile, function (data)
                 if origname == "BoonSelectMelIn" then
                     newentry.FilePath = newfilepath
                 end
-                table.insert(newdata,newentry)
-                print(mod.dump(newentry))
+                table.insert(data.Animations,newentry)
             end
         end
-    end
-    for _, entry in ipairs(newdata) do
-        table.insert(data.Animations,entry)
     end
 end)
 
 sjson.hook(guiFile,function (data)
-    local newdata = {}
     local origname = mod.BoonSelectObstacle.Name
     for dress,dressData in pairs(mod.DressData) do
         if dressData.BoonPortrait then
@@ -89,11 +83,7 @@ sjson.hook(guiFile,function (data)
             local newentry = game.DeepCopyTable(mod.BoonSelectObstacle)
             newentry.Name = newname
             newentry.Thing.Graphic = dress .. "_" .. newentry.Thing.Graphic
-            table.insert(newdata,newentry)
-            print(mod.dump(newentry))
+            table.insert(data.Obstacles,newentry)
         end
-    end
-    for _, entry in ipairs(newdata) do
-        table.insert(data.Obstacles,entry)
     end
 end)

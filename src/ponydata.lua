@@ -116,6 +116,24 @@ mod.DressScreenData = {
                         },
                         Text = "{ML} Reset Favorites",
                         TextArgs = UIData.ContextualButtonFormatLeft,
+                    },
+                    SelectAllFavoriteButton =
+                    {
+                        Graphic = "ContextualActionButton",
+                        GroupName = "Combat_Menu_TraitTray",
+                        Alpha = 1,
+                        OffsetY = 420,
+                        OffsetX = -500,
+                        Data =
+                        {
+                            -- Hotkey only
+                            OnMouseOverFunctionName = "MouseOverContextualAction",
+		                    OnMouseOffFunctionName = "MouseOffContextualAction",
+                            OnPressedFunctionName = _PLUGIN.guid .. "." .. "FavoriteAll",
+                            ControlHotkeys = { "MenuRight" },
+                        },
+                        Text = "{MR} Favorite All",
+                        TextArgs = UIData.ContextualButtonFormatLeft,
                     }
                 }
             }

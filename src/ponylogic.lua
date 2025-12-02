@@ -98,7 +98,10 @@ function  mod.DressSelectorLoadPage(screen)
 			})
 			local text = dressButtonData.key
 			local color = Color.White
-			if config.dress == text then
+			if config.dress == text and config.random_each_run == false then
+				color = Color.Orange
+			end
+			if config.random_each_run == true and CurrentRun.Hero.ModDressData == text then
 				color = Color.Orange
 			end
 			print(text)
@@ -160,9 +163,11 @@ function mod.DressSelectorReloadPage(screen)
 	for i, component in pairs(screen.Components) do
 		if component.RandomButtonId == "RandomButtonId" then
 			print("randombuttonreload", screen.Components[i].Text)
-			screen.Components[i].Text = mod.DressScreenData.DressSelector.ComponentData.Background.Children.RandomDressButton.Text
 			screen.Components[i].Color = Color.White
-			ModifyTextBox({Id = screen.Components[i].Id, Text = screen.Components[i].Text, Color = screen.Components[i].Color})
+			if config.random_each_run then
+				screen.Components[i].Color = Color.Orange
+			end
+			ModifyTextBox({Id = screen.Components[i].Id, Color = screen.Components[i].Color})
 		end
 		if component.ToDestroy then
 			table.insert(ids, component.Id)
@@ -182,7 +187,7 @@ function mod.ToggleRandomDressSelection(screen, button)
 		mod.UpdateSkin(mod.GetDressGrannyTexture(config.dress))
 	end
 	ModifyTextBox({Id = button.Id, Color = color})
-	-- mod.DressSelectorReloadPage(screen)
+	mod.DressSelectorReloadPage(screen)
 end
 
 function mod.CloseDressSelector(screen)
@@ -220,6 +225,10 @@ end
 
 function mod.ResetFavorites(screen, button)
 	game.GameState.ModFavoriteDressList = {}
-	game.GameState.ModRandomizeFavDress = false
+	mod.DressSelectorReloadPage(screen)
+end
+
+function mod.FavoriteAll(screen, button)
+	game.GameState.ModFavoriteDressList = game.DeepCopyTable(mod.DressDisplayOrder)
 	mod.DressSelectorReloadPage(screen)
 end

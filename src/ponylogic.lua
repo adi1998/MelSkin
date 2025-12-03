@@ -21,12 +21,12 @@ function mod.OpenDressSelector()
 	screen.DressList = {}
 	for _, dressName in ipairs(mod.DressDisplayOrder) do
 		local rowOffset = 100
-		local columnOffset = 310
+		local columnOffset = 285
 		local boonsPerRow = 5
 		local rowsPerPage = 7
 		local rowIndex = math.floor(index / boonsPerRow)
 		local pageIndex = math.floor(rowIndex / rowsPerPage)
-		local offsetX = screen.RowStartX + columnOffset * (index % boonsPerRow)
+		local offsetX = screen.RowStartX + columnOffset * (index % boonsPerRow) - 100
 		local offsetY = screen.RowStartY + rowOffset * (rowIndex % rowsPerPage)
 		index = index + 1
 		screen.LastPage = pageIndex
@@ -64,7 +64,7 @@ function  mod.DressSelectorLoadPage(screen)
 				Name = "ButtonDefault",
 				Group = "Combat_Menu_TraitTray",
 				Scale = 1.1,
-				ScaleX = 0.90,
+				ScaleX = 0.85,
 				ToDestroy = true
 			})
 			SetInteractProperty({
@@ -209,8 +209,6 @@ function mod.PopulatePonyMenuData()
     end
 end
 
-mod.PopulatePonyMenuData()
-
 function mod.ToggleFavriteDressSelection(screen, button)
 	if screen.SelectedItem == nil or screen.SelectedItem.Purchased then
 		return
@@ -243,21 +241,25 @@ function mod.ApplyMenuZoom()
 		defaultZoom = CurrentRun.CurrentRoom.ZoomFraction or defaultZoom
 	end
 
-	if CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
-		for id, _ in pairs( CurrentRun.CurrentRoom.CameraZoomWeights ) do
-			SetCameraZoomWeight({ Id = id, Weight = 1, ZoomSpeed = 1.0 })
+	if CurrentRun.CurrentRoom ~= nil then
+		if CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
+			for id, _ in pairs( CurrentRun.CurrentRoom.CameraZoomWeights ) do
+				SetCameraZoomWeight({ Id = id, Weight = 1, ZoomSpeed = 1.0 })
+			end
 		end
 	end
 
-	if CurrentHubRoom.CameraZoomWeights ~= nil then
-		for id, _ in pairs( CurrentHubRoom.CameraZoomWeights ) do
-			SetCameraZoomWeight({ Id = id, Weight = 1, ZoomSpeed = 1.0 })
+	if CurrentHubRoom ~= nil then
+		if CurrentHubRoom.CameraZoomWeights ~= nil then
+			for id, _ in pairs( CurrentHubRoom.CameraZoomWeights ) do
+				SetCameraZoomWeight({ Id = id, Weight = 1, ZoomSpeed = 1.0 })
+			end
 		end
 	end
 
 	print("default zoom", defaultZoom)
-	LockCamera({Id = CurrentRun.Hero.ObjectId, OffsetX = -380, OffsetY = -30, Duration = 0.2})
-	AdjustZoom({ Fraction = 2.2, Duration = 0.2 })
+	LockCamera({Id = CurrentRun.Hero.ObjectId, OffsetX = -290, OffsetY = -80, Duration = 0.2})
+	AdjustZoom({ Fraction = 2.5, Duration = 0.2 })
 end
 
 function mod.ResetMenuZoom()
@@ -267,16 +269,23 @@ function mod.ResetMenuZoom()
 	else
 		defaultZoom = CurrentRun.CurrentRoom.ZoomFraction or defaultZoom
 	end
-	if CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
-		for id, weight in pairs( CurrentRun.CurrentRoom.CameraZoomWeights ) do
-			SetCameraZoomWeight({ Id = id, Weight = weight, ZoomSpeed = 1.0 })
+
+	if CurrentRun.CurrentRoom ~= nil then
+		if CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
+			for id, weight in pairs( CurrentRun.CurrentRoom.CameraZoomWeights ) do
+				SetCameraZoomWeight({ Id = id, Weight = weight, ZoomSpeed = 1.0 })
+			end
 		end
 	end
-	if CurrentHubRoom.CameraZoomWeights ~= nil then
-		for id, weight in pairs( CurrentHubRoom.CameraZoomWeights ) do
-			SetCameraZoomWeight({ Id = id, Weight = weight, ZoomSpeed = 1.0 })
+
+	if CurrentHubRoom ~= nil then
+		if CurrentHubRoom.CameraZoomWeights ~= nil then
+			for id, weight in pairs( CurrentHubRoom.CameraZoomWeights ) do
+				SetCameraZoomWeight({ Id = id, Weight = weight, ZoomSpeed = 1.0 })
+			end
 		end
 	end
+
 	AdjustZoom({ Fraction = defaultZoom, Duration = 0.2 })
 	LockCamera({Id = CurrentRun.Hero.ObjectId, Duration = 0.2})
 end

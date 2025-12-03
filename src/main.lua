@@ -45,6 +45,7 @@ local function on_ready()
 	
 	import 'ponydata.lua'
 	import 'ponylogic.lua'
+	mod.PopulatePonyMenuData()
 	import 'data.lua'
 	import 'setupdata.lua'
 	import 'sjson.lua'

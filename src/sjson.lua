@@ -87,3 +87,33 @@ sjson.hook(guiFile,function (data)
         end
     end
 end)
+
+local function AddPreviewSjson()
+	local GUIFile = rom.path.combine(rom.paths.Content, 'Game/Obstacles/GUI.sjson')
+
+	local gui_order = {
+		"Name", "InheritFrom", "DisplayInEditor", "Thing"
+	}
+
+	local gui_order_2 = {
+		"EditorOutlineDrawBounds", "Graphic"
+	}
+
+	local newSubItem = sjson.to_object({
+		EditorOutlineDrawBounds = false,
+		Graphic = "zerp-MelSkin\\Box_Preview"
+	}, gui_order_2)
+
+	local newItem = sjson.to_object({
+		Name = "MelSkin_Box_Preview",
+		InheritFrom = "1_BaseGUIObstacle",
+		DisplayInEditor = false,
+		Thing = newSubItem,
+	}, gui_order)
+
+	sjson.hook(GUIFile, function(data)
+		table.insert(data.Obstacles, newItem)
+	end)
+end
+
+AddPreviewSjson()

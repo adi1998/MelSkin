@@ -20,11 +20,10 @@ mod.DressScreenData = {
 
             Background =
             {
-                Graphic = "Box_FullScreen",
+                Graphic = "MelSkin_Box_Preview",
                 GroupName = "Combat_Menu_TraitTray",
-                X = ScreenCenterX-100,
+                X = ScreenCenterX,
                 Y = ScreenCenterY,
-                ScaleX = 0.9,
                 Scale = 1.15,
                 Text = "Select Dress",
                 TextArgs =

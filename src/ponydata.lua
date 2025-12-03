@@ -11,7 +11,7 @@ mod.DressScreenData = {
 
             BackgroundTint =
             {
-                Graphic = "rectangle01",
+                Graphic = "",
                 GroupName = "Combat_Menu_TraitTray_Backing",
                 Scale = 10,
                 X = ScreenCenterX,
@@ -22,8 +22,9 @@ mod.DressScreenData = {
             {
                 Graphic = "Box_FullScreen",
                 GroupName = "Combat_Menu_TraitTray",
-                X = ScreenCenterX,
+                X = ScreenCenterX-100,
                 Y = ScreenCenterY,
+                ScaleX = 0.9,
                 Scale = 1.15,
                 Text = "Select Dress",
                 TextArgs =
@@ -86,7 +87,7 @@ mod.DressScreenData = {
                         GroupName = "Combat_Menu_TraitTray",
                         Alpha = 1,
                         OffsetY = 420,
-                        OffsetX = 800,
+                        OffsetX = 770,
                         Data =
                         {
                             -- Hotkey only
@@ -105,7 +106,7 @@ mod.DressScreenData = {
                         GroupName = "Combat_Menu_TraitTray",
                         Alpha = 1,
                         OffsetY = 420,
-                        OffsetX = -800,
+                        OffsetX = -750,
                         Data =
                         {
                             OnMouseOverFunctionName = "MouseOverContextualAction",
@@ -122,7 +123,7 @@ mod.DressScreenData = {
                         GroupName = "Combat_Menu_TraitTray",
                         Alpha = 1,
                         OffsetY = 420,
-                        OffsetX = -500,
+                        OffsetX = -490,
                         Data =
                         {
                             OnMouseOverFunctionName = "MouseOverContextualAction",

@@ -218,3 +218,13 @@ end
 function mod.AddFavoriteDress(dressName)
     table.insert(GameState.ModFavoriteDressList, dressName)
 end
+
+-- modutil.mod.Path.Wrap("SetCameraZoomWeight", function (base,args)
+--     if SessionState.InDreamSequence then
+--         base(args)
+--     end
+-- end)
+
+-- game.HubRoomData.Hub_Main.ZoomFraction = 1
+-- game.RoomSetData.N.N_Hub.ZoomFraction = 0.7
+-- game.RoomSetData.N.N_Hub.ZoomFractionSwitch = 0.7

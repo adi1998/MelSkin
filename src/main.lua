@@ -59,6 +59,7 @@ local function on_reload()
 	import 'reload.lua'
 	import 'imgui.lua'
 	import 'ponydata.lua'
+	import 'ponylogic.lua'
 	
 	ModUtil.Table.Merge(ScreenData,mod.DressScreenData)
     

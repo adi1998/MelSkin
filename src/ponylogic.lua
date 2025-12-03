@@ -21,7 +21,7 @@ function mod.OpenDressSelector()
 	screen.DressList = {}
 	for _, dressName in ipairs(mod.DressDisplayOrder) do
 		local rowOffset = 100
-		local columnOffset = 320
+		local columnOffset = 310
 		local boonsPerRow = 5
 		local rowsPerPage = 7
 		local rowIndex = math.floor(index / boonsPerRow)
@@ -42,8 +42,9 @@ function mod.OpenDressSelector()
 		})
 	end
 
-	mod.DressSelectorLoadPage(screen)
+	mod.ApplyMenuZoom()
 
+	mod.DressSelectorLoadPage(screen)
 	SetColor({ Id = components.BackgroundTint.Id, Color = Color.Black })
 	SetAlpha({ Id = components.BackgroundTint.Id, Fraction = 0.0, Duration = 0 })
 	SetAlpha({ Id = components.BackgroundTint.Id, Fraction = 0.9, Duration = 0.3 })
@@ -62,8 +63,8 @@ function  mod.DressSelectorLoadPage(screen)
 			screen.Components[dressKey] = CreateScreenComponent({
 				Name = "ButtonDefault",
 				Group = "Combat_Menu_TraitTray",
-				Scale = 1.2,
-				ScaleX = 0.92,
+				Scale = 1.1,
+				ScaleX = 0.90,
 				ToDestroy = true
 			})
 			SetInteractProperty({
@@ -123,7 +124,7 @@ function  mod.DressSelectorLoadPage(screen)
 				Attach({
 					Id = screen.Components[dressKey .. "Icon"].Id,
 					DestinationId = screen.Components[dressKey].Id,
-					OffsetX = -140,
+					OffsetX = -125,
 					OffsetY = -30
 				})
 			end
@@ -197,6 +198,7 @@ function mod.CloseDressSelector(screen)
 	CloseScreen(GetAllIds(screen.Components), 0.15)
 	OnScreenCloseFinished(screen)
 	notifyExistingWaiters("DressSelector")
+	mod.ResetMenuZoom()
 end
 
 function mod.PopulatePonyMenuData()
@@ -231,4 +233,50 @@ end
 function mod.FavoriteAll(screen, button)
 	game.GameState.ModFavoriteDressList = game.DeepCopyTable(mod.DressDisplayOrder)
 	mod.DressSelectorReloadPage(screen)
+end
+
+function mod.ApplyMenuZoom()
+	local defaultZoom = 1.0
+	if CurrentHubRoom ~= nil then
+		defaultZoom = CurrentHubRoom.ZoomFraction or defaultZoom
+	else
+		defaultZoom = CurrentRun.CurrentRoom.ZoomFraction or defaultZoom
+	end
+
+	if CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
+		for id, _ in pairs( CurrentRun.CurrentRoom.CameraZoomWeights ) do
+			SetCameraZoomWeight({ Id = id, Weight = 1, ZoomSpeed = 1.0 })
+		end
+	end
+
+	if CurrentHubRoom.CameraZoomWeights ~= nil then
+		for id, _ in pairs( CurrentHubRoom.CameraZoomWeights ) do
+			SetCameraZoomWeight({ Id = id, Weight = 1, ZoomSpeed = 1.0 })
+		end
+	end
+
+	print("default zoom", defaultZoom)
+	LockCamera({Id = CurrentRun.Hero.ObjectId, OffsetX = -380, OffsetY = -30, Duration = 0.2})
+	AdjustZoom({ Fraction = 2.2, Duration = 0.2 })
+end
+
+function mod.ResetMenuZoom()
+	local defaultZoom = 1.0
+	if CurrentHubRoom ~= nil then
+		defaultZoom = CurrentHubRoom.ZoomFraction or defaultZoom
+	else
+		defaultZoom = CurrentRun.CurrentRoom.ZoomFraction or defaultZoom
+	end
+	if CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
+		for id, weight in pairs( CurrentRun.CurrentRoom.CameraZoomWeights ) do
+			SetCameraZoomWeight({ Id = id, Weight = weight, ZoomSpeed = 1.0 })
+		end
+	end
+	if CurrentHubRoom.CameraZoomWeights ~= nil then
+		for id, weight in pairs( CurrentHubRoom.CameraZoomWeights ) do
+			SetCameraZoomWeight({ Id = id, Weight = weight, ZoomSpeed = 1.0 })
+		end
+	end
+	AdjustZoom({ Fraction = defaultZoom, Duration = 0.2 })
+	LockCamera({Id = CurrentRun.Hero.ObjectId, Duration = 0.2})
 end

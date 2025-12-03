@@ -42,10 +42,11 @@ local function on_ready()
 	-- what to do when we are ready, but not re-do on reload.
 	if config.enabled == false then return end
 	mod = modutil.mod.Mod.Register(_PLUGIN.guid)
-	
+
 	import 'ponydata.lua'
 	import 'ponylogic.lua'
 	mod.PopulatePonyMenuData()
+
 	import 'data.lua'
 	import 'setupdata.lua'
 	import 'sjson.lua'
@@ -59,9 +60,14 @@ local function on_reload()
 
 	import 'reload.lua'
 	import 'imgui.lua'
+
+	if config.debug_reload == false then return end
+
 	import 'ponydata.lua'
 	import 'ponylogic.lua'
-	
+	import 'data.lua'
+	import 'setupdata.lua'
+
 	ModUtil.Table.Merge(ScreenData,mod.DressScreenData)
     
 end

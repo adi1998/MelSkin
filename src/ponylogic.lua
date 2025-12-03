@@ -201,14 +201,6 @@ function mod.CloseDressSelector(screen)
 	mod.ResetMenuZoom()
 end
 
-function mod.PopulatePonyMenuData()
-    mod.ponyMenu = rom.mods["PonyWarrior-PonyMenu"]
-    if mod.ponyMenu ~= nil and mod.ponyMenu.CommandData ~= nil then
-        ModUtil.Table.Merge(ScreenData,mod.DressScreenData)
-        table.insert(mod.ponyMenu.CommandData,mod.DressCommandData)
-    end
-end
-
 function mod.ToggleFavriteDressSelection(screen, button)
 	if screen.SelectedItem == nil or screen.SelectedItem.Purchased then
 		return
@@ -234,12 +226,6 @@ function mod.FavoriteAll(screen, button)
 end
 
 function mod.ApplyMenuZoom()
-	local defaultZoom = 1.0
-	if CurrentHubRoom ~= nil then
-		defaultZoom = CurrentHubRoom.ZoomFraction or defaultZoom
-	else
-		defaultZoom = CurrentRun.CurrentRoom.ZoomFraction or defaultZoom
-	end
 
 	if CurrentRun.CurrentRoom ~= nil then
 		if CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
@@ -257,7 +243,6 @@ function mod.ApplyMenuZoom()
 		end
 	end
 
-	print("default zoom", defaultZoom)
 	LockCamera({Id = CurrentRun.Hero.ObjectId, OffsetX = -313, OffsetY = -80, Duration = 0.2})
 	AdjustZoom({ Fraction = 2.3, Duration = 0.2 })
 end
@@ -286,6 +271,14 @@ function mod.ResetMenuZoom()
 		end
 	end
 
-	AdjustZoom({ Fraction = defaultZoom, Duration = 0.2 })
 	LockCamera({Id = CurrentRun.Hero.ObjectId, Duration = 0.2})
+	AdjustZoom({ Fraction = defaultZoom, Duration = 0.2 })
+end
+
+function mod.PopulatePonyMenuData()
+    mod.ponyMenu = rom.mods["PonyWarrior-PonyMenu"]
+    if mod.ponyMenu ~= nil and mod.ponyMenu.CommandData ~= nil then
+        ModUtil.Table.Merge(ScreenData,mod.DressScreenData)
+        table.insert(mod.ponyMenu.CommandData,mod.DressCommandData)
+    end
 end

@@ -243,7 +243,12 @@ function mod.ApplyMenuZoom()
 		end
 	end
 
-	LockCamera({Id = CurrentRun.Hero.ObjectId, OffsetX = -313, OffsetY = -80, Duration = 0.2})
+	ClearCameraClamp({ LerpTime = 0 })
+	local offsetY = -80
+	if HeroHasTrait("TorchAutofireAspect") then
+		offsetY = -110
+	end
+	LockCamera({Id = CurrentRun.Hero.ObjectId, OffsetX = -313, OffsetY = offsetY, Duration = 0.2})
 	AdjustZoom({ Fraction = 2.3, Duration = 0.2 })
 end
 

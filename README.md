@@ -40,7 +40,7 @@ Open a PR with this template https://github.com/adi1998/MelSkin/pull/10
 
 - @burn on [Discord](https://discord.gg/bKvJTAJj), custom skins
 - @punishedmat on [Discord](https://discord.gg/bKvJTAJj), portrait replacements
-- @PonyWarrior, PonyMenu
+- [@PonyWarrior](https://github.com/PonyWarrior/), PonyMenu
 
 ## Issues
 

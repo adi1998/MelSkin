@@ -113,7 +113,7 @@ end)
 
 modutil.mod.Path.Wrap("SetupMap", function(base)
     mod.LoadSkinPackages()
-    if game.GameState.ModFavoriteDressList == nil then
+    if game.GameState ~= nil and game.GameState.ModFavoriteDressList == nil then
         game.GameState.ModFavoriteDressList = {}
     end
     base()

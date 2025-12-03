@@ -86,7 +86,7 @@ mod.DressScreenData = {
                         GroupName = "Combat_Menu_TraitTray",
                         Alpha = 1,
                         OffsetY = 420,
-                        OffsetX = 770,
+                        OffsetX = 750,
                         Data =
                         {
                             -- Hotkey only
@@ -105,7 +105,7 @@ mod.DressScreenData = {
                         GroupName = "Combat_Menu_TraitTray",
                         Alpha = 1,
                         OffsetY = 420,
-                        OffsetX = -750,
+                        OffsetX = -820,
                         Data =
                         {
                             OnMouseOverFunctionName = "MouseOverContextualAction",
@@ -122,7 +122,7 @@ mod.DressScreenData = {
                         GroupName = "Combat_Menu_TraitTray",
                         Alpha = 1,
                         OffsetY = 420,
-                        OffsetX = -490,
+                        OffsetX = -530,
                         Data =
                         {
                             OnMouseOverFunctionName = "MouseOverContextualAction",

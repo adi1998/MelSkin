@@ -45,7 +45,6 @@ function drawMenu()
         config.random_each_run = value
         previousConfig.random_each_run = value
         if value then
-            
             mod.UpdateSkin(mod.GetDressGrannyTexture(mod.GetCurrentRunDress()))
         else
             -- mod.ClearRunDressData()

@@ -258,8 +258,8 @@ function mod.ApplyMenuZoom()
 	end
 
 	print("default zoom", defaultZoom)
-	LockCamera({Id = CurrentRun.Hero.ObjectId, OffsetX = -290, OffsetY = -80, Duration = 0.2})
-	AdjustZoom({ Fraction = 2.5, Duration = 0.2 })
+	LockCamera({Id = CurrentRun.Hero.ObjectId, OffsetX = -313, OffsetY = -80, Duration = 0.2})
+	AdjustZoom({ Fraction = 2.3, Duration = 0.2 })
 end
 
 function mod.ResetMenuZoom()

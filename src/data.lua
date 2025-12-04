@@ -76,6 +76,7 @@ mod.DressData = {
     },
     Void =
     {
+        BoonPortrait = false,
         GrannyTexture = "zerp-MelSkin/skins/Void",
         Portraits = mod.Portraits,
     },

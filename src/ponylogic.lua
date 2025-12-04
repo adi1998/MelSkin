@@ -207,6 +207,7 @@ function mod.CloseDressSelector(screen)
     OnScreenCloseFinished(screen)
     notifyExistingWaiters("DressSelector")
     mod.ResetMenuZoom()
+	game.SetupCostume()
 end
 
 function mod.ToggleFavriteDressSelection(screen, button)

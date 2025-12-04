@@ -18,9 +18,9 @@ Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(new sub
 
 Favorites are only available through PonyMenu.
 
-| ![ImguiSubmenu](images/ImguiSubmenu.png) | ![ImguiWindow](images/ImguiWindow.png) |
+| ![PonyDressList](images/PonyDressList.png) | ![ImguiSubmenu](images/ImguiSubmenu.png) |
 | :-: | :-: |
-| ![PonyInv](images/PonyInv.png) | ![PonyDressList](images/PonyDressList.png) |
+| ![PonyInv](images/PonyInv.png) | ![ImguiWindow](images/ImguiWindow.png) |
 
 ## Skins
 

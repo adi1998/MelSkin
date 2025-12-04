@@ -144,8 +144,9 @@ function mod.DressMouseOverButton(button)
     game.GenericMouseOverPresentation( button )
     screen.SelectedItem = button
 
+	-- update just for preview
     local dressGrannyTexture = mod.GetDressGrannyTexture(button.Dress)
-    mod.UpdateSkin(dressGrannyTexture)
+    SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = CurrentRun.Hero.ObjectId})
 end
 
 function mod.DressMouseOffButton(button)

@@ -51,12 +51,6 @@ modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, butt
     end)
 end)
 
-function mod.UpdateSkin(dressGrannyTexture)
-    if CurrentRun ~= nil and game.GetHeroTraitValues("Costume")[1] == nil then
-        SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = CurrentRun.Hero.ObjectId})
-    end
-end
-
 function mod.GetDressGrannyTexture(inputDress)
     if mod.DressData[inputDress] ~= nil then
         return mod.DressData[inputDress].GrannyTexture or ""

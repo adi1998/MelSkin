@@ -152,8 +152,7 @@ function mod.DressMouseOffButton(button)
     local screen = button.Screen
     screen.SelectedItem = nil
 
-    local dressGrannyTexture = mod.GetDressGrannyTexture(config.dress)
-    mod.UpdateSkin(dressGrannyTexture)
+    game.SetupCostume()
 end
 
 function mod.SetDress(screen,button)

@@ -30,7 +30,7 @@ function drawMenu()
                     config.dress = dressName
                     previousConfig.dress = dressName
                     config.random_each_run = false
-                    mod.UpdateSkin(dressGrannyTexture)
+                    game.SetupCostume()
                 end
                 rom.ImGui.SetItemDefaultFocus()
             end
@@ -44,11 +44,6 @@ function drawMenu()
     if checked and value ~= previousConfig.random_each_run then
         config.random_each_run = value
         previousConfig.random_each_run = value
-        if value then
-            mod.UpdateSkin(mod.GetDressGrannyTexture(mod.GetCurrentRunDress()))
-        else
-            -- mod.ClearRunDressData()
-            mod.UpdateSkin(mod.GetDressGrannyTexture(config.dress))
-        end
+        game.SetupCostume()
     end
 end

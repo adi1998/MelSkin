@@ -161,8 +161,7 @@ function mod.SetDress(screen,button)
     print("DressGrannyTexture", dressGrannyTexture)
     config.dress = button.Dress
     config.random_each_run = false
-    mod.UpdateSkin(dressGrannyTexture)
-    -- mod.CloseDressSelector(screen)
+    game.SetupCostume()
     mod.DressSelectorReloadPage(screen)
 end
 
@@ -190,10 +189,8 @@ function mod.ToggleRandomDressSelection(screen, button)
     local color = Color.White
     if config.random_each_run then
         color = Color.Orange
-        mod.UpdateSkin(mod.GetDressGrannyTexture(mod.GetCurrentRunDress()))
-    else
-        mod.UpdateSkin(mod.GetDressGrannyTexture(config.dress))
     end
+	game.SetupCostume()
     ModifyTextBox({Id = button.Id, Color = color})
     mod.DressSelectorReloadPage(screen)
 end

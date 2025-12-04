@@ -1,8 +1,8 @@
 ## Mel Skin Selector
 
-Hades II mod allowing you to select a skin for Melinoe from one of Arachne's boons and some more.
+Hades II mod allowing you to select a dress for Melinoe from one of Arachne's boons and some more.
 
-Includes portrait replacements for the Arachne skins with optional support for custom skin related portraits.
+Includes portrait replacements for the Arachne dresses with support for optional custom skin related portraits.
 
 Options to pick favorites and randomize dresses on run start.
 

@@ -4,11 +4,13 @@
 
 -- here is where your mod sets up all the things it will do.
 -- this file will not be reloaded if it changes during gameplay
--- 	so you will most likely want to have it reference
---	values and functions later defined in `reload.lua`.
+--     so you will most likely want to have it reference
+--    values and functions later defined in `reload.lua`.
 
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
+
+
 
 function mod.GetCurrentDress()
     local costumes = game.GetHeroTraitValues("Costume")
@@ -83,7 +85,7 @@ function mod.dump(o)
 end
 
 modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
-	if CurrentRun.Hero.SubtitleColor ~= Color.ChronosVoice and
+    if CurrentRun.Hero.SubtitleColor ~= Color.ChronosVoice and
         (MapState.HostilePolymorph == false or MapState.HostilePolymorph == nil) and
         args.Property == "GrannyTexture" and
         (args.Value == "null" or args.Value == "") and
@@ -98,9 +100,9 @@ modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
             args_copy.Value = grannyTexture
             print("Mod args:",mod.dump(args_copy))
             base(args_copy)
-	else
-		base(args)
-	end
+    else
+        base(args)
+    end
 end)
 
 -- TODO: this is untested
@@ -111,6 +113,9 @@ end)
 
 modutil.mod.Path.Wrap("SetupMap", function(base)
     mod.LoadSkinPackages()
+    if game.GameState ~= nil and game.GameState.ModFavoriteDressList == nil then
+        game.GameState.ModFavoriteDressList = {}
+    end
     base()
 end)
 
@@ -169,7 +174,12 @@ modutil.mod.Path.Context.Wrap.Static("PlayEmoteAnimFromSource", function (source
 end)
 
 function mod.SetRandomDress()
-    local randomDress = tostring(game.GetRandomKey(mod.DressData))
+    local randomDress = ""
+    if game.GameState.ModFavoriteDressList ~= nil and #game.GameState.ModFavoriteDressList > 0 then
+        randomDress = game.GetRandomArrayValue(game.GameState.ModFavoriteDressList)
+    else
+        randomDress = game.GetRandomArrayValue(mod.DressDisplayOrder)
+    end
     print("Random dress", randomDress)
     CurrentRun.Hero.ModDressData = randomDress
 end
@@ -184,6 +194,9 @@ end
 
 modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
     local retValue = base(prevRun,args)
+    if game.GameState ~= nil and game.GameState.ModFavoriteDressList == nil then
+        game.GameState.ModFavoriteDressList = {}
+    end
     if config.random_each_run then
         mod.SetRandomDress()
     else
@@ -191,3 +204,20 @@ modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
     end
     return retValue
 end)
+
+function mod.CheckDressInFavorite(dressName)
+    return game.Contains(game.GameState.ModFavoriteDressList,dressName)
+end
+
+function mod.RemoveFavoriteDress(dressName)
+    local index = game.GetIndex(GameState.ModFavoriteDressList, dressName)
+    if index == 0 then
+        print("trying to remove unknown dress")
+        return
+    end
+    game.RemoveIndexAndCollapse(GameState.ModFavoriteDressList, index)
+end
+
+function mod.AddFavoriteDress(dressName)
+    table.insert(GameState.ModFavoriteDressList, dressName)
+end

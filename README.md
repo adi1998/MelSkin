@@ -4,7 +4,7 @@ Hades II mod allowing you to select a skin for Melinoe from one of Arachne's boo
 
 Includes portrait replacements for the Arachne skins with optional support for custom skin related portraits.
 
-Option to randomize dress on run start.
+Options to pick favorites and randomize dresses on run start.
 
 ## Installation
 
@@ -16,9 +16,11 @@ While the mod has been tested decently well it is recommended to backup your sav
 
 Use the Imgui menu(default keybind for imgui toggle: Insert) or PonyMenu(new submenu in inventory) to select the dress.
 
-| ![ImguiSubmenu](images/ImguiSubmenu.png) | ![ImguiWindow](images/ImguiWindow.png) |
+Favorites are only available through PonyMenu.
+
+| ![PonyDressList](images/PonyDressList.png) | ![ImguiSubmenu](images/ImguiSubmenu.png) |
 | :-: | :-: |
-| ![PonyInv](images/PonyInv.png) | ![PonyDressList](images/PonyDressList.png) |
+| ![PonyInv](images/PonyInv.png) | ![ImguiWindow](images/ImguiWindow.png) |
 
 ## Skins
 
@@ -38,6 +40,7 @@ Open a PR with this template https://github.com/adi1998/MelSkin/pull/10
 
 - @burn on [Discord](https://discord.gg/bKvJTAJj), custom skins
 - @punishedmat on [Discord](https://discord.gg/bKvJTAJj), portrait replacements
+- [@PonyWarrior](https://github.com/PonyWarrior/), PonyMenu
 
 ## Issues
 

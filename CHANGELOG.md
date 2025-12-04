@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Add option to favorite dress for randomization.
+- Add a preview window for Mel.
+
 ## [1.4.0] - 2025-12-01
 
 - Add upgrade menu portrait

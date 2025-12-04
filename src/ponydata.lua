@@ -11,7 +11,7 @@ mod.DressScreenData = {
 
             BackgroundTint =
             {
-                Graphic = "rectangle01",
+                Graphic = "",
                 GroupName = "Combat_Menu_TraitTray_Backing",
                 Scale = 10,
                 X = ScreenCenterX,
@@ -20,7 +20,7 @@ mod.DressScreenData = {
 
             Background =
             {
-                Graphic = "Box_FullScreen",
+                Graphic = "MelSkin_Box_Preview",
                 GroupName = "Combat_Menu_TraitTray",
                 X = ScreenCenterX,
                 Y = ScreenCenterY,
@@ -77,8 +77,80 @@ mod.DressScreenData = {
                         {
                             OnPressedFunctionName = _PLUGIN.guid .. '.' .. 'CloseDressSelector',
                             ControlHotkeys = { "Cancel", },
+                            MouseControlHotkeys  = { "Cancel", "Inventory", },
                         },
                     },
+
+                    SelectButton =
+                    {
+                        Graphic = "ContextualActionButton",
+                        GroupName = "Combat_Menu_TraitTray",
+                        Alpha = 1,
+                        OffsetY = 420,
+                        OffsetX = 440,
+                        Data =
+                        {
+                            -- For display only
+                            OnMouseOverFunctionName = "MouseOverContextualAction",
+                            OnMouseOffFunctionName = "MouseOffContextualAction",
+                        },
+                        Text = "{SL} Select",
+                        TextArgs = UIData.ContextualButtonFormatRight,
+                    },
+
+                    FavoriteButton =
+                    {
+                        Graphic = "ContextualActionButton",
+                        GroupName = "Combat_Menu_TraitTray",
+                        Alpha = 1,
+                        OffsetY = 420,
+                        OffsetX = 805,
+                        Data =
+                        {
+                            -- Hotkey only
+                            OnMouseOverFunctionName = "MouseOverContextualAction",
+                            OnMouseOffFunctionName = "MouseOffContextualAction",
+                            OnPressedFunctionName = _PLUGIN.guid .. '.' .. "ToggleFavriteDressSelection",
+                            ControlHotkeys = { "ItemPin" }
+                        },
+                        Text = "{IP} Add/Remove Favorite",
+                        TextArgs = UIData.ContextualButtonFormatRight,
+                    },
+
+                    ResetFavoriteButton =
+                    {
+                        Graphic = "ContextualActionButton",
+                        GroupName = "Combat_Menu_TraitTray",
+                        Alpha = 1,
+                        OffsetY = 420,
+                        OffsetX = -820,
+                        Data =
+                        {
+                            OnMouseOverFunctionName = "MouseOverContextualAction",
+                            OnMouseOffFunctionName = "MouseOffContextualAction",
+                            OnPressedFunctionName = _PLUGIN.guid .. "." .. "ResetFavorites",
+                            ControlHotkeys = { "MenuLeft" },
+                        },
+                        Text = "{ML} Reset Favorites",
+                        TextArgs = UIData.ContextualButtonFormatLeft,
+                    },
+                    SelectAllFavoriteButton =
+                    {
+                        Graphic = "ContextualActionButton",
+                        GroupName = "Combat_Menu_TraitTray",
+                        Alpha = 1,
+                        OffsetY = 420,
+                        OffsetX = -530,
+                        Data =
+                        {
+                            OnMouseOverFunctionName = "MouseOverContextualAction",
+                            OnMouseOffFunctionName = "MouseOffContextualAction",
+                            OnPressedFunctionName = _PLUGIN.guid .. "." .. "FavoriteAll",
+                            ControlHotkeys = { "MenuRight" },
+                        },
+                        Text = "{MR} Favorite All",
+                        TextArgs = UIData.ContextualButtonFormatLeft,
+                    }
                 }
             }
         }

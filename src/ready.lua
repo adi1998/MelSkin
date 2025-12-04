@@ -4,8 +4,8 @@
 
 -- here is where your mod sets up all the things it will do.
 -- this file will not be reloaded if it changes during gameplay
--- 	so you will most likely want to have it reference
---	values and functions later defined in `reload.lua`.
+--     so you will most likely want to have it reference
+--    values and functions later defined in `reload.lua`.
 
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
@@ -85,7 +85,7 @@ function mod.dump(o)
 end
 
 modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
-	if CurrentRun.Hero.SubtitleColor ~= Color.ChronosVoice and
+    if CurrentRun.Hero.SubtitleColor ~= Color.ChronosVoice and
         (MapState.HostilePolymorph == false or MapState.HostilePolymorph == nil) and
         args.Property == "GrannyTexture" and
         (args.Value == "null" or args.Value == "") and
@@ -100,9 +100,9 @@ modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
             args_copy.Value = grannyTexture
             print("Mod args:",mod.dump(args_copy))
             base(args_copy)
-	else
-		base(args)
-	end
+    else
+        base(args)
+    end
 end)
 
 -- TODO: this is untested
@@ -194,6 +194,9 @@ end
 
 modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
     local retValue = base(prevRun,args)
+    if game.GameState ~= nil and game.GameState.ModFavoriteDressList == nil then
+        game.GameState.ModFavoriteDressList = {}
+    end
     if config.random_each_run then
         mod.SetRandomDress()
     else

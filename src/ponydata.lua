@@ -92,7 +92,7 @@ mod.DressScreenData = {
                         {
                             -- For display only
                             OnMouseOverFunctionName = "MouseOverContextualAction",
-		                    OnMouseOffFunctionName = "MouseOffContextualAction",
+                            OnMouseOffFunctionName = "MouseOffContextualAction",
                         },
                         Text = "{SL} Select",
                         TextArgs = UIData.ContextualButtonFormatRight,
@@ -109,7 +109,7 @@ mod.DressScreenData = {
                         {
                             -- Hotkey only
                             OnMouseOverFunctionName = "MouseOverContextualAction",
-		                    OnMouseOffFunctionName = "MouseOffContextualAction",
+                            OnMouseOffFunctionName = "MouseOffContextualAction",
                             OnPressedFunctionName = _PLUGIN.guid .. '.' .. "ToggleFavriteDressSelection",
                             ControlHotkeys = { "ItemPin" }
                         },
@@ -127,7 +127,7 @@ mod.DressScreenData = {
                         Data =
                         {
                             OnMouseOverFunctionName = "MouseOverContextualAction",
-		                    OnMouseOffFunctionName = "MouseOffContextualAction",
+                            OnMouseOffFunctionName = "MouseOffContextualAction",
                             OnPressedFunctionName = _PLUGIN.guid .. "." .. "ResetFavorites",
                             ControlHotkeys = { "MenuLeft" },
                         },
@@ -144,7 +144,7 @@ mod.DressScreenData = {
                         Data =
                         {
                             OnMouseOverFunctionName = "MouseOverContextualAction",
-		                    OnMouseOffFunctionName = "MouseOffContextualAction",
+                            OnMouseOffFunctionName = "MouseOffContextualAction",
                             OnPressedFunctionName = _PLUGIN.guid .. "." .. "FavoriteAll",
                             ControlHotkeys = { "MenuRight" },
                         },

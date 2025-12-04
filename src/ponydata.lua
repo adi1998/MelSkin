@@ -87,7 +87,7 @@ mod.DressScreenData = {
                         GroupName = "Combat_Menu_TraitTray",
                         Alpha = 1,
                         OffsetY = 420,
-                        OffsetX = 430,
+                        OffsetX = 440,
                         Data =
                         {
                             -- For display only
@@ -104,7 +104,7 @@ mod.DressScreenData = {
                         GroupName = "Combat_Menu_TraitTray",
                         Alpha = 1,
                         OffsetY = 420,
-                        OffsetX = 800,
+                        OffsetX = 805,
                         Data =
                         {
                             -- Hotkey only

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.5.0] - 2025-12-04
+
 - Add option to favorite dress for randomization.
 - Add a preview window for Mel.
 
@@ -62,7 +64,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.4.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.5.0...HEAD
+[1.5.0]: https://github.com/adi1998/MelSkin/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/adi1998/MelSkin/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/adi1998/MelSkin/compare/1.2.1...1.3.0
 [1.2.1]: https://github.com/adi1998/MelSkin/compare/1.2.0...1.2.1

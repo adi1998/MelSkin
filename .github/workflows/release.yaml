@@ -10,6 +10,7 @@ on:
       is-dry-run:
         description: "Dry-run (do not publish, only test build)"
         type: boolean
+        default: true
 
 permissions:
   contents: write # required for pushing to the repository and creating releases

@@ -77,7 +77,25 @@ mod.DressScreenData = {
                         {
                             OnPressedFunctionName = _PLUGIN.guid .. '.' .. 'CloseDressSelector',
                             ControlHotkeys = { "Cancel", },
+                            MouseControlHotkeys  = { "Cancel", "Inventory", },
                         },
+                    },
+
+                    SelectButton =
+                    {
+                        Graphic = "ContextualActionButton",
+                        GroupName = "Combat_Menu_TraitTray",
+                        Alpha = 1,
+                        OffsetY = 420,
+                        OffsetX = 430,
+                        Data =
+                        {
+                            -- For display only
+                            OnMouseOverFunctionName = "MouseOverContextualAction",
+		                    OnMouseOffFunctionName = "MouseOffContextualAction",
+                        },
+                        Text = "{SL} Select",
+                        TextArgs = UIData.ContextualButtonFormatRight,
                     },
 
                     FavoriteButton =
@@ -86,7 +104,7 @@ mod.DressScreenData = {
                         GroupName = "Combat_Menu_TraitTray",
                         Alpha = 1,
                         OffsetY = 420,
-                        OffsetX = 750,
+                        OffsetX = 800,
                         Data =
                         {
                             -- Hotkey only

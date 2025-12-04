@@ -137,15 +137,19 @@ function mod.DressMouseOverButton(button)
 	if screen.Closing then
 		return
 	end
-
 	game.GenericMouseOverPresentation( button )
-
 	screen.SelectedItem = button
+
+	local dressGrannyTexture = mod.GetDressGrannyTexture(button.Dress)
+	mod.UpdateSkin(dressGrannyTexture)
 end
 
 function mod.DressMouseOffButton(button)
 	local screen = button.Screen
 	screen.SelectedItem = nil
+
+	local dressGrannyTexture = mod.GetDressGrannyTexture(config.dress)
+	mod.UpdateSkin(dressGrannyTexture)
 end
 
 function mod.SetDress(screen,button)

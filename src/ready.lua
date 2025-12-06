@@ -51,12 +51,6 @@ modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, butt
     end)
 end)
 
-function mod.UpdateSkin(dressGrannyTexture)
-    if CurrentRun ~= nil and game.GetHeroTraitValues("Costume")[1] == nil then
-        SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = CurrentRun.Hero.ObjectId})
-    end
-end
-
 function mod.GetDressGrannyTexture(inputDress)
     if mod.DressData[inputDress] ~= nil then
         return mod.DressData[inputDress].GrannyTexture or ""
@@ -84,25 +78,15 @@ function mod.dump(o)
    end
 end
 
-modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
-    if CurrentRun.Hero.SubtitleColor ~= Color.ChronosVoice and
-        (MapState.HostilePolymorph == false or MapState.HostilePolymorph == nil) and
-        args.Property == "GrannyTexture" and
-        (args.Value == "null" or args.Value == "") and
-        args.DestinationId == CurrentRun.Hero.ObjectId then
-            print("Base args:",mod.dump(args))
-            args_copy = DeepCopyTable(args)
-            local grannyTexture = mod.GetDressGrannyTexture(config.dress)
-            if config.random_each_run then
-                grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
-                print("skin random", grannyTexture)
-            end
-            args_copy.Value = grannyTexture
-            print("Mod args:",mod.dump(args_copy))
-            base(args_copy)
-    else
-        base(args)
+modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
+    local grannyTexture = mod.GetDressGrannyTexture(config.dress)
+    if config.random_each_run then
+        grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
+        print("skin random", grannyTexture)
     end
+    game.CostumeData.Costume_Default.GrannyTexture = grannyTexture
+    base(skipCostume)
+    game.CostumeData.Costume_Default.GrannyTexture = ""
 end)
 
 -- TODO: this is untested

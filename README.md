@@ -41,6 +41,7 @@ Open a PR with this template https://github.com/adi1998/MelSkin/pull/10
 - @burn on [Discord](https://discord.gg/bKvJTAJj), custom skins
 - @punishedmat on [Discord](https://discord.gg/bKvJTAJj), portrait replacements
 - [@PonyWarrior](https://github.com/PonyWarrior/), PonyMenu
+- @Aunuch on [Discord](https://discord.gg/bKvJTAJj), Updated Alternate Time skin
 
 ## Issues
 

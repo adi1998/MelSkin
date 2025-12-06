@@ -27,7 +27,7 @@ Favorites are only available through PonyMenu.
 | Lavender | Azure | Emerald | Onyx | Fuchsia | 
 | :-: | :-: | :-: | :-: | :-: |
 | ![Lavender](images/skins/Lavender.png) | ![Azure](images/skins/Azure.png) | ![Emerald](images/skins/Emerald.png) | ![Onyx](images/skins/Onyx.png) | ![Fuchsia](images/skins/Fuchsia.png) | 
-| __Gilded__ | __Moonlight__ | __Crimson__ | __DarkSide__ | __Alternate Time by burn__ |
+| __Gilded__ | __Moonlight__ | __Crimson__ | __DarkSide__ | __Alternate Time by burn (Updated by Aunuch)__ |
 | ![Gilded](images/skins/Gilded.png) | ![Moonlight](images/skins/Moonlight.png) | ![Crimson](images/skins/Crimson.png) | ![DarkSide](images/skins/Darkside.png) | ![Alternate Time](images/skins/Alternate%20Time.png) | 
 | __Murderrrrr by burn__ | | | | |
 | ![Murderrrrr](images/skins/Murderrrrr.png) | | | | |
@@ -45,6 +45,7 @@ Sample mod for adding a skin https://github.com/adi1998/MelSkin_Example
 - @burn on [Discord](https://discord.gg/bKvJTAJj), custom skins
 - @punishedmat on [Discord](https://discord.gg/bKvJTAJj), portrait replacements
 - [@PonyWarrior](https://github.com/PonyWarrior/), PonyMenu
+- @Aunuch on [Discord](https://discord.gg/bKvJTAJj), Updated Alternate Time skin
 
 ## Issues
 

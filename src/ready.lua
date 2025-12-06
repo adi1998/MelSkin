@@ -79,7 +79,9 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
         grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
         print("skin random", grannyTexture)
     end
-    game.CostumeData.Costume_Default.GrannyTexture = grannyTexture
+    if not skipCostume then
+        game.CostumeData.Costume_Default.GrannyTexture = grannyTexture
+    end
     base(skipCostume)
     game.CostumeData.Costume_Default.GrannyTexture = ""
 end)
@@ -88,6 +90,16 @@ end)
 modutil.mod.Path.Wrap("SetupFlashbackPlayerUnitChronos", function(base,source,args)
     base(source,args)
     SetThingProperty({Property = "GrannyTexture", Value = "", DestinationId = CurrentRun.Hero.ObjectId})
+end)
+
+modutil.mod.Path.Wrap("MelBackToBedroomPresentation", function(base,source,args)
+    local grannyTexture = mod.GetDressGrannyTexture(config.dress)
+    if config.random_each_run then
+        grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
+        print("skin random", grannyTexture)
+    end
+    SetThingProperty({Property = "GrannyTexture", Value = grannyTexture, DestinationId = CurrentRun.Hero.ObjectId})
+    base(source,args)
 end)
 
 modutil.mod.Path.Wrap("SetupMap", function(base)

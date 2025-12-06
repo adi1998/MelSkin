@@ -11,7 +11,7 @@ local public = {}
 
 ---@param name string Dress name to be added
 ---@param entry table DressData containing GrannyTexture field, other fields are not supported
----@param addportraits boolean Whether to add portraits or not
-function public.AddEntryToDressData(name, entry, addportraits) end
+---@param package string package name to load for granny texture
+function public.AddEntryToDressData(name, entry, package) end
 
 return public

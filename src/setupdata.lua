@@ -8,4 +8,18 @@ function udpatePortraitNameFileMap()
     end
 end
 
+function mod.AddEntryToDressData(name,entry,package,addportraits)
+    if mod.DressData ~= nil and mod.DressData[name] == nil then
+        if addportraits then
+            entry.Portraits = mod.Portraits
+        end
+        print("adding extertnal dress",name,entry.GrannyTexture)
+        mod.DressData[name] = entry
+        table.insert(mod.DressDisplayOrder,name)
+        table.insert(mod.skinPackageList,package)
+    end
+end
+
+public.AddEntryToDressData = mod.AddEntryToDressData
+
 udpatePortraitNameFileMap()

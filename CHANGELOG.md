@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Updates to Alternate Time by @Aunuch
+- Basic support for adding dresses through other mods
+
 ## [1.5.0] - 2025-12-04
 
 - Add option to favorite dress for randomization.

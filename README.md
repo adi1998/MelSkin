@@ -32,9 +32,13 @@ Favorites are only available through PonyMenu.
 | __Murderrrrr by burn__ | | | | |
 | ![Murderrrrr](images/skins/Murderrrrr.png) | | | | |
 
-## Adding skins to the mod
+## Adding skins to this mod
 
 Open a PR with this template https://github.com/adi1998/MelSkin/pull/10
+
+## Adding skins to your own mod
+
+Sample mod for adding a skin https://github.com/adi1998/MelSkin_Example
 
 ## Contributors
 

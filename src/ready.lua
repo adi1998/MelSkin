@@ -10,8 +10,6 @@
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
 
-
-
 function mod.GetCurrentDress()
     local costumes = game.GetHeroTraitValues("Costume")
     if costumes[1] ~= nil then
@@ -59,10 +57,7 @@ function mod.GetDressGrannyTexture(inputDress)
 end
 
 function mod.LoadSkinPackages()
-    for _, packageName in ipairs(mod.skinPackageList) do
-        print("Loading package: " .. packageName)
-        LoadPackages({ Name = packageName })
-    end
+    LoadPackages({Names = mod.skinPackageList})
 end
 
 function mod.dump(o)

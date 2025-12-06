@@ -9,9 +9,8 @@ local public = {}
 --    ---@return table c helpful description
 --    function public.do_stuff(a, b) end
 
----@param name string Dress name to be added
----@param entry table DressData containing GrannyTexture field, other fields are not supported
----@param package string package name to load for granny texture
-function public.AddEntryToDressData(name, entry, package) end
+---@param dressdata table DressData containing GrannyTexture field, other fields are not supported
+---@param packages table list of package/s for the skin/s
+function public.AddEntriesToDressData(dressdata, packages) end
 
 return public

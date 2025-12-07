@@ -417,7 +417,7 @@ mod.FamiliarMenuData = {
     CostDisplay =
 	{
 		StartX = 1200,
-		StartY = 100,
+		StartY = 150,
 		SpacerX = 160,
 		InventoryAmountOffsetY = 90,
 		ResourceIconOffsetY = -5,

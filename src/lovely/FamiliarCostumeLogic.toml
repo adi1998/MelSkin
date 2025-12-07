@@ -26,3 +26,30 @@ payload = '''
 '''
 match_indent = true
 times = 1
+
+[[patches]]
+[patches.pattern]
+target = "FamiliarCostumeLogic.lua"
+pattern = '''
+			local stateText = "Shop_Purchased"
+			if GameState.FamiliarCostumes[screen.OpenedFrom.Name] ~= itemName then
+				button.Free = true
+				button.OnPressedFunctionName = "HandleFamiliarCostumeShopReAdd"
+				stateText = "Shop_ReAdd"
+			end
+'''
+position = "after"
+payload = '''
+			if GameState.ModFamiliarCostumes[screen.OpenedFrom.Name] ~= nil and itemName == FamiliarData[screen.OpenedFrom.Name].DefaultCostume then
+				button.Free = true
+				button.OnPressedFunctionName = "HandleFamiliarCostumeShopReAdd"
+				stateText = "Shop_ReAdd"
+			end
+			if GameState.ModFamiliarCostumes[screen.OpenedFrom.Name] == itemName then
+				button.Free = false
+				button.OnPressedFunctionName = nil
+				stateText = "Shop_Purchased"
+			end
+'''
+match_indent = true
+times = 1

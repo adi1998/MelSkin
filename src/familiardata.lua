@@ -384,13 +384,6 @@ mod.FamiliarMenuData = {
 
     ItemAvailableAnimation = "MusicPlayerItemButton",
 	ItemAvailableMouseOverAnimation = "MusicPlayerItemNowPlaying",
-    -- ItemAvailableMouseOffAnimation = "GhostAdminScreenCauldronButtonOut",
-	-- ItemNowPlayingAnimation = "MusicPlayerItemNowPlaying",
-	-- ItemNowPlayingMouseOverAnimation = "MusicPlayerItemNowPlayingHighlight",
-
-
-    -- ItemAvailableAnimation = "GhostAdminScreenCauldronButton",
-	-- ItemAvailableMouseOverAnimation = "GhostAdminScreenCauldronButtonIn",
 	ItemAvailableMouseOffAnimation = "MusicPlayerItemButton",
 
     ItemAvailableAffordableNameFormat =

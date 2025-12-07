@@ -1,0 +1,27 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[vars]
+env = "rom.mods['zerp-MelSkin'].lovely_env"
+
+[[patches]]
+[patches.pattern]
+target = "FamiliarCostumeLogic.lua"
+pattern = '''
+function DoFamiliarCostumeShopPurchase( screen, button, args )
+	args = args or {}
+	local itemData = button.Data
+	GameState.FamiliarCostumes[screen.OpenedFrom.Name] = itemData.Name
+'''
+position = "after"
+payload = '''
+    GameState.ModFamiliarCostumes = GameState.ModFamiliarCostumes or {}
+    print(itemData.Name)
+    if {{lovely:env}}.FamiliarCostumeData[itemData.Name] ~= nil then
+		GameState.FamiliarCostumes[screen.OpenedFrom.Name] = FamiliarData[screen.OpenedFrom.Name].DefaultCostume
+		GameState.ModFamiliarCostumes[screen.OpenedFrom.Name] = itemData.Name
+	end
+'''
+match_indent = true
+times = 1

@@ -1,4 +1,4 @@
-mod.FamiliarCostumeData = {
+FamiliarCostumeData = {
     FamiliarCostume_FrogBrown =
 	{
 		Icon = "Costume_Frog02",
@@ -336,7 +336,7 @@ mod.FamiliarCostumeData = {
 	},
 }
 
-game.OverwriteTableKeys( game.WorldUpgradeData,mod.FamiliarCostumeData)
+game.OverwriteTableKeys( game.WorldUpgradeData,FamiliarCostumeData)
 
 mod.FamiliarList = {
     ItemCategories = {

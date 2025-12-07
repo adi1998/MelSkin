@@ -1,5 +1,4 @@
-game.OverwriteTableKeys( game.WorldUpgradeData,
-{
+game.OverwriteTableKeys( game.WorldUpgradeData,{
     FamiliarCostume_FrogBrown =
 	{
 		Icon = "Costume_Frog02",
@@ -376,11 +375,22 @@ end
 mod.FamiliarMenuData = {
     ItemStartX = 515,
 	ItemStartY = 150,
-	ItemSpacingY = 50,
+	ItemSpacingY = 60,
 	IconOffsetX = -388,
 	IconOffsetY = -1,
 	IconScale = 0.5,
 	ItemsPerPage = 11,
+
+    ItemAvailableAnimation = "MusicPlayerItemButton",
+	ItemAvailableMouseOverAnimation = "MusicPlayerItemButtonHighlight",
+    -- ItemAvailableMouseOffAnimation = "GhostAdminScreenCauldronButtonOut",
+	-- ItemNowPlayingAnimation = "MusicPlayerItemNowPlaying",
+	-- ItemNowPlayingMouseOverAnimation = "MusicPlayerItemNowPlayingHighlight",
+
+
+    -- ItemAvailableAnimation = "GhostAdminScreenCauldronButton",
+	-- ItemAvailableMouseOverAnimation = "GhostAdminScreenCauldronButtonIn",
+	ItemAvailableMouseOffAnimation = "MusicPlayerItemButton",
 
     ItemAvailableAffordableNameFormat =
 	{
@@ -402,8 +412,6 @@ mod.FamiliarMenuData = {
 		FontSize = 16,
         ScaleY = 0.5
     },
-
-
 }
 
 game.ScreenData.FamiliarCostumeShop = game.DeepMergeTables(game.ScreenData.FamiliarCostumeShop, mod.FamiliarMenuData)

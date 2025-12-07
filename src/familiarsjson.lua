@@ -30,7 +30,6 @@ sjson.hook(helpTextPath, function (data)
             DisplayName = value,
             Description = "",
         }
-        print("sjson", key,value)
         table.insert(data.Texts,sjson.to_object(entry,order))
     end
 end)

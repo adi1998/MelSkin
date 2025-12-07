@@ -109,12 +109,12 @@ FamiliarCostumeData = {
 
 		PreRevealVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogCostumeUnlocked" },
+			{ GlobalVoiceLines = "FamiliarHoundCostumeUnlocked" },
 			{ GlobalVoiceLines = "FamiliarMiscCostumeUnlocked" }
 		},
 		SwitchCostumeVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogSwitchCostumeVoiceLines" },
+			{ GlobalVoiceLines = "FamiliarHoundSwitchCostumeVoiceLines" },
 			{ GlobalVoiceLines = "FamiliarMiscSwitchCostumeVoiceLines" },
 		},
 	},
@@ -133,12 +133,12 @@ FamiliarCostumeData = {
 
 		PreRevealVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogCostumeUnlocked" },
+			{ GlobalVoiceLines = "FamiliarHoundCostumeUnlocked" },
 			{ GlobalVoiceLines = "FamiliarMiscCostumeUnlocked" }
 		},
 		SwitchCostumeVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogSwitchCostumeVoiceLines" },
+			{ GlobalVoiceLines = "FamiliarHoundSwitchCostumeVoiceLines" },
 			{ GlobalVoiceLines = "FamiliarMiscSwitchCostumeVoiceLines" },
 		},
 	},
@@ -157,12 +157,12 @@ FamiliarCostumeData = {
 
 		PreRevealVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogCostumeUnlocked" },
+			{ GlobalVoiceLines = "FamiliarHoundCostumeUnlocked" },
 			{ GlobalVoiceLines = "FamiliarMiscCostumeUnlocked" }
 		},
 		SwitchCostumeVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogSwitchCostumeVoiceLines" },
+			{ GlobalVoiceLines = "FamiliarHoundSwitchCostumeVoiceLines" },
 			{ GlobalVoiceLines = "FamiliarMiscSwitchCostumeVoiceLines" },
 		},
 	},
@@ -181,12 +181,12 @@ FamiliarCostumeData = {
 
 		PreRevealVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogCostumeUnlocked" },
+			{ GlobalVoiceLines = "FamiliarRavenCostumeUnlocked" },
 			{ GlobalVoiceLines = "FamiliarMiscCostumeUnlocked" }
 		},
 		SwitchCostumeVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogSwitchCostumeVoiceLines" },
+			{ GlobalVoiceLines = "FamiliarRavenSwitchCostumeVoiceLines" },
 			{ GlobalVoiceLines = "FamiliarMiscSwitchCostumeVoiceLines" },
 		},
 	},
@@ -205,12 +205,12 @@ FamiliarCostumeData = {
 
 		PreRevealVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogCostumeUnlocked" },
+			{ GlobalVoiceLines = "FamiliarCatCostumeUnlocked" },
 			{ GlobalVoiceLines = "FamiliarMiscCostumeUnlocked" }
 		},
 		SwitchCostumeVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogSwitchCostumeVoiceLines" },
+			{ GlobalVoiceLines = "FamiliarCatSwitchCostumeVoiceLines" },
 			{ GlobalVoiceLines = "FamiliarMiscSwitchCostumeVoiceLines" },
 		},
 	},
@@ -229,12 +229,12 @@ FamiliarCostumeData = {
 
 		PreRevealVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogCostumeUnlocked" },
+			{ GlobalVoiceLines = "FamiliarCatCostumeUnlocked" },
 			{ GlobalVoiceLines = "FamiliarMiscCostumeUnlocked" }
 		},
 		SwitchCostumeVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogSwitchCostumeVoiceLines" },
+			{ GlobalVoiceLines = "FamiliarCatSwitchCostumeVoiceLines" },
 			{ GlobalVoiceLines = "FamiliarMiscSwitchCostumeVoiceLines" },
 		},
 	},
@@ -253,12 +253,12 @@ FamiliarCostumeData = {
 
 		PreRevealVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogCostumeUnlocked" },
+			{ GlobalVoiceLines = "FamiliarCatCostumeUnlocked" },
 			{ GlobalVoiceLines = "FamiliarMiscCostumeUnlocked" }
 		},
 		SwitchCostumeVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogSwitchCostumeVoiceLines" },
+			{ GlobalVoiceLines = "FamiliarCatSwitchCostumeVoiceLines" },
 			{ GlobalVoiceLines = "FamiliarMiscSwitchCostumeVoiceLines" },
 		},
 	},
@@ -277,12 +277,12 @@ FamiliarCostumeData = {
 
 		PreRevealVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogCostumeUnlocked" },
+			{ GlobalVoiceLines = "FamiliarCatCostumeUnlocked" },
 			{ GlobalVoiceLines = "FamiliarMiscCostumeUnlocked" }
 		},
 		SwitchCostumeVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogSwitchCostumeVoiceLines" },
+			{ GlobalVoiceLines = "FamiliarCatSwitchCostumeVoiceLines" },
 			{ GlobalVoiceLines = "FamiliarMiscSwitchCostumeVoiceLines" },
 		},
 	},
@@ -301,12 +301,12 @@ FamiliarCostumeData = {
 
 		PreRevealVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogCostumeUnlocked" },
+			{ GlobalVoiceLines = "FamiliarCatCostumeUnlocked" },
 			{ GlobalVoiceLines = "FamiliarMiscCostumeUnlocked" }
 		},
 		SwitchCostumeVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogSwitchCostumeVoiceLines" },
+			{ GlobalVoiceLines = "FamiliarCatSwitchCostumeVoiceLines" },
 			{ GlobalVoiceLines = "FamiliarMiscSwitchCostumeVoiceLines" },
 		},
 	},
@@ -325,12 +325,12 @@ FamiliarCostumeData = {
 
 		PreRevealVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogCostumeUnlocked" },
+			{ GlobalVoiceLines = "FamiliarCatCostumeUnlocked" },
 			{ GlobalVoiceLines = "FamiliarMiscCostumeUnlocked" }
 		},
 		SwitchCostumeVoiceLines =
 		{
-			{ GlobalVoiceLines = "FamiliarFrogSwitchCostumeVoiceLines" },
+			{ GlobalVoiceLines = "FamiliarCatSwitchCostumeVoiceLines" },
 			{ GlobalVoiceLines = "FamiliarMiscSwitchCostumeVoiceLines" },
 		},
 	},

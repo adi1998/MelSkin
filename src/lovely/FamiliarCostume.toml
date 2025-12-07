@@ -21,6 +21,8 @@ payload = '''
     if {{lovely:env}}.FamiliarCostumeData[itemData.Name] ~= nil then
 		GameState.FamiliarCostumes[screen.OpenedFrom.Name] = FamiliarData[screen.OpenedFrom.Name].DefaultCostume
 		GameState.ModFamiliarCostumes[screen.OpenedFrom.Name] = itemData.Name
+    else
+        GameState.ModFamiliarCostumes[screen.OpenedFrom.Name] = nil
 	end
 '''
 match_indent = true

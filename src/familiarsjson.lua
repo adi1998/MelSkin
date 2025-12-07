@@ -17,6 +17,12 @@ local FamiliarNames = {
     FamiliarCostume_CatWhite ="White",
 }
 
+local order = {
+    "Id",
+    "DisplayName",
+    "Description",
+}
+
 sjson.hook(helpTextPath, function (data)
     for key, value in pairs(FamiliarNames) do
         local entry = {
@@ -24,6 +30,7 @@ sjson.hook(helpTextPath, function (data)
             DisplayName = value,
             Description = "",
         }
-        table.insert(data.Texts,entry)
+        print("sjson", key,value)
+        table.insert(data.Texts,sjson.to_object(entry,order))
     end
 end)

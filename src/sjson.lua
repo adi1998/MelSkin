@@ -51,6 +51,7 @@ local FamiliarIconList = {
     "cat_tabby",
     "cat_tuxedo",
     "cat_white",
+    "bird_green",
 }
 
 sjson.hook(guiPortraitsVFXFile, function(data)

@@ -169,7 +169,7 @@ FamiliarCostumeData = {
 
     FamiliarCostume_RavenBlack =
 	{
-		Icon = "Costume_Hound02",
+		Icon = "Costume_Raven02",
 		InheritFrom = { "DefaultFamiliarCostume" },
 		GrannyModel = "CritterRaven_Mesh",
         GrannyTexture = "zerp-MelSkin/raven/CritterRavenBlack_Color",
@@ -193,7 +193,7 @@ FamiliarCostumeData = {
 
 	FamiliarCostume_RavenGreen =
 	{
-		Icon = "Costume_Hound02",
+		Icon = _PLUGIN.guid .. "bird_green",
 		InheritFrom = { "DefaultFamiliarCostume" },
 		GrannyModel = "RavenFamiliar_Mesh",
         GrannyTexture = "zerp-MelSkin/raven/DefaultRavenGreen_Color",

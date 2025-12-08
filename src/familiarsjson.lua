@@ -9,6 +9,7 @@ local FamiliarNames = {
     FamiliarCostume_HoundTan = "Tan",
     FamiliarCostume_HoundOrange = "Orange",
     FamiliarCostume_RavenBlack = "Black",
+    FamiliarCostume_RavenGreen = "Green",
     FamiliarCostume_CatBicolor ="Bicolor",
     FamiliarCostume_CatBlack ="Black",
     FamiliarCostume_CatSpotted ="Spotted",

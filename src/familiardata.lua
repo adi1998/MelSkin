@@ -191,6 +191,30 @@ FamiliarCostumeData = {
 		},
 	},
 
+	FamiliarCostume_RavenGreen =
+	{
+		Icon = "Costume_Hound02",
+		InheritFrom = { "DefaultFamiliarCostume" },
+		GrannyModel = "RavenFamiliar_Mesh",
+        GrannyTexture = "zerp-MelSkin/raven/DefaultRavenGreen_Color",
+
+		Cost =
+		{
+			CosmeticsPoints = 100,
+		},
+
+		PreRevealVoiceLines =
+		{
+			{ GlobalVoiceLines = "FamiliarRavenCostumeUnlocked" },
+			{ GlobalVoiceLines = "FamiliarMiscCostumeUnlocked" }
+		},
+		SwitchCostumeVoiceLines =
+		{
+			{ GlobalVoiceLines = "FamiliarRavenSwitchCostumeVoiceLines" },
+			{ GlobalVoiceLines = "FamiliarMiscSwitchCostumeVoiceLines" },
+		},
+	},
+
     FamiliarCostume_CatBicolor =
 	{
 		Icon = _PLUGIN.guid .. "cat_bicolor",
@@ -357,6 +381,7 @@ mod.FamiliarList = {
         RavenFamiliar =
 		{
 			"FamiliarCostume_RavenBlack",
+			"FamiliarCostume_RavenGreen",
         },
         HoundFamiliar =
 		{

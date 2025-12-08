@@ -171,7 +171,7 @@ FamiliarCostumeData = {
 	{
 		Icon = "Costume_Hound02",
 		InheritFrom = { "DefaultFamiliarCostume" },
-		GrannyModel = "RavenFamiliar_Mesh",
+		GrannyModel = "CritterRaven_Mesh",
         GrannyTexture = "zerp-MelSkin/raven/CritterRavenBlack_Color",
 
 		Cost =

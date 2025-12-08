@@ -193,7 +193,7 @@ FamiliarCostumeData = {
 
     FamiliarCostume_CatBicolor =
 	{
-		Icon = "Costume_Cat05",
+		Icon = "cat_bicolor",
 		InheritFrom = { "DefaultFamiliarCostume" },
 		GrannyModel = "CatFamiliar_Mesh",
         GrannyTexture = "zerp-MelSkin/cat/CritterCatBicolor_Color",
@@ -217,7 +217,7 @@ FamiliarCostumeData = {
 
     FamiliarCostume_CatBlack =
 	{
-		Icon = "Costume_Cat05",
+		Icon = "cat_black",
 		InheritFrom = { "DefaultFamiliarCostume" },
 		GrannyModel = "CatFamiliar_Mesh",
         GrannyTexture = "zerp-MelSkin/cat/CritterCatBlack_Color",
@@ -241,7 +241,7 @@ FamiliarCostumeData = {
 
     FamiliarCostume_CatSpotted =
 	{
-		Icon = "Costume_Cat05",
+		Icon = "cat_spotted",
 		InheritFrom = { "DefaultFamiliarCostume" },
 		GrannyModel = "CatFamiliar_Mesh",
         GrannyTexture = "zerp-MelSkin/cat/CritterCatSpotted_Color",
@@ -265,7 +265,7 @@ FamiliarCostumeData = {
 
     FamiliarCostume_CatTabby =
 	{
-		Icon = "Costume_Cat05",
+		Icon = "cat_tabby",
 		InheritFrom = { "DefaultFamiliarCostume" },
 		GrannyModel = "CatFamiliar_Mesh",
         GrannyTexture = "zerp-MelSkin/cat/CritterCatTabby_Color",
@@ -289,7 +289,7 @@ FamiliarCostumeData = {
 
     FamiliarCostume_CatTuxedo =
 	{
-		Icon = "Costume_Cat05",
+		Icon = "cat_tuxedo",
 		InheritFrom = { "DefaultFamiliarCostume" },
 		GrannyModel = "CatFamiliar_Mesh",
         GrannyTexture = "zerp-MelSkin/cat/CritterCatTuxedo_Color",
@@ -313,7 +313,7 @@ FamiliarCostumeData = {
 
     FamiliarCostume_CatWhite =
 	{
-		Icon = "Costume_Cat05",
+		Icon = "cat_white",
 		InheritFrom = { "DefaultFamiliarCostume" },
 		GrannyModel = "CatFamiliar_Mesh",
         GrannyTexture = "zerp-MelSkin/cat/CritterCatWhite_Color",

@@ -32,6 +32,27 @@ mod.BoonSelectObstacle =
     }
 }
 
+local familiarIconFormat = {
+        Name = "",
+        FilePath = "zerp-MelSkin/icons/",
+        Scale = 1.1
+}
+
+local iconorder = {
+    "Name",
+    "FilePath",
+    "Scale",
+}
+
+local FamiliarIconList = {
+    "cat_bicolor",
+    "cat_black",
+    "cat_spotted",
+    "cat_tabby",
+    "cat_tuxedo",
+    "cat_white",
+}
+
 sjson.hook(guiPortraitsVFXFile, function(data)
     local newdata = {}
     for _, entry in ipairs(data.Animations) do
@@ -73,6 +94,15 @@ sjson.hook(guiScreensVFXFile, function (data)
             end
         end
     end
+
+    --icons
+    for _, icon in ipairs(FamiliarIconList) do
+        local newentry = game.DeepCopyTable(familiarIconFormat)
+        newentry.Name = newentry.Name .. icon
+        newentry.FilePath = newentry.FilePath .. icon
+        table.insert(data.Animations,sjson.to_object(newentry,iconorder))
+    end
+
 end)
 
 sjson.hook(guiFile,function (data)

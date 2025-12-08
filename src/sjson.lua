@@ -33,7 +33,7 @@ mod.BoonSelectObstacle =
 }
 
 local familiarIconFormat = {
-        Name = "",
+        Name = _PLUGIN.guid,
         FilePath = "zerp-MelSkin/icons/",
         Scale = 1.1
 }

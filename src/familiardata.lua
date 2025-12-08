@@ -193,7 +193,7 @@ FamiliarCostumeData = {
 
     FamiliarCostume_CatBicolor =
 	{
-		Icon = "cat_bicolor",
+		Icon = _PLUGIN.guid .. "cat_bicolor",
 		InheritFrom = { "DefaultFamiliarCostume" },
 		GrannyModel = "CatFamiliar_Mesh",
         GrannyTexture = "zerp-MelSkin/cat/CritterCatBicolor_Color",
@@ -217,7 +217,7 @@ FamiliarCostumeData = {
 
     FamiliarCostume_CatBlack =
 	{
-		Icon = "cat_black",
+		Icon = _PLUGIN.guid .. "cat_black",
 		InheritFrom = { "DefaultFamiliarCostume" },
 		GrannyModel = "CatFamiliar_Mesh",
         GrannyTexture = "zerp-MelSkin/cat/CritterCatBlack_Color",
@@ -241,7 +241,7 @@ FamiliarCostumeData = {
 
     FamiliarCostume_CatSpotted =
 	{
-		Icon = "cat_spotted",
+		Icon = _PLUGIN.guid .. "cat_spotted",
 		InheritFrom = { "DefaultFamiliarCostume" },
 		GrannyModel = "CatFamiliar_Mesh",
         GrannyTexture = "zerp-MelSkin/cat/CritterCatSpotted_Color",
@@ -265,7 +265,7 @@ FamiliarCostumeData = {
 
     FamiliarCostume_CatTabby =
 	{
-		Icon = "cat_tabby",
+		Icon = _PLUGIN.guid .. "cat_tabby",
 		InheritFrom = { "DefaultFamiliarCostume" },
 		GrannyModel = "CatFamiliar_Mesh",
         GrannyTexture = "zerp-MelSkin/cat/CritterCatTabby_Color",
@@ -289,7 +289,7 @@ FamiliarCostumeData = {
 
     FamiliarCostume_CatTuxedo =
 	{
-		Icon = "cat_tuxedo",
+		Icon = _PLUGIN.guid .. "cat_tuxedo",
 		InheritFrom = { "DefaultFamiliarCostume" },
 		GrannyModel = "CatFamiliar_Mesh",
         GrannyTexture = "zerp-MelSkin/cat/CritterCatTuxedo_Color",
@@ -313,7 +313,7 @@ FamiliarCostumeData = {
 
     FamiliarCostume_CatWhite =
 	{
-		Icon = "cat_white",
+		Icon = _PLUGIN.guid .. "cat_white",
 		InheritFrom = { "DefaultFamiliarCostume" },
 		GrannyModel = "CatFamiliar_Mesh",
         GrannyTexture = "zerp-MelSkin/cat/CritterCatWhite_Color",

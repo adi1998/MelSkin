@@ -35,7 +35,7 @@ mod.BoonSelectObstacle =
 local familiarIconFormat = {
         Name = _PLUGIN.guid,
         FilePath = "zerp-MelSkin/icons/",
-        Scale = 1.1
+        Scale = 1.3
 }
 
 local iconorder = {

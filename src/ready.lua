@@ -51,7 +51,11 @@ end)
 
 function mod.GetDressGrannyTexture(inputDress)
     if mod.DressData[inputDress] ~= nil then
-        return mod.DressData[inputDress].GrannyTexture or ""
+        if game.MapState.BabyPolymorph then
+            return mod.DressData[inputDress].ChildGrannyTexture or ""
+        else
+            return mod.DressData[inputDress].GrannyTexture or ""
+        end
     end
     return ""
 end
@@ -79,7 +83,7 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
         grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
         print("skin random", grannyTexture)
     end
-    if not skipCostume then
+    if (not skipCostume) or game.MapState.BabyPolymorph then
         game.CostumeData.Costume_Default.GrannyTexture = grannyTexture
     end
     base(skipCostume)

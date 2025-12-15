@@ -65,10 +65,12 @@ mod.DressData = {
     ["Dark Side"] =
     {
         GrannyTexture = "Models/Melinoe/MelinoeTransform_Color",
+        ChildGrannyTexture = "Models/Melinoe/YoungMelTransform_Color",
     },
     ["Alternate Time"] =
     {
-        GrannyTexture = "zerp-MelSkin/skins/Alternate Time"
+        GrannyTexture = "zerp-MelSkin/skins/Alternate Time",
+        ChildGrannyTexture = "zerp-MelSkin/skins/YoungMelRed_Color",
     },
     Murderrrrr =
     {

@@ -150,8 +150,11 @@ function mod.SetAnimationWrap(base,args)
         local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
         print("SetAnimation", origname, newname)
         args.Name = newname
-        base(args)
-        return
+        return base(args)
+    end
+    if mod.TyphonRivalsPortraitMap[origname] and mod.GetCurrentDress() == "Alternate Time" then
+        args.Name = mod.TyphonRivalsPortraitMap[origname]
+        return base(args)
     end
     base(args)
 end

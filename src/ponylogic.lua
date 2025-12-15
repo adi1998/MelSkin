@@ -250,12 +250,12 @@ function mod.ApplyMenuZoom()
     end
 
     ClearCameraClamp({ LerpTime = 0 })
-    local offsetY = -80
+    local offsetY = -70
     if HeroHasTrait("TorchAutofireAspect") then
         offsetY = -110
     end
-    LockCamera({Id = CurrentRun.Hero.ObjectId, OffsetX = -257, OffsetY = offsetY, Duration = 0.2})
-    AdjustZoom({ Fraction = 2.8, Duration = 0.2 })
+    game.thread(LockCamera,{Id = CurrentRun.Hero.ObjectId, OffsetX = -265, OffsetY = offsetY, Duration = 0.3})
+    AdjustZoom({ Fraction = 2.8, Duration = 0.3 })
 end
 
 function mod.ResetMenuZoom()
@@ -282,8 +282,8 @@ function mod.ResetMenuZoom()
         end
     end
 
-    LockCamera({Id = CurrentRun.Hero.ObjectId, Duration = 0.2})
-    AdjustZoom({ Fraction = defaultZoom, Duration = 0.2 })
+    game.thread(LockCamera,{Id = CurrentRun.Hero.ObjectId, Duration = 0.3})
+    AdjustZoom({ Fraction = defaultZoom, Duration = 0.3 })
 end
 
 function mod.PopulatePonyMenuData()

@@ -24,7 +24,7 @@ mod.DressScreenData = {
                 GroupName = "Combat_Menu_TraitTray",
                 X = ScreenCenterX,
                 Y = ScreenCenterY,
-                Scale = 1.15,
+                Scale = 1,
                 Text = "Select Dress",
                 TextArgs =
                 {

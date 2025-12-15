@@ -25,7 +25,7 @@ function drawMenu()
     if rom.ImGui.BeginCombo("###dress", config.dress) then
         for _, dressName in ipairs(mod.DressDisplayOrder) do
             if rom.ImGui.Selectable(dressName, (dressName == config.dress)) then
-                if dressName ~= previousConfig then
+                if dressName ~= previousConfig.dress then
                     local  dressGrannyTexture = mod.GetDressGrannyTexture(dressName)
                     config.dress = dressName
                     previousConfig.dress = dressName

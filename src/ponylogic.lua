@@ -254,8 +254,8 @@ function mod.ApplyMenuZoom()
     if HeroHasTrait("TorchAutofireAspect") then
         offsetY = -110
     end
-    LockCamera({Id = CurrentRun.Hero.ObjectId, OffsetX = -313, OffsetY = offsetY, Duration = 0.2})
-    AdjustZoom({ Fraction = 2.3, Duration = 0.2 })
+    LockCamera({Id = CurrentRun.Hero.ObjectId, OffsetX = -257, OffsetY = offsetY, Duration = 0.2})
+    AdjustZoom({ Fraction = 2.8, Duration = 0.2 })
 end
 
 function mod.ResetMenuZoom()

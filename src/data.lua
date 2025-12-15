@@ -65,10 +65,16 @@ mod.DressData = {
     ["Dark Side"] =
     {
         GrannyTexture = "Models/Melinoe/MelinoeTransform_Color",
+        ChildGrannyTexture = "Models/Melinoe/YoungMelTransform_Color",
     },
     ["Alternate Time"] =
     {
-        GrannyTexture = "zerp-MelSkin/skins/Alternate Time"
+        GrannyTexture = "zerp-MelSkin/skins/Alternate Time",
+        ChildGrannyTexture = "zerp-MelSkin/skins/YoungMelRed_Color",
+        TyphonRivalsPortraitMap = {
+            Portrait_Mel_Child_Defiant_01 = "Portrait_Melinoe_Child_Ending_Defiant_01",
+            Portrait_Mel_Child_Defiant_01_Exit = "Portrait_Melinoe_Child_Ending_Defiant_01_Exit",
+        }
     },
     Murderrrrr =
     {

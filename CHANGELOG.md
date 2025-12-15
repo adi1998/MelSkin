@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Update Dress menu background
+
 ## [1.6.0] - 2025-12-06
 
 - Updates to Alternate Time by @Aunuch

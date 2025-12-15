@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Add Alternate Time(repalced with young ending Mel) and DarkSide costume for Rivals Typhon.
+- Replace young Mel portrait with the ending one for Alternate Time
+
 ## [1.6.1] - 2025-12-15
 
 - Update Dress menu background

@@ -155,7 +155,9 @@ function mod.SetAnimationWrap(base,args)
     if game.MapState.BabyPolymorph then
         local dress = mod.GetCurrentDress()
         local dressdata = mod.DressData[dress]
-        if dressdata == nil or dressdata.TyphonRivalsPortraitMap == nil then return end
+        if dressdata == nil or dressdata.TyphonRivalsPortraitMap == nil then
+            return base(args)
+        end
         local newname = dressdata.TyphonRivalsPortraitMap[origname]
         args.Name = newname or args.Name
         return base(args)

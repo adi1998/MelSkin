@@ -71,6 +71,10 @@ mod.DressData = {
     {
         GrannyTexture = "zerp-MelSkin/skins/Alternate Time",
         ChildGrannyTexture = "zerp-MelSkin/skins/YoungMelRed_Color",
+        TyphonRivalsPortraitMap = {
+            Portrait_Mel_Child_Defiant_01 = "Portrait_Melinoe_Child_Ending_Defiant_01",
+            Portrait_Mel_Child_Defiant_01_Exit = "Portrait_Melinoe_Child_Ending_Defiant_01_Exit",
+        }
     },
     Murderrrrr =
     {
@@ -120,9 +124,4 @@ mod.PortraitNameFileMap = {
     Portrait_Mel_Casual_01 = "Portraits_Melinoe_Casual_01",
     Portrait_Mel_Pleased_01 = "Portraits_Melinoe_Pleased_01",
     Portrait_Mel_PleasedFlushed_01 = "Portraits_Melinoe_PleasedFlushed_01",
-}
-
-mod.TyphonRivalsPortraitMap = {
-    Portrait_Mel_Child_Defiant_01 = "Portrait_Melinoe_Child_Ending_Defiant_01",
-    Portrait_Mel_Child_Defiant_01_Exit = "Portrait_Melinoe_Child_Ending_Defiant_01_Exit",
 }

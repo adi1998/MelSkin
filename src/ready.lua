@@ -152,11 +152,15 @@ function mod.SetAnimationWrap(base,args)
         args.Name = newname
         return base(args)
     end
-    if mod.TyphonRivalsPortraitMap[origname] and mod.GetCurrentDress() == "Alternate Time" then
-        args.Name = mod.TyphonRivalsPortraitMap[origname]
+    if game.MapState.BabyPolymorph then
+        local dress = mod.GetCurrentDress()
+        local dressdata = mod.DressData[dress]
+        if dressdata == nil or dressdata.TyphonRivalsPortraitMap == nil then return end
+        local newname = dressdata.TyphonRivalsPortraitMap[origname]
+        args.Name = newname or args.Name
         return base(args)
     end
-    base(args)
+    return base(args)
 end
 
 function mod.SetAnimationWrap2(base,args)

@@ -41,7 +41,7 @@ sjson.hook(guiPortraitsVFXFile, function(data)
             for dress, dressData in pairs(mod.DressData) do
                 if dressData.Portraits ~= nil and dressData.Portraits[origfilename] then
                     local newname = dress .. "_" .. origname
-                    print("sjson new name", newname)
+                    -- print("sjson new name", newname)
                     -- args.Name = newname
                     local newfilepath = modPortraitPrefix .. dress .. "\\" .. origfilename
                     local newentry = game.DeepCopyTable(entry)

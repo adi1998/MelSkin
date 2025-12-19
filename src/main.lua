@@ -43,6 +43,7 @@ local function on_ready()
     if config.enabled == false then return end
     mod = modutil.mod.Mod.Register(_PLUGIN.guid)
 
+    import 'imgui.lua'
     import 'ponydata.lua'
     import 'ponylogic.lua'
     mod.PopulatePonyMenuData()
@@ -59,10 +60,10 @@ local function on_reload()
     if config.enabled == false then return end
 
     import 'reload.lua'
-    import 'imgui.lua'
 
     if config.debug_reload == false then return end
 
+    import 'imgui.lua'
     import 'ponydata.lua'
     import 'ponylogic.lua'
     import 'data.lua'

@@ -51,7 +51,11 @@ end)
 
 function mod.GetDressGrannyTexture(inputDress)
     if mod.DressData[inputDress] ~= nil then
-        return mod.DressData[inputDress].GrannyTexture or ""
+        if game.MapState.BabyPolymorph then
+            return mod.DressData[inputDress].ChildGrannyTexture or ""
+        else
+            return mod.DressData[inputDress].GrannyTexture or ""
+        end
     end
     return ""
 end
@@ -79,7 +83,7 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
         grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
         print("skin random", grannyTexture)
     end
-    if not skipCostume then
+    if (not skipCostume) or game.MapState.BabyPolymorph then
         game.CostumeData.Costume_Default.GrannyTexture = grannyTexture
     end
     base(skipCostume)
@@ -146,10 +150,19 @@ function mod.SetAnimationWrap(base,args)
         local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
         print("SetAnimation", origname, newname)
         args.Name = newname
-        base(args)
-        return
+        return base(args)
     end
-    base(args)
+    if game.MapState.BabyPolymorph then
+        local dress = mod.GetCurrentDress()
+        local dressdata = mod.DressData[dress]
+        if dressdata == nil or dressdata.TyphonRivalsPortraitMap == nil then
+            return base(args)
+        end
+        local newname = dressdata.TyphonRivalsPortraitMap[origname]
+        args.Name = newname or args.Name
+        return base(args)
+    end
+    return base(args)
 end
 
 function mod.SetAnimationWrap2(base,args)

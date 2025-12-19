@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- remove excessive logging during sjson hook
+
 ## [1.7.0] - 2025-12-15
 
 - Add Alternate Time(repalced with young ending Mel) and DarkSide costume for Rivals Typhon.

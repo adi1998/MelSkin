@@ -81,7 +81,6 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
     local grannyTexture = mod.GetDressGrannyTexture(config.dress)
     if config.random_each_run then
         grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
-        print("skin random", grannyTexture)
     end
     if (not skipCostume) or game.MapState.BabyPolymorph then
         game.CostumeData.Costume_Default.GrannyTexture = grannyTexture

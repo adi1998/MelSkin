@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.7.1] - 2025-12-19
+
 - remove excessive logging during sjson hook
 
 ## [1.7.0] - 2025-12-15
@@ -80,7 +82,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.7.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.7.1...HEAD
+[1.7.1]: https://github.com/adi1998/MelSkin/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/adi1998/MelSkin/compare/1.6.1...1.7.0
 [1.6.1]: https://github.com/adi1998/MelSkin/compare/1.6.0...1.6.1
 [1.6.0]: https://github.com/adi1998/MelSkin/compare/1.5.0...1.6.0

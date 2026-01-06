@@ -4,7 +4,11 @@
 local previousConfig = {
     dress = nil,
     random_each_run = nil,
+    hue_shift = 0,
 }
+
+local r, g, b = 202/255, 105/255, 28/255
+local h, s, v = rom.ImGui.ColorConvertRGBtoHSV(r, g, b)
 
 rom.gui.add_imgui(function()
     if rom.ImGui.Begin("Dress Selector") then
@@ -38,6 +42,30 @@ function drawMenu()
         rom.ImGui.EndCombo()
     end
     
+    rom.ImGui.Separator()
+
+    local new_h = (h+config.hue_shift/360.0) % 1
+    r,g,b = rom.ImGui.ColorConvertHSVtoRGB(new_h,s,v)
+    rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBg , r, g, b, 1)
+    rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBgActive , r, g, b, 1)
+    rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBgHovered , r, g, b, 1)
+    rom.ImGui.Text("Hue shift")
+    
+    value, selected = rom.ImGui.SliderInt("", config.hue_shift, 0, 360, '%d%')
+    if selected and value ~= previousConfig.hue_shift then
+        config.hue_shift = value
+        previousConfig.hue_shift = value
+        local new_h = (h+config.hue_shift/360.0) % 1
+        r,g,b = rom.ImGui.ColorConvertHSVtoRGB(new_h,s,v)
+    end
+    rom.ImGui.PopStyleColor(3)
+    rom.ImGui.SameLine()
+
+    local clicked = rom.ImGui.Button("Reload")
+    if clicked or checked then
+        mod.ReloadTexture()
+    end
+
     rom.ImGui.Separator()
 
     local value, checked = rom.ImGui.Checkbox("Random Dress Each Run", config.random_each_run)

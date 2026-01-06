@@ -83,6 +83,10 @@ mod.DressData = {
     None =
     {
         GrannyTexture = ""
+    },
+    Custom =
+    {
+        GrannyTexture = "Custom/custom"
     }
 }
 
@@ -99,6 +103,7 @@ mod.DressDisplayOrder = {
     "Alternate Time",
     "Murderrrrr",
     "None",
+    "Custom"
 }
 
 -- for portraitprefix based on Arachne boon

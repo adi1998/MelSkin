@@ -3,6 +3,7 @@ local config = {
   dress = "None";
   random_each_run = false;
   debug_reload = false;
+  hue_shift = 0;
 }
 
 local configDesc = {

@@ -86,7 +86,7 @@ mod.DressData = {
     },
     Custom =
     {
-        GrannyTexture = "Custom/custom"
+        GrannyTexture = "zerp-MelSkinCustom/custom"
     }
 }
 

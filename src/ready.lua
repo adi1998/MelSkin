@@ -7,8 +7,18 @@
 --     so you will most likely want to have it reference
 --    values and functions later defined in `reload.lua`.
 
+local pluginsData = rom.path.combine(rom.paths.plugins_data(), _PLUGIN.guid)
+local plugins = rom.path.combine(rom.paths.plugins(), _PLUGIN.guid)
+local hueshiftPath = rom.path.combine(plugins, "hueshift.py")
+local customPath = rom.path.combine(pluginsData, "Custom")
+local packagePath = rom.path.combine(pluginsData, "zerp-MelSkinCustom")
+-- local rebuildCommand = "powershell \"" .. pluginsData .. "\\build.ps1\""
+local rebuildCommand = "C: & cd \"" .. pluginsData .. "\" & deppth2 hpk -s \"" .. customPath .. "\" -t \"" .. packagePath .. "\""
+local hueshiftCommand = "C: & cd \"" .. pluginsData .. "\" & python " .. hueshiftPath .. " \"" .. pluginsData .. "\" "
+
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
+table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustom")
 
 function mod.GetCurrentDress()
     local costumes = game.GetHeroTraitValues("Costume")
@@ -223,4 +233,14 @@ end
 
 function mod.AddFavoriteDress(dressName)
     table.insert(GameState.ModFavoriteDressList, dressName)
+end
+
+function mod.ReloadCustomTexture()
+    print("running", hueshiftCommand)
+    local handle = os.execute(hueshiftCommand .. " " .. tostring(config.hue_shift))
+    print("running", rebuildCommand)
+    handle = os.execute(rebuildCommand)
+
+    game.UnloadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})
+    game.LoadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})
 end

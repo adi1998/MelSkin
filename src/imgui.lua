@@ -61,9 +61,9 @@ function drawMenu()
     rom.ImGui.PopStyleColor(3)
     rom.ImGui.SameLine()
 
-    local clicked = rom.ImGui.Button("Reload")
+    local clicked = rom.ImGui.Button("Apply")
     if clicked or checked then
-        mod.ReloadTexture()
+        game.thread(mod.ReloadCustomTexture)
     end
 
     rom.ImGui.Separator()

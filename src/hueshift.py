@@ -37,10 +37,10 @@ def replace_pixels(base_path, input_img):
 
 # Usage
 input_folder = sys.argv[1]
-atlas_path = os.path.join(input_folder,"Data/base.png")
-dress_path = os.path.join(input_folder,"Data/dress.png")
-dress_hue_path = os.path.join(input_folder,"Data/dress_hue.png")
-custom_path = os.path.join(input_folder,"Data/custom.png")
+atlas_path = os.path.join(input_folder,"base.png")
+dress_path = os.path.join(input_folder,"dress.png")
+dress_hue_path = os.path.join(input_folder,"dress_hue.png")
+custom_path = os.path.join(input_folder,"Custom/custom.png")
 
 shifted = hue_shift(dress_path, hue_shift=int(sys.argv[2]))
 # shifted.save(dress_hue_path)

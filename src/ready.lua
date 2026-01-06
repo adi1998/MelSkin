@@ -236,8 +236,9 @@ function mod.AddFavoriteDress(dressName)
 end
 
 function mod.ReloadCustomTexture()
-    print("running", hueshiftCommand)
-    local handle = os.execute(hueshiftCommand .. " " .. tostring(config.hue_shift))
+    local rgbCommand = hueshiftCommand .. " rgb " .. tostring(config.color.r) .. " " .. tostring(config.color.g) .. " " .. tostring(config.color.b)
+    print("running", rgbCommand)
+    local handle = os.execute(rgbCommand)
     print("running", rebuildCommand)
     handle = os.execute(rebuildCommand)
 

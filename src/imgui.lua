@@ -5,6 +5,11 @@ local previousConfig = {
     dress = nil,
     random_each_run = nil,
     hue_shift = 0,
+    color = {
+        r = 0,
+        g = 0,
+        b = 0,
+    }
 }
 
 local r, g, b = 202/255, 105/255, 28/255
@@ -42,28 +47,53 @@ function drawMenu()
         rom.ImGui.EndCombo()
     end
     
-    rom.ImGui.Separator()
+    if config.dress == "Custom" then
+        rom.ImGui.Separator()
 
-    local new_h = (h+config.hue_shift/360.0) % 1
-    r,g,b = rom.ImGui.ColorConvertHSVtoRGB(new_h,s,v)
-    rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBg , r, g, b, 1)
-    rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBgActive , r, g, b, 1)
-    rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBgHovered , r, g, b, 1)
-    rom.ImGui.Text("Hue shift")
-    
-    value, selected = rom.ImGui.SliderInt("", config.hue_shift, 0, 360, '%d%')
-    if selected and value ~= previousConfig.hue_shift then
-        config.hue_shift = value
-        previousConfig.hue_shift = value
         local new_h = (h+config.hue_shift/360.0) % 1
         r,g,b = rom.ImGui.ColorConvertHSVtoRGB(new_h,s,v)
-    end
-    rom.ImGui.PopStyleColor(3)
-    rom.ImGui.SameLine()
+        rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBg , config.color.r/255, config.color.g/255, config.color.b/255, 1)
+        rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBgActive , config.color.r/255, config.color.g/255, config.color.b/255, 1)
+        rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBgHovered , config.color.r/255, config.color.g/255, config.color.b/255, 1)
+        rom.ImGui.PushStyleColor(rom.ImGuiCol.SliderGrab, config.color.r/255, config.color.g/255, config.color.b/255, 0)
+        rom.ImGui.PushStyleColor(rom.ImGuiCol.SliderGrabActive, config.color.r/255, config.color.g/255, config.color.b/255, 0)
+        rom.ImGui.Text("Custom Color Selector")
+        
+        value, selected = rom.ImGui.SliderInt("", config.hue_shift, 0, 360, '')
+        if selected and value ~= previousConfig.hue_shift then
+            config.hue_shift = value
+            previousConfig.hue_shift = value
+            local new_h = (h+config.hue_shift/360.0) % 1
+            r,g,b = rom.ImGui.ColorConvertHSVtoRGB(new_h,s,v)
+        end
 
-    local clicked = rom.ImGui.Button("Apply")
-    if clicked or checked then
-        game.thread(mod.ReloadCustomTexture)
+        rom.ImGui.PopStyleColor(5)
+
+        value, selected = rom.ImGui.SliderInt("R", config.color.r, 0, 255, '%d%')
+        if selected and value ~= previousConfig.color.r then
+            config.color.r = value
+            previousConfig.color.r = value
+        end
+
+        value, selected = rom.ImGui.SliderInt("G", config.color.g, 0, 255, '%d%')
+        if selected and value ~= previousConfig.color.g then
+            config.color.g = value
+            previousConfig.color.g = value
+        end
+
+        value, selected = rom.ImGui.SliderInt("B", config.color.b, 0, 255, '%d%')
+        if selected and value ~= previousConfig.color.b then
+            config.color.b = value
+            previousConfig.color.b = value
+        end
+        
+        -- rom.ImGui.SameLine()
+
+        local clicked = rom.ImGui.Button("Apply")
+        if clicked or checked then
+            game.thread(mod.ReloadCustomTexture)
+        end
+
     end
 
     rom.ImGui.Separator()

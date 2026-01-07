@@ -21,3 +21,4 @@ tcli.exe
 
 # ignore PSD files
 *.psd
+*.spec

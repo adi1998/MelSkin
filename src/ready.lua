@@ -9,7 +9,7 @@
 
 local pluginsData = rom.path.combine(rom.paths.plugins_data(), _PLUGIN.guid)
 local plugins = rom.path.combine(rom.paths.plugins(), _PLUGIN.guid)
-local hueshiftPath = rom.path.combine(plugins, "hueshift.py")
+local hueshiftPath = rom.path.combine(pluginsData, "colormap.exe")
 local customPath = rom.path.combine(pluginsData, "Custom")
 local packagePath = rom.path.combine(pluginsData, "zerp-MelSkinCustom")
 -- local rebuildCommand = "powershell \"" .. pluginsData .. "\\build.ps1\""
@@ -235,7 +235,8 @@ function mod.AddFavoriteDress(dressName)
 end
 
 function mod.ReloadCustomTexture()
-    local hueshiftCommand = "C: & cd \"" .. pluginsData .. "\" & python " .. hueshiftPath .. " --path \"" .. pluginsData .. "\" "
+    local driveLetter = pluginsData:sub(1,1)
+    local hueshiftCommand = driveLetter .. ": & cd \"" .. pluginsData .. "\" & " .. hueshiftPath .. " --path \"" .. pluginsData .. "\" "
     local rgbCommand = hueshiftCommand
     if config.custom_dress_color and config.custom_dress then
         rgbCommand = rgbCommand .. " --dress " .. tostring(config.dresscolor.r) .. "," .. tostring(config.dresscolor.g) .. "," .. tostring(config.dresscolor.b)

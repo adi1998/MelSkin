@@ -54,7 +54,7 @@ jobs:
       - name: Build package
         run: |
           mkdir data/Custom
-          cp data/base.png data/Custom/custom.png
+          cp data/None.png data/Custom/custom.png
           tcli build
           ARTIFACT_NAME=$(find "${{ env.build-dir }}" -type f -printf "%f\n")
           echo "artifact-name=${ARTIFACT_NAME}" >> "$GITHUB_ENV"

@@ -2,9 +2,11 @@
 
 ## [Unreleased]
 
+- Add color slider for dress and hair
+
 ## [1.7.1] - 2025-12-19
 
-- remove excessive logging during sjson hook
+- Remove excessive logging during sjson hook
 
 ## [1.7.0] - 2025-12-15
 

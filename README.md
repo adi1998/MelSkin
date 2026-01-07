@@ -32,6 +32,16 @@ Favorites are only available through PonyMenu.
 | __Murderrrrr by burn__ | | | | |
 | ![Murderrrrr](images/skins/Murderrrrr.png) | | | | |
 
+## [Beta] Color selector
+
+Experimental color selector to allow setting any* dress and hair color. Only works with the ImGui menu.
+
+To activate, select `Custom` in the Dress drop-down and edit dress/hair colors and hit Apply.
+
+| ![1](images/colorslider/1.png) | ![2](images/colorslider/2.png) |
+| - | - |
+| ![3](images/colorslider/3.png) | ![4](images/colorslider/4.png) |
+
 ## Adding skins to this mod
 
 Open a PR with this template https://github.com/adi1998/MelSkin/pull/10

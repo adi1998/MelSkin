@@ -106,6 +106,18 @@ mod.DressDisplayOrder = {
     "Custom"
 }
 
+mod.CustomDressDisplayOrder = {
+    "Lavender" ,
+    "Azure" ,
+    "Emerald" ,
+    "Onyx" ,
+    "Fuchsia" ,
+    "Gilded" ,
+    "Moonlight" ,
+    "Crimson" ,
+    "None"
+}
+
 -- for portraitprefix based on Arachne boon
 mod.CostumeDressMap = {
     ["Models/Melinoe/Melinoe_ArachneArmorC"] = "Lavender",

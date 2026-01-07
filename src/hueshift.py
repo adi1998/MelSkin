@@ -3,6 +3,7 @@ import colorsys
 import sys
 import os
 import argparse
+import deppth2.texpacking as texpack
 
 def hue_shift(image_path, hue_shift=50):
     with Image.open(image_path) as img:
@@ -96,10 +97,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--path", type=str)
 parser.add_argument("--dress", type=rgb)
 parser.add_argument("--hair", type=rgb)
+parser.add_argument("--base", type=str)
 
 args = parser.parse_args()
 input_folder = args.path
-atlas_path = os.path.join(input_folder,"base.png")
+atlas_path = os.path.join(input_folder,"None.png")
+if args.base != None:
+    atlas_path = os.path.join(input_folder,f"{args.base}.png")
 dress_path = os.path.join(input_folder,"dress.png")
 hair_path = os.path.join(input_folder,"hair.png")
 dress_hue_path = os.path.join(input_folder,"dress_hue.png")
@@ -117,5 +121,9 @@ img = Image.open(atlas_path)
 
 new_dress = replace_pixels(img, shifted_dress)
 new_hair = replace_pixels(new_dress, shifted_hair)
-new_hair.show()
+# new_hair.show()
 new_hair.save(custom_path)
+
+source_folder = os.path.join(input_folder, "Custom")
+target_folder = os.path.join(input_folder, "zerp-MelSkinCustom")
+texpack.build_atlases_hades(source_folder, target_folder)

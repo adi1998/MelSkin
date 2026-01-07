@@ -5,7 +5,11 @@ local config = {
   debug_reload = false;
   hue_shift = 0;
   dresscolor = { r = 223, g = 122, b = 68 },
-  haircolor = { r = 223, g = 122, b = 68 }
+  haircolor = { r = 223, g = 122, b = 68 },
+  custom_dress_color = false,
+  custom_hair_color = false,
+  custom_dress = false,
+  custom_dress_base = "None",
 }
 
 local configDesc = {

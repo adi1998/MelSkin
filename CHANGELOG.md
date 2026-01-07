@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-01-07
+
 - Add color slider for dress and hair
 
 ## [1.7.1] - 2025-12-19
@@ -84,7 +86,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.7.1...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.8.0...HEAD
+[1.8.0]: https://github.com/adi1998/MelSkin/compare/1.7.1...1.8.0
 [1.7.1]: https://github.com/adi1998/MelSkin/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/adi1998/MelSkin/compare/1.6.1...1.7.0
 [1.6.1]: https://github.com/adi1998/MelSkin/compare/1.6.0...1.6.1

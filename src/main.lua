@@ -63,7 +63,6 @@ local function on_reload()
 
     if config.debug_reload == false then return end
 
-    import 'imgui.lua'
     import 'ponydata.lua'
     import 'ponylogic.lua'
     import 'data.lua'

@@ -83,6 +83,10 @@ mod.DressData = {
     None =
     {
         GrannyTexture = ""
+    },
+    Custom =
+    {
+        GrannyTexture = "zerp-MelSkinCustom/custom"
     }
 }
 
@@ -99,6 +103,19 @@ mod.DressDisplayOrder = {
     "Alternate Time",
     "Murderrrrr",
     "None",
+    "Custom"
+}
+
+mod.CustomDressDisplayOrder = {
+    "Lavender" ,
+    "Azure" ,
+    "Emerald" ,
+    "Onyx" ,
+    "Fuchsia" ,
+    "Gilded" ,
+    "Moonlight" ,
+    "Crimson" ,
+    "None"
 }
 
 -- for portraitprefix based on Arachne boon

@@ -7,8 +7,17 @@
 --     so you will most likely want to have it reference
 --    values and functions later defined in `reload.lua`.
 
+local pluginsData = rom.path.combine(rom.paths.plugins_data(), _PLUGIN.guid)
+local plugins = rom.path.combine(rom.paths.plugins(), _PLUGIN.guid)
+local hueshiftPath = rom.path.combine(pluginsData, "colormap.exe")
+local customPath = rom.path.combine(pluginsData, "Custom")
+local packagePath = rom.path.combine(pluginsData, "zerp-MelSkinCustom")
+-- local rebuildCommand = "powershell \"" .. pluginsData .. "\\build.ps1\""
+local rebuildCommand = "C: & cd \"" .. pluginsData .. "\" & deppth2 hpk -s \"" .. customPath .. "\" -t \"" .. packagePath .. "\""
+
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
+table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustom")
 
 function mod.GetCurrentDress()
     local costumes = game.GetHeroTraitValues("Costume")
@@ -223,4 +232,24 @@ end
 
 function mod.AddFavoriteDress(dressName)
     table.insert(GameState.ModFavoriteDressList, dressName)
+end
+
+function mod.ReloadCustomTexture()
+    local driveLetter = pluginsData:sub(1,1)
+    local hueshiftCommand = driveLetter .. ": & cd \"" .. pluginsData .. "\" & " .. hueshiftPath .. " --path \"" .. pluginsData .. "\" "
+    local rgbCommand = hueshiftCommand
+    if config.custom_dress_color and config.custom_dress then
+        rgbCommand = rgbCommand .. " --dress " .. tostring(config.dresscolor.r) .. "," .. tostring(config.dresscolor.g) .. "," .. tostring(config.dresscolor.b)
+    end
+    if config.custom_hair_color then
+        rgbCommand = rgbCommand .. " --hair " .. tostring(config.haircolor.r) .. "," .. tostring(config.haircolor.g) .. "," .. tostring(config.haircolor.b)
+    end
+    if config.custom_dress and not config.custom_dress_color then
+        rgbCommand = rgbCommand .. " --base " .. config.custom_dress_base
+    end
+    print("running", rgbCommand)
+    local handle = os.execute(rgbCommand)
+
+    game.UnloadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})
+    game.LoadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})
 end

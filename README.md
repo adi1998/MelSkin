@@ -42,7 +42,7 @@ To activate, select `Custom` in the Dress drop-down and edit dress/hair colors a
 | - | - |
 | ![3](images/colorslider/3.png) | ![4](images/colorslider/4.png) |
 
-## Adding skins to this mod
+## Contributing skins to this mod
 
 Open a PR with this template https://github.com/adi1998/MelSkin/pull/10
 

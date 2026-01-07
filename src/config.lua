@@ -4,7 +4,8 @@ local config = {
   random_each_run = false;
   debug_reload = false;
   hue_shift = 0;
-  color = { r = 223, g = 122, b = 68 }
+  dresscolor = { r = 223, g = 122, b = 68 },
+  haircolor = { r = 223, g = 122, b = 68 }
 }
 
 local configDesc = {

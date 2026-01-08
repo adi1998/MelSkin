@@ -3,4 +3,4 @@
 ---@diagnostic disable: lowercase-global
 
 -- this file will be reloaded if it changes during gameplay,
--- 	so only assign to values or define things here.
+--     so only assign to values or define things here.

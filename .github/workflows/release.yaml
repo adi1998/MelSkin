@@ -48,7 +48,7 @@ jobs:
         shell: pwsh
         run: |
           (Get-Content $env:thunderstoreconfig -Raw) -replace 'versionNumber = ".*?"', "versionNumber = `"${{ inputs.tag }}`"" | Set-Content $env:thunderstoreconfig
-          (Get-Content README.md) -replace 'images', 'https://media.githubusercontent.com/media/adi1998/MelSkin/refs/heads/main/images' |
+          (Get-Content README.md) -replace 'images/', 'https://media.githubusercontent.com/media/adi1998/MelSkin/refs/heads/main/images/' |
             Set-Content README.md
 
       - name: Install Thunderstore CLI
@@ -72,6 +72,8 @@ jobs:
       - name: Build package
         shell: pwsh
         run: |
+          mkdir data/Custom
+          cp data/None.png data/Custom/custom.png
           tcli build
           $artifact = Get-ChildItem "${{ env.build-dir }}" -File | Select-Object -ExpandProperty Name
           echo "artifact-name=$artifact" | Out-File -FilePath $env:GITHUB_ENV -Append

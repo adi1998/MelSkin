@@ -4,174 +4,73 @@
 
 -- here is where your mod sets up all the things it will do.
 -- this file will not be reloaded if it changes during gameplay
--- 	so you will most likely want to have it reference
---	values and functions later defined in `reload.lua`.
+--     so you will most likely want to have it reference
+--    values and functions later defined in `reload.lua`.
 
--- These are some sample code snippets of what you can do with our modding framework:
-
-
--- for model texture swap
-mod.DressData = {
-    {"Lavender" , "Models/Melinoe/Melinoe_ArachneArmorC"},
-    {"Azure" , "Models/Melinoe/Melinoe_ArachneArmorB"},
-    {"Emerald" , "Models/Melinoe/Melinoe_ArachneArmorA"},
-    {"Onyx" , "Models/Melinoe/Melinoe_ArachneArmorF"},
-    {"Fuchsia" , "Models/Melinoe/Melinoe_ArachneArmorD"},
-    {"Gilded" , "Models/Melinoe/Melinoe_ArachneArmorE"},
-    {"Moonlight" , "Models/Melinoe/Melinoe_ArachneArmorG"},
-    {"Crimson" , "Models/Melinoe/Melinoe_ArachneArmorH"},
-    {"Dark Side" , "Models/Melinoe/MelinoeTransform_Color"},
-    {"Alternate Time", "zerp-MelSkin/skins/Alternate Time"},
-    {"Murderrrrr", "zerp-MelSkin/skins/Halloween 2025"},
-    {"None" , ""},
-}
-
--- for portraitprefix based on Arachne boon
-mod.CostumeDressMap = {
-    ["Models/Melinoe/Melinoe_ArachneArmorC"] = "Lavender",
-    ["Models/Melinoe/Melinoe_ArachneArmorB"] = "Azure",
-    ["Models/Melinoe/Melinoe_ArachneArmorA"] = "Emerald",
-    ["Models/Melinoe/Melinoe_ArachneArmorF"] = "Onyx",
-    ["Models/Melinoe/Melinoe_ArachneArmorD"] = "Fuchsia",
-    ["Models/Melinoe/Melinoe_ArachneArmorE"] = "Gilded",
-    ["Models/Melinoe/Melinoe_ArachneArmorG"] = "Moonlight",
-    ["Models/Melinoe/Melinoe_ArachneArmorH"] = "Crimson",
-}
-
--- list of supported Portraits
-mod.Portraits = 
-{
-    Portraits_Melinoe_01 = true,
-    Portraits_Melinoe_Proud_01 = true,
-    Portraits_Melinoe_Intense_01 = true,
-    Portraits_Melinoe_Vulnerable_01 = true,
-    Portraits_Melinoe_Empathetic_01 = true,
-    Portraits_Melinoe_EmpatheticFlushed_01 = true,
-    Portraits_Melinoe_Hesitant_01 = true,
-    Portraits_Melinoe_Casual_01 = true,
-    Portraits_Melinoe_Pleased_01 = true,
-    Portraits_Melinoe_PleasedFlushed_01 = true,
-}
-
--- for getting available portraits for a dress
-mod.PortraitData = {
-    Emerald =
-    {
-        Portraits = DeepCopyTable(mod.Portraits)
-    },
-    Lavender =
-    {
-        Portraits = DeepCopyTable(mod.Portraits)
-    },
-    Azure =
-    {
-        Portraits = DeepCopyTable(mod.Portraits)
-    },
-    Onyx =
-    {
-        Portraits = DeepCopyTable(mod.Portraits)
-    },
-    Fuchsia =
-    {
-        Portraits = DeepCopyTable(mod.Portraits)
-    },
-    Gilded =
-    {
-        Portraits = DeepCopyTable(mod.Portraits)
-    },
-    Moonlight =
-    {
-        Portraits = DeepCopyTable(mod.Portraits)
-    },
-    Crimson =
-    {
-        Portraits = DeepCopyTable(mod.Portraits)
-    },
-}
-
-mod.NameFileMap = {
-    Portrait_Mel_Default_01 = "Portraits_Melinoe_01",
-    Portrait_Mel_Proud_01 = "Portraits_Melinoe_Proud_01",
-    Portrait_Mel_Intense_01 = "Portraits_Melinoe_Intense_01",
-    Portrait_Mel_Vulnerable_01 = "Portraits_Melinoe_Vulnerable_01",
-    Portrait_Mel_Empathetic_01 = "Portraits_Melinoe_Empathetic_01",
-    Portrait_Mel_EmpatheticFlushed_01 = "Portraits_Melinoe_EmpatheticFlushed_01",
-    Portrait_Mel_Hesitant_01 = "Portraits_Melinoe_Hesitant_01",
-    Portrait_Mel_Casual_01 = "Portraits_Melinoe_Casual_01",
-    Portrait_Mel_Pleased_01 = "Portraits_Melinoe_Pleased_01",
-    Portrait_Mel_PleasedFlushed_01 = "Portraits_Melinoe_PleasedFlushed_01",
-}
-
-function udpateNameFileMap()
-    local tempMap = {}
-    for k,v in pairs(mod.NameFileMap) do
-        tempMap[k .. "_Exit"] = v
-    end
-    for k,v in pairs(tempMap) do
-        mod.NameFileMap[k] = v
-    end
-end
-
-udpateNameFileMap()
+local pluginsData = rom.path.combine(rom.paths.plugins_data(), _PLUGIN.guid)
+local plugins = rom.path.combine(rom.paths.plugins(), _PLUGIN.guid)
+local hueshiftPath = rom.path.combine(pluginsData, "colormap.exe")
+local customPath = rom.path.combine(pluginsData, "Custom")
+local packagePath = rom.path.combine(pluginsData, "zerp-MelSkinCustom")
+-- local rebuildCommand = "powershell \"" .. pluginsData .. "\\build.ps1\""
+local rebuildCommand = "C: & cd \"" .. pluginsData .. "\" & deppth2 hpk -s \"" .. customPath .. "\" -t \"" .. packagePath .. "\""
 
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
+table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustom")
 
-local guiPortraitsVFXFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\GUI_Portraits_VFX.sjson")
-local portraitprefix = "Portraits\\Melinoe\\"
-local modPortraitPrefix = "zerp-MelSkin\\portraits\\"
-
-sjson.hook(guiPortraitsVFXFile, function(data)
-    local newdata = {}
-    for _, entry in ipairs(data.Animations) do
-        local origname = entry.Name
-        local origfilepath = entry.FilePath
-        local origfilename = mod.NameFileMap[origname]
-        if origfilename ~= nil then
-            for dress,portraitData in pairs(mod.PortraitData) do
-                if portraitData ~= nil and portraitData.Portraits ~= nil and portraitData.Portraits[origfilename] then
-                    local newname = dress .. "_" .. origname
-                    print("sjson old name", origname)
-                    print("sjson new name", newname)
-                    -- args.Name = newname
-                    local newfilepath = modPortraitPrefix .. dress .. "\\" .. origfilename
-                    print("sjson old path", origfilepath)
-                    print("sjson new path", newfilepath)
-                    local newentry = DeepCopyTable(entry)
-                    newentry.Name = newname
-                    newentry.FilePath = newfilepath
-                    table.insert(newdata,newentry)
-                end
-            end
+function mod.GetCurrentDress()
+    local costumes = game.GetHeroTraitValues("Costume")
+    if costumes[1] ~= nil then
+        local dress = mod.CostumeDressMap[costumes[1]]
+        if dress ~= nil then
+            return dress
         end
     end
-    for _, entry in ipairs(newdata) do
-        table.insert(data.Animations,entry)
+    local dress = config.dress
+    if config.random_each_run then
+        dress = mod.GetCurrentRunDress()
     end
-end)
-
-
-function mod.UpdateSkin(dress)
-    if CurrentRun ~= nil then
-        SetThingProperty({Property = "GrannyTexture", Value = dress, DestinationId = CurrentRun.Hero.ObjectId})
-    end
+    return dress
 end
 
-for _, dressPair in ipairs(mod.DressData) do
-    local dressName = dressPair[1]
-    local dressValue = dressPair[2]
-    if dressName == config.dress then
-        mod.dressvalue = dressValue
-        mod.UpdateSkin(mod.dressvalue)
-        break
+modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
+    local dress = mod.GetCurrentDress()
+    local dressData = mod.DressData[dress]
+    if dressData ~= nil and dressData.BoonPortrait then
+        ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonSelectObstacle.Name
     end
+    base(source,args)
+    -- resetting base value
+    ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonSelectObstacle.Name
+end)
+
+modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, button)
+    modutil.mod.Path.Wrap("SetAnimation", function (base,args)
+        if args.Name == "BoonSelectMelOut" then
+            local dress = mod.GetCurrentDress()
+            local dressData = mod.DressData[dress]
+            if dressData ~= nil and dressData.BoonPortrait then
+                args.Name = dress .. "_" .. args.Name
+            end
+        end
+        base(args)
+    end)
+end)
+
+function mod.GetDressGrannyTexture(inputDress)
+    if mod.DressData[inputDress] ~= nil then
+        if game.MapState.BabyPolymorph then
+            return mod.DressData[inputDress].ChildGrannyTexture or ""
+        else
+            return mod.DressData[inputDress].GrannyTexture or ""
+        end
+    end
+    return ""
 end
 
 function mod.LoadSkinPackages()
-    for _, packageName in ipairs(mod.skinPackageList) do
-        print("Loading package: " .. packageName)
-        LoadPackages({ Name = packageName })
-    end
+    LoadPackages({Names = mod.skinPackageList})
 end
 
 function mod.dump(o)
@@ -187,20 +86,16 @@ function mod.dump(o)
    end
 end
 
-modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
-	if CurrentRun.Hero.SubtitleColor ~= Color.ChronosVoice and
-        (MapState.HostilePolymorph == false or MapState.HostilePolymorph == nil) and
-        args.Property == "GrannyTexture" and
-        (args.Value == "null" or args.Value == "") and
-        args.DestinationId == CurrentRun.Hero.ObjectId then
-            print("Base args:",mod.dump(args))
-            args_copy = DeepCopyTable(args)
-            args_copy.Value = mod.dressvalue
-            print("Mod args:",mod.dump(args_copy))
-            base(args_copy)
-	else
-		base(args)
-	end
+modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
+    local grannyTexture = mod.GetDressGrannyTexture(config.dress)
+    if config.random_each_run then
+        grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
+    end
+    if (not skipCostume) or game.MapState.BabyPolymorph then
+        game.CostumeData.Costume_Default.GrannyTexture = grannyTexture
+    end
+    base(skipCostume)
+    game.CostumeData.Costume_Default.GrannyTexture = ""
 end)
 
 -- TODO: this is untested
@@ -209,8 +104,21 @@ modutil.mod.Path.Wrap("SetupFlashbackPlayerUnitChronos", function(base,source,ar
     SetThingProperty({Property = "GrannyTexture", Value = "", DestinationId = CurrentRun.Hero.ObjectId})
 end)
 
+modutil.mod.Path.Wrap("MelBackToBedroomPresentation", function(base,source,args)
+    local grannyTexture = mod.GetDressGrannyTexture(config.dress)
+    if config.random_each_run then
+        grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
+        print("skin random", grannyTexture)
+    end
+    SetThingProperty({Property = "GrannyTexture", Value = grannyTexture, DestinationId = CurrentRun.Hero.ObjectId})
+    base(source,args)
+end)
+
 modutil.mod.Path.Wrap("SetupMap", function(base)
     mod.LoadSkinPackages()
+    if game.GameState ~= nil and game.GameState.ModFavoriteDressList == nil then
+        game.GameState.ModFavoriteDressList = {}
+    end
     base()
 end)
 
@@ -219,8 +127,8 @@ function mod.GetPortraitNameFromCostume(filename, name)
     if costumes[1] ~= nil then
         local dress = mod.CostumeDressMap[costumes[1]]
         if dress ~= nil then
-            local portraitData = mod.PortraitData[dress]
-            if portraitData.Portraits[filename] then
+            local dressData = mod.DressData[dress]
+            if dressData.Portraits and dressData.Portraits[filename] then
                 return dress .. "_" .. name
             end
         end
@@ -229,10 +137,15 @@ function mod.GetPortraitNameFromCostume(filename, name)
 end
 
 function mod.GetPortraitNameFromConfig(filename,name)
-    local portraitData = mod.PortraitData[config.dress]
-    if portraitData ~= nil then
-        if portraitData.Portraits[filename] then
-            return config.dress .. "_" .. name
+    local dress = config.dress
+    if config.random_each_run then
+        dress = mod.GetCurrentRunDress()
+        print("portrait random", dress)
+    end
+    local dressData = mod.DressData[dress]
+    if dressData ~= nil then
+        if dressData.Portraits and dressData.Portraits[filename] then
+            return dress .. "_" .. name
         end
     end
     return nil
@@ -240,26 +153,103 @@ end
 
 function mod.SetAnimationWrap(base,args)
     local origname = args.Name
-    local origfilename = mod.NameFileMap[origname]
-    print("play text line", origname, origfilename)
+    local origfilename = mod.PortraitNameFileMap[origname]
     if origfilename ~= nil then
         local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
         print("SetAnimation", origname, newname)
         args.Name = newname
-        base(args)
-        return
+        return base(args)
     end
-    base(args)
+    if game.MapState.BabyPolymorph then
+        local dress = mod.GetCurrentDress()
+        local dressdata = mod.DressData[dress]
+        if dressdata == nil or dressdata.TyphonRivalsPortraitMap == nil then
+            return base(args)
+        end
+        local newname = dressdata.TyphonRivalsPortraitMap[origname]
+        args.Name = newname or args.Name
+        return base(args)
+    end
+    return base(args)
 end
 
 function mod.SetAnimationWrap2(base,args)
     return mod.SetAnimationWrap(base,args)
 end
 
-modutil.mod.Path.Context.Wrap("PlayTextLines", function (source, textLines, args)
+modutil.mod.Path.Context.Wrap.Static("PlayTextLines", function (source, textLines, args)
     modutil.mod.Path.Wrap("SetAnimation", mod.SetAnimationWrap)
 end)
 
-modutil.mod.Path.Context.Wrap("PlayEmoteAnimFromSource", function (source, args, screen, lines)
+modutil.mod.Path.Context.Wrap.Static("PlayEmoteAnimFromSource", function (source, args, screen, lines)
     modutil.mod.Path.Wrap("SetAnimation", mod.SetAnimationWrap)
 end)
+
+function mod.SetRandomDress()
+    local randomDress = ""
+    if game.GameState.ModFavoriteDressList ~= nil and #game.GameState.ModFavoriteDressList > 0 then
+        randomDress = game.GetRandomArrayValue(game.GameState.ModFavoriteDressList)
+    else
+        randomDress = game.GetRandomArrayValue(mod.DressDisplayOrder)
+    end
+    print("Random dress", randomDress)
+    CurrentRun.Hero.ModDressData = randomDress
+end
+
+function mod.GetCurrentRunDress()
+    -- if this is called, it means random is enabled
+    if CurrentRun.Hero.ModDressData == nil or CurrentRun.Hero.ModDressData == "" then
+        mod.SetRandomDress()
+    end
+    return CurrentRun.Hero.ModDressData
+end
+
+modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
+    local retValue = base(prevRun,args)
+    if game.GameState ~= nil and game.GameState.ModFavoriteDressList == nil then
+        game.GameState.ModFavoriteDressList = {}
+    end
+    if config.random_each_run then
+        mod.SetRandomDress()
+    else
+        CurrentRun.Hero.ModDressData = nil
+    end
+    return retValue
+end)
+
+function mod.CheckDressInFavorite(dressName)
+    return game.Contains(game.GameState.ModFavoriteDressList,dressName)
+end
+
+function mod.RemoveFavoriteDress(dressName)
+    local index = game.GetIndex(GameState.ModFavoriteDressList, dressName)
+    if index == 0 then
+        print("trying to remove unknown dress")
+        return
+    end
+    game.RemoveIndexAndCollapse(GameState.ModFavoriteDressList, index)
+end
+
+function mod.AddFavoriteDress(dressName)
+    table.insert(GameState.ModFavoriteDressList, dressName)
+end
+
+function mod.ReloadCustomTexture()
+    local driveLetter = pluginsData:sub(1,1)
+    local hueshiftCommand = driveLetter .. ": & cd \"" .. pluginsData .. "\" & " .. hueshiftPath .. " --path \"" .. pluginsData .. "\" "
+    local rgbCommand = hueshiftCommand
+    if config.custom_dress_color and config.custom_dress then
+        rgbCommand = rgbCommand .. " --dress " .. tostring(config.dresscolor.r) .. "," .. tostring(config.dresscolor.g) .. "," .. tostring(config.dresscolor.b)
+    end
+    if config.custom_hair_color then
+        rgbCommand = rgbCommand .. " --hair " .. tostring(config.haircolor.r) .. "," .. tostring(config.haircolor.g) .. "," .. tostring(config.haircolor.b)
+    end
+    if config.custom_dress and not config.custom_dress_color then
+        rgbCommand = rgbCommand .. " --base " .. config.custom_dress_base
+    end
+    print("running", rgbCommand)
+    local handle = os.execute(rgbCommand)
+
+    game.UnloadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})
+    game.LoadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})
+end

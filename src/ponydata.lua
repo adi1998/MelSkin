@@ -11,7 +11,7 @@ mod.DressScreenData = {
 
             BackgroundTint =
             {
-                Graphic = "rectangle01",
+                Graphic = "",
                 GroupName = "Combat_Menu_TraitTray_Backing",
                 Scale = 10,
                 X = ScreenCenterX,
@@ -20,11 +20,11 @@ mod.DressScreenData = {
 
             Background =
             {
-                Graphic = "Box_FullScreen",
+                Graphic = "MelSkin_Box_Preview",
                 GroupName = "Combat_Menu_TraitTray",
                 X = ScreenCenterX,
                 Y = ScreenCenterY,
-                Scale = 1.15,
+                Scale = 1,
                 Text = "Select Dress",
                 TextArgs =
                 {
@@ -39,6 +39,33 @@ mod.DressScreenData = {
                 },
 
                 Children = {
+
+                    RandomDressButton =
+                    {
+                        Name = "ButtonDefault",
+                        Group = "Combat_Menu_TraitTray",
+                        Scale = 1.2,
+                        ScaleX = 1.6,
+                        OffsetX = 0,
+                        OffsetY = 420,
+                        Text = "Randomize Dress Each Run",
+                        TextArgs =
+                        {
+                            FontSize = 22,
+                            Width = 720,
+                            Color = Color.White,
+                            Font = "P22UndergroundSCMedium",
+                            ShadowBlur = 0,
+                            ShadowColor = { 0, 0, 0, 1 },
+                            ShadowOffset = { 0, 2 },
+                            Justification = "Center"
+                        },
+                        Data = {
+                            OnPressedFunctionName = _PLUGIN.guid .. '.' .. 'ToggleRandomDressSelection',
+                            RandomButtonId = "RandomButtonId"
+                        },
+                    },
+
                     CloseButton =
                     {
                         Graphic = "ButtonClose",
@@ -50,8 +77,80 @@ mod.DressScreenData = {
                         {
                             OnPressedFunctionName = _PLUGIN.guid .. '.' .. 'CloseDressSelector',
                             ControlHotkeys = { "Cancel", },
+                            MouseControlHotkeys  = { "Cancel", "Inventory", },
                         },
                     },
+
+                    SelectButton =
+                    {
+                        Graphic = "ContextualActionButton",
+                        GroupName = "Combat_Menu_TraitTray",
+                        Alpha = 1,
+                        OffsetY = 420,
+                        OffsetX = 440,
+                        Data =
+                        {
+                            -- For display only
+                            OnMouseOverFunctionName = "MouseOverContextualAction",
+                            OnMouseOffFunctionName = "MouseOffContextualAction",
+                        },
+                        Text = "{SL} Select",
+                        TextArgs = UIData.ContextualButtonFormatRight,
+                    },
+
+                    FavoriteButton =
+                    {
+                        Graphic = "ContextualActionButton",
+                        GroupName = "Combat_Menu_TraitTray",
+                        Alpha = 1,
+                        OffsetY = 420,
+                        OffsetX = 805,
+                        Data =
+                        {
+                            -- Hotkey only
+                            OnMouseOverFunctionName = "MouseOverContextualAction",
+                            OnMouseOffFunctionName = "MouseOffContextualAction",
+                            OnPressedFunctionName = _PLUGIN.guid .. '.' .. "ToggleFavriteDressSelection",
+                            ControlHotkeys = { "ItemPin" }
+                        },
+                        Text = "{IP} Add/Remove Favorite",
+                        TextArgs = UIData.ContextualButtonFormatRight,
+                    },
+
+                    ResetFavoriteButton =
+                    {
+                        Graphic = "ContextualActionButton",
+                        GroupName = "Combat_Menu_TraitTray",
+                        Alpha = 1,
+                        OffsetY = 420,
+                        OffsetX = -820,
+                        Data =
+                        {
+                            OnMouseOverFunctionName = "MouseOverContextualAction",
+                            OnMouseOffFunctionName = "MouseOffContextualAction",
+                            OnPressedFunctionName = _PLUGIN.guid .. "." .. "ResetFavorites",
+                            ControlHotkeys = { "MenuLeft" },
+                        },
+                        Text = "{ML} Reset Favorites",
+                        TextArgs = UIData.ContextualButtonFormatLeft,
+                    },
+                    SelectAllFavoriteButton =
+                    {
+                        Graphic = "ContextualActionButton",
+                        GroupName = "Combat_Menu_TraitTray",
+                        Alpha = 1,
+                        OffsetY = 420,
+                        OffsetX = -530,
+                        Data =
+                        {
+                            OnMouseOverFunctionName = "MouseOverContextualAction",
+                            OnMouseOffFunctionName = "MouseOffContextualAction",
+                            OnPressedFunctionName = _PLUGIN.guid .. "." .. "FavoriteAll",
+                            ControlHotkeys = { "MenuRight" },
+                        },
+                        Text = "{MR} Favorite All",
+                        TextArgs = UIData.ContextualButtonFormatLeft,
+                    }
                 }
             }
         }

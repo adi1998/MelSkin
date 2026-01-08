@@ -13,25 +13,26 @@ on:
         default: true
 
 permissions:
-  contents: write # required for pushing to the repository and creating releases
+  contents: write
 
 env:
   changelog: CHANGELOG.md
-  thunderstore-config: thunderstore.toml
+  thunderstoreconfig: thunderstore.toml
   build-dir: build
   artifact-content-type: application/zip
 
 jobs:
   release:
     name: ${{ format('{0} {1}', inputs.is-dry-run && 'Dry-run' || 'Release', inputs.tag) }}
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Check input tag format
+        shell: pwsh
         run: |
-          if ! echo "${{ inputs.tag }}" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$'; then
-            echo "::error title=Invalid package version number::Version numbers must follow the Major.Minor.Patch format (e.g. 1.45.320)."
+          if (-not ("${{ inputs.tag }}" -match '^[0-9]+\.[0-9]+\.[0-9]+$')) {
+            Write-Error "Invalid version. Must follow Major.Minor.Patch (e.g. 1.45.320)"
             exit 1
-          fi
+          }
 
       - name: Checkout files
         uses: actions/checkout@1d96c772d19495a3b5c517cd2bc0cb401ea0529f
@@ -44,21 +45,44 @@ jobs:
           tag: ${{ inputs.tag }}
 
       - name: Rotate version in Thunderstore CLI config
+        shell: pwsh
         run: |
-          sed -i 's/versionNumber = ".*"/versionNumber = "${{ inputs.tag }}"/' ${{ env.thunderstore-config }}
-          sed -i 's/images/https:\/\/media.githubusercontent.com\/media\/adi1998\/${{ github.event.repository.name }}\/refs\/heads\/main\/images/g' README.md
+          (Get-Content $env:thunderstoreconfig -Raw) -replace 'versionNumber = ".*?"', "versionNumber = `"${{ inputs.tag }}`"" | Set-Content $env:thunderstoreconfig
+          (Get-Content README.md) -replace 'images/', 'https://media.githubusercontent.com/media/adi1998/MelSkin/refs/heads/main/images/' |
+            Set-Content README.md
 
       - name: Install Thunderstore CLI
+        shell: pwsh
         run: dotnet tool install -g tcli
 
-      - name: Build package
+      - name: Install deppth2 and pyinstaller
+        shell: pwsh
+        run: pip install deppth2 pillow lz4 PyTexturePacker pyinstaller
+
+      - name: build packages
+        shell: pwsh
         run: |
           mkdir data/Custom
           cp data/None.png data/Custom/custom.png
+          deppth2 hpk -s .\data\Custom -t .\data\zerp-MelSkinCustom
+          rm -force -recurse data/zerp-MelSkinCustom
+
+      - name: build colormap
+        shell: pwsh
+        run: |
+          pyinstaller .\src\colormap.py  --distpath data -F
+
+      - name: Add .NET tools to PATH
+        shell: pwsh
+        run: echo "$env:USERPROFILE\.dotnet\tools" | Out-File -FilePath $env:GITHUB_PATH -Append
+
+      - name: Build package
+        shell: pwsh
+        run: |
           tcli build
-          ARTIFACT_NAME=$(find "${{ env.build-dir }}" -type f -printf "%f\n")
-          echo "artifact-name=${ARTIFACT_NAME}" >> "$GITHUB_ENV"
-          echo "artifact-path=${{ env.build-dir }}/${ARTIFACT_NAME}" >> "$GITHUB_ENV"
+          $artifact = Get-ChildItem "${{ env.build-dir }}" -File | Select-Object -ExpandProperty Name
+          echo "artifact-name=$artifact" | Out-File -FilePath $env:GITHUB_ENV -Append
+          echo "artifact-path=${{ env.build-dir }}/$artifact" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Upload artifact to workflow
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808
@@ -69,18 +93,21 @@ jobs:
 
       - name: Publish package
         if: ${{ !inputs.is-dry-run }}
+        shell: pwsh
         env:
           TCLI_AUTH_TOKEN: ${{ secrets.TCLI_AUTH_TOKEN }}
         run: tcli publish --file ${{ env.artifact-path }}
 
       - name: Tag and push to repository
         if: ${{ !inputs.is-dry-run }}
+        shell: pwsh
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ${{ env.changelog }} ${{ env.thunderstore-config }}
-          git commit --message "Release ${{ inputs.tag }}"
-          git tag ${{ inputs.tag }} --annotate --message "Release ${{ inputs.tag }}"
+
+          git add $env:changelog $env:thunderstoreconfig
+          git commit -m "Release ${{ inputs.tag }}"
+          git tag ${{ inputs.tag }} -a -m "Release ${{ inputs.tag }}"
           git push origin HEAD:${{ github.ref_name }} --tags
 
       - name: Create release
@@ -104,4 +131,3 @@ jobs:
           asset_content_type: ${{ env.artifact-content-type }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-

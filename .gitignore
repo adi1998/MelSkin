@@ -16,9 +16,11 @@ tcli.exe
 
 # ignore unpacked package contents
 /data/zerp-MelSkin
-/data/zerp-MelSkinCustom
+/data/zerp-MelSkinCustom*
+/data/zerp-MelSkinCustom/
 /data/Custom
 
 # ignore PSD files
 *.psd
 *.spec
+*.exe

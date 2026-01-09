@@ -97,6 +97,14 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
     end
     base(skipCostume)
     game.CostumeData.Costume_Default.GrannyTexture = ""
+    local dress = config.dress
+    if config.random_each_run then
+        dress = mod.GetCurrentRunDress()
+    end
+    game.StopAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
+    if dress and not mod.DressData[dress].DisableMelArmGlow then
+        game.CreateAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
+    end
 end)
 
 -- TODO: this is untested
@@ -264,3 +272,14 @@ function mod.ReloadCustomTexture()
     game.UnloadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})
     game.LoadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})
 end
+
+modutil.mod.Path.Wrap("SetupHeroObject", function (base,...)
+    base(...)
+    local dress = config.dress
+    if config.random_each_run then
+        dress = mod.GetCurrentRunDress()
+    end
+    if dress and mod.DressData[dress].DisableMelArmGlow then
+        game.StopAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
+    end
+end)

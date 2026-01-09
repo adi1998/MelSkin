@@ -74,7 +74,8 @@ mod.DressData = {
         TyphonRivalsPortraitMap = {
             Portrait_Mel_Child_Defiant_01 = "Portrait_Melinoe_Child_Ending_Defiant_01",
             Portrait_Mel_Child_Defiant_01_Exit = "Portrait_Melinoe_Child_Ending_Defiant_01_Exit",
-        }
+        },
+        DisableMelArmGlow = true,
     },
     Murderrrrr =
     {

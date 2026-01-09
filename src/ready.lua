@@ -119,7 +119,7 @@ modutil.mod.Path.Wrap("MelBackToBedroomPresentation", function(base,source,args)
         grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
         print("skin random", grannyTexture)
     end
-    SetThingProperty({Property = "GrannyTexture", Value = grannyTexture, DestinationId = CurrentRun.Hero.ObjectId})
+    game.SetThingProperty({Property = "GrannyTexture", Value = grannyTexture, DestinationId = game.CurrentRun.Hero.ObjectId})
     base(source,args)
 end)
 
@@ -202,15 +202,15 @@ function mod.SetRandomDress()
         randomDress = game.GetRandomArrayValue(mod.DressDisplayOrder)
     end
     print("Random dress", randomDress)
-    CurrentRun.Hero.ModDressData = randomDress
+    game.CurrentRun.Hero.ModDressData = randomDress
 end
 
 function mod.GetCurrentRunDress()
     -- if this is called, it means random is enabled
-    if CurrentRun.Hero.ModDressData == nil or CurrentRun.Hero.ModDressData == "" then
+    if game.CurrentRun.Hero.ModDressData == nil or game.CurrentRun.Hero.ModDressData == "" then
         mod.SetRandomDress()
     end
-    return CurrentRun.Hero.ModDressData
+    return game.CurrentRun.Hero.ModDressData
 end
 
 modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
@@ -221,7 +221,7 @@ modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
     if config.random_each_run then
         mod.SetRandomDress()
     else
-        CurrentRun.Hero.ModDressData = nil
+        game.CurrentRun.Hero.ModDressData = nil
     end
     return retValue
 end)
@@ -231,16 +231,16 @@ function mod.CheckDressInFavorite(dressName)
 end
 
 function mod.RemoveFavoriteDress(dressName)
-    local index = game.GetIndex(GameState.ModFavoriteDressList, dressName)
+    local index = game.GetIndex(game.GameState.ModFavoriteDressList, dressName)
     if index == 0 then
         print("trying to remove unknown dress")
         return
     end
-    game.RemoveIndexAndCollapse(GameState.ModFavoriteDressList, index)
+    game.RemoveIndexAndCollapse(game.GameState.ModFavoriteDressList, index)
 end
 
 function mod.AddFavoriteDress(dressName)
-    table.insert(GameState.ModFavoriteDressList, dressName)
+    table.insert(game.GameState.ModFavoriteDressList, dressName)
 end
 
 function mod.ReloadCustomTexture()

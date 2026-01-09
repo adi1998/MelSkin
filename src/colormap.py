@@ -92,7 +92,7 @@ def hue(hue_raw):
     return (int(hue_raw) + 360) % 360
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--path", type=str)
+parser.add_argument("--path", type=str, required=True)
 parser.add_argument("--dress", type=rgb)
 parser.add_argument("--hair", type=rgb)
 parser.add_argument("--base", type=str)
@@ -111,9 +111,6 @@ hair_path = os.path.join(input_folder,"hair.png")
 arm_path = os.path.join(input_folder,"arm.png")
 dress_hue_path = os.path.join(input_folder,"dress_hue.png")
 custom_path = os.path.join(input_folder,"Custom/custom.png")
-
-shifted_dress = None
-shifted_hair = None
 
 modified_layers = []
 

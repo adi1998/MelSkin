@@ -9,7 +9,8 @@
 
 local pluginsData = rom.path.combine(rom.paths.plugins_data(), _PLUGIN.guid)
 local plugins = rom.path.combine(rom.paths.plugins(), _PLUGIN.guid)
-local hueshiftPath = rom.path.combine(pluginsData, "colormap.exe")
+local colorMapExePath = rom.path.combine(pluginsData, "colormap.exe")
+local colorMapScriptPath = "python " .. rom.path.combine(plugins, "colormap.py")
 local customPath = rom.path.combine(pluginsData, "Custom")
 local packagePath = rom.path.combine(pluginsData, "zerp-MelSkinCustom")
 -- local rebuildCommand = "powershell \"" .. pluginsData .. "\\build.ps1\""
@@ -236,8 +237,12 @@ end
 
 function mod.ReloadCustomTexture()
     local driveLetter = pluginsData:sub(1,1)
-    local hueshiftCommand = driveLetter .. ": & cd \"" .. pluginsData .. "\" & " .. hueshiftPath .. " --path \"" .. pluginsData .. "\" "
-    local rgbCommand = hueshiftCommand
+    local colorMapPath = colorMapExePath
+    if not config.use_exe then
+        colorMapPath = colorMapScriptPath
+    end
+    local colorMapCommand = driveLetter .. ": & cd \"" .. pluginsData .. "\" & " .. colorMapPath .. " --path \"" .. pluginsData .. "\" "
+    local rgbCommand = colorMapCommand
     if config.custom_dress_color and config.custom_dress then
         rgbCommand = rgbCommand .. " --dress " .. tostring(config.dresscolor.r) .. "," .. tostring(config.dresscolor.g) .. "," .. tostring(config.dresscolor.b)
     end
@@ -246,6 +251,12 @@ function mod.ReloadCustomTexture()
     end
     if config.custom_dress and not config.custom_dress_color then
         rgbCommand = rgbCommand .. " --base " .. config.custom_dress_base
+    end
+    if config.custom_arm_color then
+        rgbCommand = rgbCommand .. " --arm " .. tostring(config.arm_hue)
+    end
+    if config.bright_dress then
+        rgbCommand = rgbCommand .. " --bright "
     end
     print("running", rgbCommand)
     local handle = os.execute(rgbCommand)

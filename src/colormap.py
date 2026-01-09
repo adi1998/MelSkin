@@ -5,6 +5,30 @@ import os
 import argparse
 import deppth2.texpacking as texpack
 
+def hue_shift(image_path, hue_shift=50):
+    with Image.open(image_path) as img:
+        # Convert image to RGB if it's not already
+        img = img.convert('RGBA')
+        
+        # Get image data as a list of RGB tuples
+        data = img.getdata()
+        
+        # Convert RGB to HSV, shift the hue, and convert back to RGB
+        new_data = []
+        for item in data:
+            r, g, b, a = item
+            h, s, v = colorsys.rgb_to_hsv(r/255., g/255., b/255.)
+            h = (h + hue_shift/360) % 1
+            r, g, b = colorsys.hsv_to_rgb(h, s, v)
+            new_data.append((int(r*255), int(g*255), int(b*255), a))
+        
+        # Create a new image with the shifted colors
+        new_img = Image.new(img.mode, img.size)
+        new_img.putdata(new_data)
+        
+        # new_img.show()
+        return new_img
+
 def replace_pixels(base_img, input_img):
     if input_img == None :
         return base_img
@@ -64,14 +88,16 @@ def gradient_map_dress(image_path, color):
 def rgb(string):
     return tuple([int(i.strip()) for i in string.split(",")])
 
-# Usage
-
+def hue(hue_raw):
+    return (int(hue_raw) + 360) % 360
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--path", type=str)
 parser.add_argument("--dress", type=rgb)
 parser.add_argument("--hair", type=rgb)
 parser.add_argument("--base", type=str)
+parser.add_argument("--arm", type=hue)
+parser.add_argument("--bright" ,action="store_true")
 
 args = parser.parse_args()
 input_folder = args.path
@@ -79,26 +105,35 @@ atlas_path = os.path.join(input_folder,"None.png")
 if args.base != None:
     atlas_path = os.path.join(input_folder,f"{args.base}.png")
 dress_path = os.path.join(input_folder,"dress.png")
+if args.bright:
+    dress_path = os.path.join(input_folder,"dress-bright.png")
 hair_path = os.path.join(input_folder,"hair.png")
+arm_path = os.path.join(input_folder,"arm.png")
 dress_hue_path = os.path.join(input_folder,"dress_hue.png")
 custom_path = os.path.join(input_folder,"Custom/custom.png")
 
 shifted_dress = None
 shifted_hair = None
 
+modified_layers = []
+
 if args.dress:
-    shifted_dress = gradient_map_dress(dress_path, args.dress)
+    modified_layers.append(gradient_map_dress(dress_path, args.dress))
 
 if args.hair:
-    shifted_hair = gradient_map_hair(hair_path, args.hair)
+    modified_layers.append(gradient_map_hair(hair_path, args.hair))
+
+if args.arm:
+    modified_layers.append(hue_shift(arm_path, args.arm))
 # shifted.save(dress_hue_path)
 
 img = Image.open(atlas_path)
 
-new_dress = replace_pixels(img, shifted_dress)
-new_hair = replace_pixels(new_dress, shifted_hair)
+for layer in modified_layers:
+    img = replace_pixels(img, layer)
+
 # new_hair.show()
-new_hair.save(custom_path)
+img.save(custom_path)
 
 source_folder = os.path.join(input_folder, "Custom")
 target_folder = os.path.join(input_folder, "zerp-MelSkinCustom")

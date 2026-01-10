@@ -23,10 +23,15 @@ local h, s, v = rom.ImGui.ColorConvertRGBtoHSV(r, g, b)
 local text_hsv = { 130/360, 56/100, 89/100 }
 local back_hsv = { 160/360, 64/100, 38/100 }
 
+local zoom = false
+
 rom.gui.add_imgui(function()
     if rom.ImGui.Begin("Dress Selector") then
         drawMenu()
         rom.ImGui.End()
+    elseif zoom then
+        zoom = false
+        mod.ResetMenuZoom()
     end
 end)
 
@@ -38,6 +43,13 @@ rom.gui.add_to_menu_bar(function()
 end)
 
 function drawMenu()
+
+    if not zoom then
+        AdjustZoom({ Fraction = 2.8, Duration = 0.3 })
+        game.thread(mod.ResetZoomAfterGuiClose)
+        zoom = true
+    end
+
     rom.ImGui.Text("Select Dress")
     if rom.ImGui.BeginCombo("###dress", config.dress) then
         for _, dressName in ipairs(mod.DressDisplayOrder) do
@@ -201,4 +213,12 @@ function drawMenu()
         previousConfig.random_each_run = value
         game.SetupCostume()
     end
+end
+
+function mod.ResetZoomAfterGuiClose()
+    while rom.gui.is_open() do
+        wait(0.3)
+    end
+    zoom = false
+    mod.ResetMenuZoom()
 end

@@ -39,6 +39,9 @@ rom.gui.add_to_menu_bar(function()
     if rom.ImGui.BeginMenu("Configure Dress") then
         drawMenu()
         rom.ImGui.EndMenu()
+    elseif zoom then
+        zoom = false
+        mod.ResetMenuZoom()
     end
 end)
 
@@ -46,7 +49,7 @@ function drawMenu()
 
     if not zoom then
         AdjustZoom({ Fraction = 2.8, Duration = 0.3 })
-        game.thread(mod.ResetZoomAfterGuiClose)
+        game.thread(mod.ResetZoomAfterImGuiClose)
         zoom = true
     end
 
@@ -215,7 +218,7 @@ function drawMenu()
     end
 end
 
-function mod.ResetZoomAfterGuiClose()
+function mod.ResetZoomAfterImGuiClose()
     while rom.gui.is_open() do
         wait(0.3)
     end

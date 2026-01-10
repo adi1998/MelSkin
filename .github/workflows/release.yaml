@@ -57,7 +57,7 @@ jobs:
 
       - name: Install deppth2 and pyinstaller
         shell: pwsh
-        run: pip install deppth2 pillow lz4 PyTexturePacker pyinstaller
+        run: pip install deppth2 pillow lz4 PyTexturePacker
 
       - name: build packages
         shell: pwsh
@@ -66,11 +66,6 @@ jobs:
           cp data/None.png data/Custom/custom.png
           deppth2 hpk -s .\data\Custom -t .\data\zerp-MelSkinCustom
           rm -force -recurse data/zerp-MelSkinCustom
-
-      - name: build colormap
-        shell: pwsh
-        run: |
-          pyinstaller .\src\colormap.py  --distpath data -F
 
       - name: Add .NET tools to PATH
         shell: pwsh

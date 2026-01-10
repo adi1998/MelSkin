@@ -4,6 +4,8 @@
 
 - Add ghost arm slider
 - Disable arm glow for Alternate Time
+- Zoom during imgui menu
+- Dev: move exe to helper mod
 
 ## [1.8.0] - 2026-01-07
 

@@ -3,7 +3,6 @@ local config = {
   dress = "None";
   random_each_run = false;
   debug_reload = false;
-  hue_shift = 0;
   dresscolor = { r = 223, g = 122, b = 68 },
   haircolor = { r = 223, g = 122, b = 68 },
   arm_hue = 0,
@@ -20,6 +19,13 @@ local configDesc = {
   dress = "Select a skin from Lavender, Azure, Emerald, Onyx, Fuchsia, Gilded, Moonlight, Crimson, and more";
   random_each_run = "Choose a dress randomly at the start of the run.";
   debug_reload = "Meant for dev/debug purposes";
+  arm_hue = "Hue shift for Mel Arm Glow (0-360)";
+  custom_dress_color = "Use a custom color for the dress";
+  custom_hair_color = "Use a custom color for the dress";
+  custom_dress = "Use base game dress for Custom skin";
+  custom_arm_color = "Set a custom arm glow hue";
+  use_exe = "DEBUG: set false to use the script instead of exe";
+  bright_dress = "Use a bright dress as the custom dress base";
 }
 
 return config, configDesc

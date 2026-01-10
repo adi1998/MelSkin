@@ -9,8 +9,8 @@
 
 local pluginsData = rom.path.combine(rom.paths.plugins_data(), _PLUGIN.guid .. "Helper")
 local plugins = rom.path.combine(rom.paths.plugins(), _PLUGIN.guid .. "Helper")
-local colorMapExePath = rom.path.combine(pluginsData, "colormap.exe")
-local colorMapScriptPath = "python " .. rom.path.combine(plugins, "colormap.py")
+local colorMapExePath = "start /b /wait \"\" \"" .. rom.path.combine(pluginsData, "colormap.exe") .. "\""
+local colorMapScriptPath = "python \"" .. rom.path.combine(plugins, "colormap.py") .. "\""
 local customPath = rom.path.combine( _PLUGIN.plugins_mod_folder_path, "Custom")
 local packagePath = rom.path.combine( _PLUGIN.plugins_data_mod_folder_path, "zerp-MelSkinCustom")
 -- local rebuildCommand = "powershell \"" .. pluginsData .. "\\build.ps1\""
@@ -249,7 +249,7 @@ function mod.ReloadCustomTexture()
     if not config.use_exe then
         colorMapPath = colorMapScriptPath
     end
-    local colorMapCommand = driveLetter .. ": & cd \"" .. _PLUGIN.plugins_data_mod_folder_path .. "\" & " .. colorMapPath .. " --path \"" .. pluginsData .. "\" "
+    local colorMapCommand = driveLetter .. ": & cd \"" .. _PLUGIN.plugins_data_mod_folder_path .. "\" & " .. colorMapPath .. " --path \"" .. _PLUGIN.plugins_data_mod_folder_path .. "\" "
     local rgbCommand = colorMapCommand
     if config.custom_dress_color and config.custom_dress then
         rgbCommand = rgbCommand .. " --dress " .. tostring(config.dresscolor.r) .. "," .. tostring(config.dresscolor.g) .. "," .. tostring(config.dresscolor.b)

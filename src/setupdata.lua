@@ -1,4 +1,4 @@
-function udpatePortraitNameFileMap()
+function UdpatePortraitNameFileMap()
     local tempMap = {}
     for k,v in pairs(mod.PortraitNameFileMap) do
         tempMap[k .. "_Exit"] = v
@@ -25,4 +25,4 @@ end
 
 public.AddEntriesToDressData = mod.AddEntriesToDressData
 
-udpatePortraitNameFileMap()
+UdpatePortraitNameFileMap()

@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Add ghost arm slider
+- Disable arm glow for Alternate Time
+
 ## [1.8.0] - 2026-01-07
 
 - Add color slider for dress and hair
@@ -12,7 +15,7 @@
 
 ## [1.7.0] - 2025-12-15
 
-- Add Alternate Time(repalced with young ending Mel) and DarkSide costume for Rivals Typhon.
+- Add Alternate Time(replaced with ending young Mel) and DarkSide costume for Rivals Typhon.
 - Replace young Mel portrait with the ending one for Alternate Time
 
 ## [1.6.1] - 2025-12-15

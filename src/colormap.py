@@ -97,7 +97,7 @@ parser.add_argument("--dress", type=rgb)
 parser.add_argument("--hair", type=rgb)
 parser.add_argument("--base", type=str)
 parser.add_argument("--arm", type=hue)
-parser.add_argument("--bright" ,action="store_true")
+parser.add_argument("--bright", action="store_true")
 
 args = parser.parse_args()
 input_folder = args.path

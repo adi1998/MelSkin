@@ -3,9 +3,9 @@ mod.PresetList = {
         Name = "Default",
         Dress = {
             Color = true,
-            R = 223,
-            G = 122,
-            B = 68,
+            R = 202,
+            G = 105,
+            B = 28,
             Bright = false,
             -- Base = "None"
         },

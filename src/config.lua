@@ -3,7 +3,7 @@ local config = {
   dress = "None";
   random_each_run = false;
   debug_reload = false;
-  dresscolor = { r = 223, g = 122, b = 68 },
+  dresscolor = { r = 202, g = 105, b = 28 },
   haircolor = { r = 203, g = 178, b = 121 },
   arm_hue = 0,
   custom_dress_color = false,

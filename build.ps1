@@ -23,5 +23,6 @@ rm -force -recurse data/zerp-MelSkin
 rm -force -recurse data/zerp-MelSkinPortraits -ErrorAction SilentlyContinue  
 rm -force -recurse data/zerp-MelSkinCustom
 rm -force -recurse data/small
+rm -force data/update -ErrorAction SilentlyContinue
 
 tcli build

@@ -51,19 +51,33 @@ function mod.ReadPresetsFromFile()
             print("Failed to read preset file", filePresets)
         end
     end
-    if mod.PresetTable["LastApplied"] ~= nil then
+    local touchFile = io.open(rom.path.combine(_PLUGIN.plugins_data_mod_folder_path, "update"), "r")
+    local isTouch = touchFile~=nil and io.close(touchFile)
+    if not isTouch and mod.PresetTable["LastApplied"] ~= nil then
         LoadPreset(true)
         mod.ReloadCustomTexture(true)
+        touchFile = io.open(rom.path.combine(_PLUGIN.plugins_data_mod_folder_path, "update"), "w+")
+        if touchFile then
+            touchFile:write("")
+            touchFile:close()
+        end
     end
 end
 
-function mod.WritePresetsToFile()
+function mod.WritePresetsToFile(lastApplied)
     -- local fileHandle = io.open(presetFilePath, "w+")
     -- if not fileHandle then
     --     print("Error opening presets file for writing", presetFilePath)
     --     return
     -- end
     -- mod.ReadPresetsFromFile()
+    if lastApplied then
+        local touchFile = io.open(rom.path.combine(_PLUGIN.plugins_data_mod_folder_path, "update"), "w+")
+        if touchFile then
+            touchFile:write("")
+            touchFile:close()
+        end
+    end
     local success, fileString = pcall( rom.toml.encodeToFile, mod.PresetTable, { file = presetFilePath, overwrite = true } )
     if success then
         print("Successfully saved preset file")

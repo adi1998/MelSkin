@@ -7,11 +7,6 @@
 --     so you will most likely want to have it reference
 --    values and functions later defined in `reload.lua`.
 
-local pluginsData = rom.path.combine(rom.paths.plugins_data(), _PLUGIN.guid .. "Helper")
-local plugins = rom.path.combine(rom.paths.plugins(), _PLUGIN.guid .. "Helper")
-local colorMapExePath = "start /b /wait \"\" \"" .. rom.path.combine(pluginsData, "colormap.exe") .. "\""
-local colorMapScriptPath = "python \"" .. rom.path.combine(plugins, "colormap.py") .. "\""
-
 mod.skinPackageList = {}
 -- table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinSmall")
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinPortraits")

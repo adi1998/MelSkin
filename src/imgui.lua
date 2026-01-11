@@ -317,7 +317,7 @@ function LoadPreset(lastApplied)
     else
         config.custom_dress = false
     end
-    presetNameBuffer = config.current_preset
+    if not lastApplied then presetNameBuffer = config.current_preset end
 end
 
 function SavePreset(lastApplied)
@@ -359,7 +359,7 @@ function SavePreset(lastApplied)
     else
         mod.PresetTable["LastApplied"] = preset
     end
-    mod.WritePresetsToFile()
+    mod.WritePresetsToFile(lastApplied)
     if not lastApplied then
         config.current_preset = presetNameBuffer
         presetNameBuffer = ""

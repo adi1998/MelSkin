@@ -101,7 +101,7 @@ local function AddPreviewSjson()
 
     local newSubItem = sjson.to_object({
         EditorOutlineDrawBounds = false,
-        Graphic = "zerp-MelSkin\\Box_Preview"
+        Graphic = "zerp-MelSkinPortraits\\Box_Preview"
     }, gui_order_2)
 
     local newItem = sjson.to_object({

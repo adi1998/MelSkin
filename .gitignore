@@ -15,9 +15,10 @@
 tcli.exe
 
 # ignore unpacked package contents
-/data/zerp-MelSkin
+/data/zerp-MelSkin/
+/data/zerp-MelSkin.*
 /data/zerp-MelSkinPortraits
-/data/zerp-MelSkinSmall
+/data/zerp-MelSkinSmall*
 /data/zerp-MelSkinCustom*
 /data/zerp-MelSkinCustom/
 /data/Custom

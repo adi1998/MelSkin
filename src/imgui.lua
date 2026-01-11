@@ -25,6 +25,9 @@ local back_hsv = { 160/360, 64/100, 38/100 }
 
 local zoom = false
 
+local presetNameBuffer = ""
+local prevPresetBuffer = ""
+
 rom.gui.add_imgui(function()
     if rom.ImGui.Begin("Dress Selector") then
         drawMenu()
@@ -205,7 +208,42 @@ function drawMenu()
             if clicked then
                 game.thread(mod.ReloadCustomTexture, cdress)
             end
+
+            text, selected = rom.ImGui.InputText("###preset name", presetNameBuffer, 100)
+            if selected and text ~= prevPresetBuffer then
+                prevPresetBuffer = text
+                presetNameBuffer = text
+            end
+
+            rom.ImGui.SameLine()
+
+            local clicked = rom.ImGui.Button("Save")
+            if clicked then
+                SavePreset()
+            end
+
+            if rom.ImGui.BeginCombo("###preset list", config.current_preset) then
+                for presetName, preset in pairs(mod.PresetTable) do
+                    if rom.ImGui.Selectable(presetName, (presetName == config.current_preset)) then
+                        if preset.Name ~= previousConfig.current_preset then
+                            config.current_preset = presetName
+                            previousConfig.current_preset = presetName
+                        end
+                        rom.ImGui.SetItemDefaultFocus()
+                    end
+                end
+                rom.ImGui.EndCombo()
+            end
+
+            rom.ImGui.SameLine()
+
+            local clicked = rom.ImGui.Button("Load")
+            if clicked then
+                LoadPreset()
+            end
+
         end
+
     end
 
     rom.ImGui.Separator()
@@ -224,4 +262,66 @@ function mod.ResetZoomAfterImGuiClose()
     end
     zoom = false
     mod.ResetMenuZoom()
+end
+
+function LoadPreset()
+    local preset = mod.PresetTable[config.current_preset]
+    config.custom_arm_color = preset.Arm ~= nil
+    config.arm_hue = (preset.Arm or {Hue = 0}).Hue
+    config.custom_hair_color = preset.Hair ~= nil
+    local hairLocal = (preset.Hair or {R=0,G=0,B=0})
+    config.haircolor.r = hairLocal.R
+    config.haircolor.g = hairLocal.G
+    config.haircolor.b = hairLocal.B
+    if preset.Dress ~= nil then
+        config.custom_dress = true
+        if preset.Dress.Type == "Color" then
+            config.custom_dress_color = true
+            config.custom_dress_base = false
+            config.dresscolor.r = preset.Dress.R
+            config.dresscolor.g = preset.Dress.G
+            config.dresscolor.b = preset.Dress.B
+        end
+        if preset.Dress.Type == "Base" then
+            config.custom_dress_base = true
+            config.custom_dress_color = false
+            config.custom_dress_base = preset.Dress.Base
+        end
+    end
+end
+
+function SavePreset()
+    local preset = {
+        Name = presetNameBuffer,
+    }
+    if config.custom_arm_color then
+        preset.Arm = {
+            Hue = config.arm_hue
+        }
+    end
+    if config.custom_hair_color then
+        preset.Hair = {
+            R = config.haircolor.r,
+            G = config.haircolor.g,
+            B = config.haircolor.b,
+        }
+    end
+    if config.custom_dress_color and config.custom_dress then
+        preset.Dress = {
+            Type = "Color",
+            R = config.dresscolor.r,
+            G = config.dresscolor.g,
+            B = config.dresscolor.b,
+            Bright = config.bright_dress
+        }
+    end
+    if config.custom_dress and not config.custom_dress_color then
+        preset.Dress = {
+            Type = "Base",
+            Base = config.custom_dress_base
+        }
+    end
+    mod.PresetTable[presetNameBuffer] = preset
+    print(mod.dump(preset))
+    mod.WritePresetsToFile()
 end

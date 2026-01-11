@@ -13,6 +13,7 @@ local config = {
   custom_arm_color = false,
   use_exe = true,
   bright_dress = false,
+  current_preset = "Default"
 }
 
 local configDesc = {

@@ -52,6 +52,8 @@ function drawMenu()
 
     if not zoom then
         AdjustZoom({ Fraction = 2.8, Duration = 0.3 })
+        game.UnloadPackages({Names = mod.smallPackageList})
+        game.LoadPackages({Names = mod.bigPackageList})
         game.thread(mod.ResetZoomAfterImGuiClose)
         zoom = true
     end
@@ -303,7 +305,7 @@ function LoadPreset()
     else
         config.custom_dress = false
     end
-
+    presetNameBuffer = config.current_preset
 end
 
 function SavePreset()
@@ -338,7 +340,6 @@ function SavePreset()
         }
     end
     mod.PresetTable[presetNameBuffer] = preset
-    print(mod.dump(preset))
     mod.WritePresetsToFile()
     config.current_preset = presetNameBuffer
     presetNameBuffer = ""

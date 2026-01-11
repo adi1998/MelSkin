@@ -69,8 +69,8 @@ mod.DressData = {
     },
     ["Alternate Time"] =
     {
-        GrannyTexture = "zerp-MelSkin/skins/Alternate Time",
-        ChildGrannyTexture = "zerp-MelSkin/skins/YoungMelRed_Color",
+        GrannyTexture = "zerp-MelSkin/Alternate Time",
+        ChildGrannyTexture = "zerp-MelSkin/YoungMelRed_Color",
         TyphonRivalsPortraitMap = {
             Portrait_Mel_Child_Defiant_01 = "Portrait_Melinoe_Child_Ending_Defiant_01",
             Portrait_Mel_Child_Defiant_01_Exit = "Portrait_Melinoe_Child_Ending_Defiant_01_Exit",
@@ -79,7 +79,7 @@ mod.DressData = {
     },
     Murderrrrr =
     {
-        GrannyTexture = "zerp-MelSkin/skins/Halloween 2025"
+        GrannyTexture = "zerp-MelSkin/Halloween 2025"
     },
     None =
     {

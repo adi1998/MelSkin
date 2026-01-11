@@ -1,7 +1,7 @@
 local guiPortraitsVFXFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\GUI_Portraits_VFX.sjson")
 local guiScreensVFXFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\GUI_Screens_VFX.sjson")
 local guiFile = rom.path.combine(rom.paths.Content(), "Game\\Obstacles\\GUI.sjson")
-local modPortraitPrefix = "zerp-MelSkin\\portraits\\"
+local modPortraitPrefix = "zerp-MelSkinPortraits\\"
 
 mod.BoonSelectAnims = {
     {

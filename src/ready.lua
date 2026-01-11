@@ -17,8 +17,13 @@ local packagePath = rom.path.combine( _PLUGIN.plugins_data_mod_folder_path, "zer
 local rebuildCommand = "C: & cd \"" .. pluginsData .. "\" & deppth2 hpk -s \"" .. customPath .. "\" -t \"" .. packagePath .. "\""
 
 mod.skinPackageList = {}
-table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
-table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustom")
+table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinSmall")
+table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinPortraits")
+-- table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustom")
+table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustomSmall")
+
+mod.smallPackageList = {_PLUGIN.guid .. "zerp-MelSkinCustomSmall", _PLUGIN.guid .. "zerp-MelSkinSmall"}
+mod.bigPackageList = {_PLUGIN.guid .. "zerp-MelSkinCustom", _PLUGIN.guid .. "zerp-MelSkin"}
 
 function mod.GetCurrentDress()
     local costumes = game.GetHeroTraitValues("Costume")
@@ -39,11 +44,11 @@ modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
     local dress = mod.GetCurrentDress()
     local dressData = mod.DressData[dress]
     if dressData ~= nil and dressData.BoonPortrait then
-        ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonSelectObstacle.Name
+        game.ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonSelectObstacle.Name
     end
     base(source,args)
     -- resetting base value
-    ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonSelectObstacle.Name
+    game.ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonSelectObstacle.Name
 end)
 
 modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, button)
@@ -71,7 +76,7 @@ function mod.GetDressGrannyTexture(inputDress)
 end
 
 function mod.LoadSkinPackages()
-    LoadPackages({Names = mod.skinPackageList})
+    game.LoadPackages({Names = mod.skinPackageList})
 end
 
 function mod.dump(o)

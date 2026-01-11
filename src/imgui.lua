@@ -217,6 +217,7 @@ function drawMenu()
             local clicked = rom.ImGui.Button("Apply")
             if clicked then
                 game.thread(mod.ReloadCustomTexture, cdress)
+                SavePreset(true)
             end
 
             text, selected = rom.ImGui.InputText("###preset name", presetNameBuffer, 100)
@@ -225,7 +226,7 @@ function drawMenu()
                 presetNameBuffer = text
             end
 
-            if presetNameBuffer ~= "Default" then
+            if presetNameBuffer ~= "Default" or presetNameBuffer ~= "LastApplied" then
                 rom.ImGui.SameLine()
                 local saveButtonText = "Save"
                 if presetNameBuffer and presetNameBuffer ~= "" and mod.PresetTable[presetNameBuffer] then
@@ -239,7 +240,7 @@ function drawMenu()
 
             if rom.ImGui.BeginCombo("###preset list", config.current_preset) then
                 for presetName, preset in pairs(mod.PresetTable) do
-                    if rom.ImGui.Selectable(presetName, (presetName == config.current_preset)) then
+                    if presetName ~= "LastApplied" and rom.ImGui.Selectable(presetName, (presetName == config.current_preset)) then
                         if preset.Name ~= previousConfig.current_preset then
                             config.current_preset = presetName
                             previousConfig.current_preset = presetName
@@ -287,8 +288,11 @@ function mod.ResetZoomAfterImGuiClose()
     mod.ResetMenuZoom()
 end
 
-function LoadPreset()
+function LoadPreset(lastApplied)
     local preset = mod.PresetTable[config.current_preset]
+    if lastApplied then
+        preset = mod.PresetTable["LastApplied"]
+    end
     config.custom_arm_color = preset.Arm ~= nil
     config.arm_hue = (preset.Arm or {Hue = 0}).Hue
     config.custom_hair_color = preset.Hair ~= nil
@@ -316,10 +320,13 @@ function LoadPreset()
     presetNameBuffer = config.current_preset
 end
 
-function SavePreset()
+function SavePreset(lastApplied)
     local preset = {
         Name = presetNameBuffer,
     }
+    if lastApplied then
+        preset.Name = "LastApplied"
+    end
     if config.custom_arm_color then
         preset.Arm = {
             Hue = config.arm_hue
@@ -347,10 +354,16 @@ function SavePreset()
             Base = config.custom_dress_base
         }
     end
-    mod.PresetTable[presetNameBuffer] = preset
+    if not lastApplied then
+        mod.PresetTable[presetNameBuffer] = preset
+    else
+        mod.PresetTable["LastApplied"] = preset
+    end
     mod.WritePresetsToFile()
-    config.current_preset = presetNameBuffer
-    presetNameBuffer = ""
+    if not lastApplied then
+        config.current_preset = presetNameBuffer
+        presetNameBuffer = ""
+    end
 end
 
 function DeletePreset()

@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Add option to save color presets
+- Fix shimmering on custom skins
+
 ## [1.9.0] - 2026-01-11
 
 - Add ghost arm slider

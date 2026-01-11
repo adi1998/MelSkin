@@ -7,3 +7,6 @@ print(skins)
 for skin in skins:
     img = Image.open("./textures/skins/" + skin).resize((128,128))
     img.save("./textures/skins-small/" + skin)
+
+img = Image.open("./data/None.png").resize((128,128))
+img.save("./data/Custom/custom.png")

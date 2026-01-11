@@ -52,8 +52,10 @@ function drawMenu()
 
     if not zoom then
         AdjustZoom({ Fraction = 2.8, Duration = 0.3 })
-        game.UnloadPackages({Names = mod.smallPackageList})
-        game.LoadPackages({Names = mod.bigPackageList})
+        if config.enable_shimmer_fix then
+            game.UnloadPackages({Names = mod.smallPackageList})
+            game.LoadPackages({Names = mod.bigPackageList})
+        end
         game.thread(mod.ResetZoomAfterImGuiClose)
         zoom = true
     end

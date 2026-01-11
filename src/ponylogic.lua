@@ -255,8 +255,10 @@ function mod.ApplyMenuZoom()
         offsetY = -110
     end
     game.thread(LockCamera,{Id = game.CurrentRun.Hero.ObjectId, OffsetX = -265, OffsetY = offsetY, Duration = 0.3})
-    game.UnloadPackages({Names = mod.smallPackageList})
-    game.LoadPackages({Names = mod.bigPackageList})
+    if config.enable_shimmer_fix then
+        game.UnloadPackages({Names = mod.smallPackageList})
+        game.LoadPackages({Names = mod.bigPackageList})
+    end
     AdjustZoom({ Fraction = 2.8, Duration = 0.3 })
 end
 
@@ -285,8 +287,10 @@ function mod.ResetMenuZoom()
     end
 
     game.thread(LockCamera,{Id = game.CurrentRun.Hero.ObjectId, Duration = 0.3})
-    game.UnloadPackages({Names = mod.bigPackageList})
-    game.LoadPackages({Names = mod.smallPackageList})
+    if config.enable_shimmer_fix then
+        game.UnloadPackages({Names = mod.bigPackageList})
+        game.LoadPackages({Names = mod.smallPackageList})
+    end
     AdjustZoom({ Fraction = defaultZoom, Duration = 0.3 })
 end
 

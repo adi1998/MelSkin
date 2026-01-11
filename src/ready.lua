@@ -17,10 +17,10 @@ local packagePath = rom.path.combine( _PLUGIN.plugins_data_mod_folder_path, "zer
 local rebuildCommand = "C: & cd \"" .. pluginsData .. "\" & deppth2 hpk -s \"" .. customPath .. "\" -t \"" .. packagePath .. "\""
 
 mod.skinPackageList = {}
-table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinSmall")
+-- table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinSmall")
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinPortraits")
 -- table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustom")
-table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustomSmall")
+-- table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustomSmall")
 
 mod.smallPackageList = {_PLUGIN.guid .. "zerp-MelSkinCustomSmall", _PLUGIN.guid .. "zerp-MelSkinSmall"}
 mod.bigPackageList = {_PLUGIN.guid .. "zerp-MelSkinCustom", _PLUGIN.guid .. "zerp-MelSkin"}
@@ -77,6 +77,11 @@ end
 
 function mod.LoadSkinPackages()
     game.LoadPackages({Names = mod.skinPackageList})
+    if config.enable_shimmer_fix then
+        game.LoadPackages({Names = mod.smallPackageList})
+    else
+        game.LoadPackages({Names = mod.bigPackageList})
+    end
 end
 
 function mod.dump(o)

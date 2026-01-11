@@ -23,34 +23,43 @@ mod.PresetTable =
 }
 
 local configPath = rom.paths.config()
-local presetFileName = _PLUGIN.guid .. "CustomPresets.sjson"
+local presetFileName = _PLUGIN.guid .. "CustomPresets.cfg"
 
 local presetFilePath = rom.path.combine(configPath, presetFileName)
 
 function mod.ReadPresetsFromFile()
-    local filePresets = {}
     if rom.path.exists(presetFilePath) then
-        local fileHandle = io.open(presetFilePath, "r")
-        if not fileHandle then
-            print("Error opening presets file", presetFilePath)
-            return filePresets
-        end
-        local fileString = fileHandle:read("a*")
-        filePresets = sjson.decode(fileString)
-        for presetName, preset in pairs(filePresets) do
-            mod.PresetTable[presetName] = preset
+        -- local fileHandle = io.open(presetFilePath, "r")
+        -- if not fileHandle then
+        --     print("Error opening presets file for reading", presetFilePath)
+        --     return
+        -- end
+        -- local fileString = fileHandle:read("*a")
+        -- print("preset file content", fileString)
+        local success, filePresets = pcall(rom.toml.decodeFromFile, presetFilePath)
+        if success then
+            for presetName, preset in pairs(filePresets) do
+                mod.PresetTable[presetName] = preset
+            end
+            print("Successfully loaded preset file")
+        else
+            print("Failed to read preset file", filePresets)
         end
     end
-    return filePresets
 end
 
 function mod.WritePresetsToFile()
-    local fileHandle = io.open(presetFilePath, "w+")
-    if not fileHandle then
-        print("Error opening presets file", presetFilePath)
-        return
+    -- local fileHandle = io.open(presetFilePath, "w+")
+    -- if not fileHandle then
+    --     print("Error opening presets file for writing", presetFilePath)
+    --     return
+    -- end
+    -- mod.ReadPresetsFromFile()
+    local success, fileString = pcall( rom.toml.encodeToFile, mod.PresetTable, { file = presetFilePath, overwrite = true } )
+    if success then
+        print("Successfully saved preset file")
+    else
+        print("Failed to save preset file", fileString)
     end
-    mod.ReadPresetsFromFile()
-    local fileString = sjson.encode(mod.PresetTable)
-    fileHandle:write(fileString)
+    -- fileHandle:write(fileString)
 end

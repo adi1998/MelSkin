@@ -215,11 +215,16 @@ function drawMenu()
                 presetNameBuffer = text
             end
 
-            rom.ImGui.SameLine()
-
-            local clicked = rom.ImGui.Button("Save")
-            if clicked then
-                SavePreset()
+            if presetNameBuffer ~= "Default" then
+                rom.ImGui.SameLine()
+                local saveButtonText = "Save"
+                if presetNameBuffer and presetNameBuffer ~= "" and mod.PresetTable[presetNameBuffer] then
+                    saveButtonText = "Overwrite"
+                end
+                local clicked = rom.ImGui.Button(saveButtonText)
+                if clicked and presetNameBuffer ~= nil and presetNameBuffer ~= "" then
+                    SavePreset()
+                end
             end
 
             if rom.ImGui.BeginCombo("###preset list", config.current_preset) then
@@ -240,6 +245,14 @@ function drawMenu()
             local clicked = rom.ImGui.Button("Load")
             if clicked then
                 LoadPreset()
+            end
+
+            if config.current_preset ~= "Default" then
+                rom.ImGui.SameLine()
+                local clicked = rom.ImGui.Button("Delete")
+                if clicked then
+                    DeletePreset()
+                end
             end
 
         end
@@ -277,17 +290,20 @@ function LoadPreset()
         config.custom_dress = true
         if preset.Dress.Type == "Color" then
             config.custom_dress_color = true
-            config.custom_dress_base = false
+            -- config.custom_dress_base = false
             config.dresscolor.r = preset.Dress.R
             config.dresscolor.g = preset.Dress.G
             config.dresscolor.b = preset.Dress.B
+            config.bright_dress = preset.Dress.Bright
         end
         if preset.Dress.Type == "Base" then
-            config.custom_dress_base = true
             config.custom_dress_color = false
             config.custom_dress_base = preset.Dress.Base
         end
+    else
+        config.custom_dress = false
     end
+
 end
 
 function SavePreset()
@@ -323,5 +339,13 @@ function SavePreset()
     end
     mod.PresetTable[presetNameBuffer] = preset
     print(mod.dump(preset))
+    mod.WritePresetsToFile()
+    config.current_preset = presetNameBuffer
+    presetNameBuffer = ""
+end
+
+function DeletePreset()
+    mod.PresetTable[config.current_preset] = nil
+    config.current_preset = "Default"
     mod.WritePresetsToFile()
 end

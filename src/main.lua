@@ -44,6 +44,7 @@ local function on_ready()
     mod = modutil.mod.Mod.Register(_PLUGIN.guid)
 
     import 'presets.lua'
+    mod.ReadPresetsFromFile()
     import 'imgui.lua'
     import 'ponydata.lua'
     import 'ponylogic.lua'

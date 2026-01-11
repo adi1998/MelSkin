@@ -4,7 +4,7 @@ local config = {
   random_each_run = false;
   debug_reload = false;
   dresscolor = { r = 223, g = 122, b = 68 },
-  haircolor = { r = 223, g = 122, b = 68 },
+  haircolor = { r = 203, g = 178, b = 121 },
   arm_hue = 0,
   custom_dress_color = false,
   custom_hair_color = false,

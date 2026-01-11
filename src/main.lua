@@ -70,7 +70,7 @@ local function on_reload()
     import 'data.lua'
     import 'setupdata.lua'
 
-    ModUtil.Table.Merge(ScreenData,mod.DressScreenData)
+    ModUtil.Table.Merge(game.ScreenData,mod.DressScreenData)
     
 end
 

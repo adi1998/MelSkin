@@ -59,14 +59,6 @@ jobs:
         shell: pwsh
         run: pip install deppth2 pillow lz4 PyTexturePacker
 
-      - name: build packages
-        shell: pwsh
-        run: |
-          mkdir data/Custom
-          cp data/None.png data/Custom/custom.png
-          deppth2 hpk -s .\data\Custom -t .\data\zerp-MelSkinCustom
-          rm -force -recurse data/zerp-MelSkinCustom
-
       - name: Add .NET tools to PATH
         shell: pwsh
         run: echo "$env:USERPROFILE\.dotnet\tools" | Out-File -FilePath $env:GITHUB_PATH -Append
@@ -74,7 +66,7 @@ jobs:
       - name: Build package
         shell: pwsh
         run: |
-          tcli build
+          .\build.ps1
           $artifact = Get-ChildItem "${{ env.build-dir }}" -File | Select-Object -ExpandProperty Name
           echo "artifact-name=$artifact" | Out-File -FilePath $env:GITHUB_ENV -Append
           echo "artifact-path=${{ env.build-dir }}/$artifact" | Out-File -FilePath $env:GITHUB_ENV -Append

@@ -1,7 +1,5 @@
 param([switch]$local)
 
-rm -force -recurse data/zerp-MelSkin
-
 if ($local) {
     deppth2 hpk -c BC7 -s .\textures\portraits -t .\data\zerp-MelSkinPortraits
 }
@@ -22,7 +20,7 @@ cp .\data\small\zerp-MelSkinCustom.pkg .\data\zerp-MelSkinCustomSmall.pkg
 cp .\data\small\zerp-MelSkinCustom.pkg_manifest .\data\zerp-MelSkinCustomSmall.pkg_manifest
 
 rm -force -recurse data/zerp-MelSkin
-rm -force -recurse data/zerp-MelSkinPortraits
+rm -force -recurse data/zerp-MelSkinPortraits -ErrorAction SilentlyContinue  
 rm -force -recurse data/zerp-MelSkinCustom
 rm -force -recurse data/small
 

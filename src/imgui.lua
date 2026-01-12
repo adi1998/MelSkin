@@ -60,6 +60,7 @@ function drawMenu()
         zoom = true
     end
 
+    -- TODO: reenable once MelskinHelper is updated
     -- local value, checked = rom.ImGui.Checkbox("Enable Shimmer Fix (for custom skins)", config.enable_shimmer_fix)
     -- if checked and value ~= previousConfig.enable_shimmer_fix then
     --     config.enable_shimmer_fix = value

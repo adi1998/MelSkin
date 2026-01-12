@@ -14,7 +14,7 @@ local config = {
   use_exe = true,
   bright_dress = false,
   current_preset = "Default",
-  enable_shimmer_fix = true,
+  enable_shimmer_fix = false,
 }
 
 local configDesc = {

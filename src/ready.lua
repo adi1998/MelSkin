@@ -196,11 +196,41 @@ modutil.mod.Path.Context.Wrap.Static("PlayEmoteAnimFromSource", function (source
 end)
 
 function mod.SetRandomDress()
+    local function RemoveCustomFromArray(array)
+        local retValue = {}
+        for key, value in pairs(array) do
+            if key ~= "Custom" then
+                retValue[key] = value
+            end
+        end
+        return retValue
+    end
     local randomDress = ""
+    local numOfFixedDress = 0
+    local numOfPresets = 0
+    local fixedDressList = RemoveCustomFromArray(mod.DressDisplayOrder)
     if game.GameState.ModFavoriteDressList ~= nil and #game.GameState.ModFavoriteDressList > 0 then
-        randomDress = game.GetRandomArrayValue(game.GameState.ModFavoriteDressList)
+        numOfFixedDress = #game.GameState.ModFavoriteDressList
+        fixedDressList = RemoveCustomFromArray(game.GameState.ModFavoriteDressList)
+        if game.Contains(game.GameState.ModFavoriteDressList, "Custom") then
+            numOfPresets = game.TableLength(mod.PresetTable) - 1 - ((mod.PresetTable["LastApplied"] and 1) or 0)
+            numOfFixedDress = numOfFixedDress - 1
+        end
     else
-        randomDress = game.GetRandomArrayValue(mod.DressDisplayOrder)
+        numOfFixedDress = #mod.DressDisplayOrder - 1
+        numOfPresets = game.TableLength(mod.PresetTable) - 1 - ((mod.PresetTable["LastApplied"] and 1) or 0)
+    end
+
+    local random = math.random(numOfFixedDress+numOfPresets)
+    print("numOfFixedDress", numOfFixedDress)
+    print("numOfPresets", numOfPresets)
+    print("random index", random)
+    if random > numOfFixedDress then
+        -- preset selected
+        randomDress = "Custom"
+        mod.SetRandomCustomPreset()
+    else
+        randomDress = fixedDressList[random]
     end
     print("Random dress", randomDress)
     game.CurrentRun.Hero.ModDressData = randomDress

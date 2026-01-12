@@ -117,3 +117,21 @@ function mod.ReloadCustomTexture(lastApplied)
         game.LoadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})
     end
 end
+
+function mod.SetRandomCustomPreset()
+    local presetArray = {}
+    for presetName, _ in pairs(mod.PresetTable) do
+        if presetName ~= "Default" and presetName ~= "LastApplied" then
+            table.insert(presetArray, presetName)
+        end
+    end
+    if #presetArray > 0 then
+        local randomPreset = game.GetRandomArrayValue(presetArray)
+        config.current_preset = randomPreset
+        print("random preset", randomPreset)
+        LoadPreset()
+        SavePreset(true)
+        mod.ReloadCustomTexture()
+        mod.ResetMenuZoom()
+    end
+end

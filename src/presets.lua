@@ -132,6 +132,6 @@ function mod.SetRandomCustomPreset()
         LoadPreset()
         SavePreset(true)
         mod.ReloadCustomTexture()
-        mod.ResetMenuZoom()
+        -- mod.ResetMenuZoom()
     end
 end

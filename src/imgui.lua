@@ -60,11 +60,11 @@ function drawMenu()
         zoom = true
     end
 
-    local value, checked = rom.ImGui.Checkbox("Enable Shimmer Fix (for custom skins)", config.enable_shimmer_fix)
-    if checked and value ~= previousConfig.enable_shimmer_fix then
-        config.enable_shimmer_fix = value
-        previousConfig.enable_shimmer_fix = value
-    end
+    -- local value, checked = rom.ImGui.Checkbox("Enable Shimmer Fix (for custom skins)", config.enable_shimmer_fix)
+    -- if checked and value ~= previousConfig.enable_shimmer_fix then
+    --     config.enable_shimmer_fix = value
+    --     previousConfig.enable_shimmer_fix = value
+    -- end
 
     rom.ImGui.Text("Select Dress")
     if rom.ImGui.BeginCombo("###dress", config.dress) then

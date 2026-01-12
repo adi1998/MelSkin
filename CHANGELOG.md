@@ -3,7 +3,8 @@
 ## [Unreleased]
 
 - Add option to save color presets
-- Fix shimmering on custom skins
+- Add support for loading lower resolution player textures
+- Add initial random dress support for color presets
 
 ## [1.9.0] - 2026-01-11
 

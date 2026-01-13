@@ -36,13 +36,15 @@ Favorites are only available through PonyMenu.
 
 Experimental color selector to allow setting any* dress and hair color. Only works with the ImGui menu (default toggle keybind: INSERT).
 
-To activate, select `Custom` in the Dress drop-down and edit dress/hair colors and hit Apply. You can also save/load presets.
+To activate, select `Custom` in the Dress drop-down and edit dress/hair colors and hit Apply. You can also use this menu to save/load presets.
 
 | ![1](images/colorslider/1.png) | ![2](images/colorslider/2.png) |
 | - | - |
 |  |  |
 
-Now includes initial support for selecting a random preset on run start. `Custom` should be favorited in the PonyMenu UI if there are other favorites selected.
+<br>
+
+Includes initial support for selecting a random preset on run start. `Custom` should be favorited in the PonyMenu UI if there are other favorites selected.
 
 | ![3](images/colorslider/3.png) | ![4](images/colorslider/4.png) |
 | - | - |

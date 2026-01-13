@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.10.0] - 2026-01-13
+
 - Add option to save color presets
 - Add support for loading lower resolution player textures
 - Add initial random dress support for color presets
@@ -97,7 +99,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.9.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.10.0...HEAD
+[1.10.0]: https://github.com/adi1998/MelSkin/compare/1.9.0...1.10.0
 [1.9.0]: https://github.com/adi1998/MelSkin/compare/1.8.0...1.9.0
 [1.8.0]: https://github.com/adi1998/MelSkin/compare/1.7.1...1.8.0
 [1.7.1]: https://github.com/adi1998/MelSkin/compare/1.7.0...1.7.1

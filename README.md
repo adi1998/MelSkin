@@ -38,6 +38,8 @@ Experimental color selector to allow setting any* dress and hair color. Only wor
 
 To activate, select `Custom` in the Dress drop-down and edit dress/hair colors and hit Apply. You can also use this menu to save/load presets.
 
+Note: If the ImGui interface is unresponsive, try disabling vsync and setting a framecap though the ingame settings menu.
+
 | ![1](images/colorslider/1.png) | ![2](images/colorslider/2.png) |
 | - | - |
 

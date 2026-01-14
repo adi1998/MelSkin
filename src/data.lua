@@ -81,6 +81,12 @@ mod.DressData = {
     {
         GrannyTexture = "zerp-MelSkin/Halloween 2025"
     },
+    Void =
+    {
+        BoonPortrait = false,
+        GrannyTexture = "zerp-MelSkin/skins/Void",
+        Portraits = mod.Portraits,
+    },
     None =
     {
         GrannyTexture = ""
@@ -103,6 +109,7 @@ mod.DressDisplayOrder = {
     "Dark Side",
     "Alternate Time",
     "Murderrrrr",
+    "Void",
     "None",
     "Custom"
 }

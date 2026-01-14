@@ -106,7 +106,7 @@ function  mod.DressSelectorLoadPage(screen)
             if config.dress == text and config.random_each_run == false then
                 color = Color.Orange
             end
-            if config.random_each_run == true and CurrentRun.Hero.ModDressData == text then
+            if config.random_each_run == true and game.CurrentRun.Hero.ModDressData == text then
                 color = Color.Orange
             end
             print(text)
@@ -144,8 +144,9 @@ function mod.DressMouseOverButton(button)
     game.GenericMouseOverPresentation( button )
     screen.SelectedItem = button
 
+	-- update just for preview
     local dressGrannyTexture = mod.GetDressGrannyTexture(button.Dress)
-    mod.UpdateSkin(dressGrannyTexture)
+    game.SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = game.CurrentRun.Hero.ObjectId})
 end
 
 function mod.DressMouseOffButton(button)
@@ -232,9 +233,9 @@ end
 
 function mod.ApplyMenuZoom()
 
-    if CurrentRun.CurrentRoom ~= nil then
-        if CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
-            for id, _ in pairs( CurrentRun.CurrentRoom.CameraZoomWeights ) do
+    if game.CurrentRun.CurrentRoom ~= nil then
+        if game.CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
+            for id, _ in pairs( game.CurrentRun.CurrentRoom.CameraZoomWeights ) do
                 SetCameraZoomWeight({ Id = id, Weight = 1, ZoomSpeed = 1.0 })
             end
         end
@@ -249,12 +250,16 @@ function mod.ApplyMenuZoom()
     end
 
     ClearCameraClamp({ LerpTime = 0 })
-    local offsetY = -80
+    local offsetY = -70
     if HeroHasTrait("TorchAutofireAspect") then
         offsetY = -110
     end
-    LockCamera({Id = CurrentRun.Hero.ObjectId, OffsetX = -313, OffsetY = offsetY, Duration = 0.2})
-    AdjustZoom({ Fraction = 2.3, Duration = 0.2 })
+    game.thread(LockCamera,{Id = game.CurrentRun.Hero.ObjectId, OffsetX = -265, OffsetY = offsetY, Duration = 0.3})
+    if config.enable_shimmer_fix then
+        game.UnloadPackages({Names = mod.smallPackageList})
+        game.LoadPackages({Names = mod.bigPackageList})
+    end
+    AdjustZoom({ Fraction = 2.8, Duration = 0.3 })
 end
 
 function mod.ResetMenuZoom()
@@ -262,12 +267,12 @@ function mod.ResetMenuZoom()
     if CurrentHubRoom ~= nil then
         defaultZoom = CurrentHubRoom.ZoomFraction or defaultZoom
     else
-        defaultZoom = CurrentRun.CurrentRoom.ZoomFraction or defaultZoom
+        defaultZoom = game.CurrentRun.CurrentRoom.ZoomFraction or defaultZoom
     end
 
-    if CurrentRun.CurrentRoom ~= nil then
-        if CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
-            for id, weight in pairs( CurrentRun.CurrentRoom.CameraZoomWeights ) do
+    if game.CurrentRun.CurrentRoom ~= nil then
+        if game.CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
+            for id, weight in pairs( game.CurrentRun.CurrentRoom.CameraZoomWeights ) do
                 SetCameraZoomWeight({ Id = id, Weight = weight, ZoomSpeed = 1.0 })
             end
         end
@@ -281,8 +286,12 @@ function mod.ResetMenuZoom()
         end
     end
 
-    LockCamera({Id = CurrentRun.Hero.ObjectId, Duration = 0.2})
-    AdjustZoom({ Fraction = defaultZoom, Duration = 0.2 })
+    game.thread(LockCamera,{Id = game.CurrentRun.Hero.ObjectId, Duration = 0.3})
+    if config.enable_shimmer_fix then
+        game.UnloadPackages({Names = mod.bigPackageList})
+        game.LoadPackages({Names = mod.smallPackageList})
+    end
+    AdjustZoom({ Fraction = defaultZoom, Duration = 0.3 })
 end
 
 function mod.PopulatePonyMenuData()

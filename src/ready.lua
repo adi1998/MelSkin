@@ -8,7 +8,13 @@
 -- values and functions later defined in `reload.lua`.
 
 mod.skinPackageList = {}
-table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
+-- table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinSmall")
+table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinPortraits")
+-- table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustom")
+-- table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustomSmall")
+
+mod.smallPackageList = {_PLUGIN.guid .. "zerp-MelSkinCustomSmall", _PLUGIN.guid .. "zerp-MelSkinSmall"}
+mod.bigPackageList = {_PLUGIN.guid .. "zerp-MelSkinCustom", _PLUGIN.guid .. "zerp-MelSkin"}
 
 function mod.GetCurrentDress()
     local costumes = game.GetHeroTraitValues("Costume")
@@ -29,11 +35,11 @@ modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
     local dress = mod.GetCurrentDress()
     local dressData = mod.DressData[dress]
     if dressData ~= nil and dressData.BoonPortrait then
-        ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonSelectObstacle.Name
+        game.ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonSelectObstacle.Name
     end
     base(source,args)
     -- resetting base value
-    ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonSelectObstacle.Name
+    game.ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonSelectObstacle.Name
 end)
 
 modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, button)
@@ -49,23 +55,23 @@ modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, butt
     end)
 end)
 
-function mod.UpdateSkin(dressGrannyTexture)
-    if CurrentRun ~= nil and game.GetHeroTraitValues("Costume")[1] == nil then
-        SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = CurrentRun.Hero.ObjectId})
-    end
-end
-
 function mod.GetDressGrannyTexture(inputDress)
     if mod.DressData[inputDress] ~= nil then
-        return mod.DressData[inputDress].GrannyTexture or ""
+        if game.MapState.BabyPolymorph then
+            return mod.DressData[inputDress].ChildGrannyTexture or ""
+        else
+            return mod.DressData[inputDress].GrannyTexture or ""
+        end
     end
     return ""
 end
 
 function mod.LoadSkinPackages()
-    for _, packageName in ipairs(mod.skinPackageList) do
-        print("Loading package: " .. packageName)
-        LoadPackages({ Name = packageName })
+    game.LoadPackages({Names = mod.skinPackageList})
+    if config.enable_shimmer_fix then
+        game.LoadPackages({Names = mod.smallPackageList})
+    else
+        game.LoadPackages({Names = mod.bigPackageList})
     end
 end
 
@@ -82,31 +88,40 @@ function mod.dump(o)
    end
 end
 
-modutil.mod.Path.Wrap("SetThingProperty", function(base,args)
-    if CurrentRun.Hero.SubtitleColor ~= Color.ChronosVoice and
-        (MapState.HostilePolymorph == false or MapState.HostilePolymorph == nil) and
-        args.Property == "GrannyTexture" and
-        (args.Value == "null" or args.Value == "") and
-        args.DestinationId == CurrentRun.Hero.ObjectId then
-            print("Base args:",mod.dump(args))
-            args_copy = DeepCopyTable(args)
-            local grannyTexture = mod.GetDressGrannyTexture(config.dress)
-            if config.random_each_run then
-                grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
-                print("skin random", grannyTexture)
-            end
-            args_copy.Value = grannyTexture
-            print("Mod args:",mod.dump(args_copy))
-            base(args_copy)
-    else
-        base(args)
+modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
+    local grannyTexture = mod.GetDressGrannyTexture(config.dress)
+    if config.random_each_run then
+        grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
+    end
+    if (not skipCostume) or game.MapState.BabyPolymorph then
+        game.CostumeData.Costume_Default.GrannyTexture = grannyTexture
+    end
+    base(skipCostume)
+    game.CostumeData.Costume_Default.GrannyTexture = ""
+    local dress = config.dress
+    if config.random_each_run then
+        dress = mod.GetCurrentRunDress()
+    end
+    game.StopAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
+    if dress and not mod.DressData[dress].DisableMelArmGlow then
+        game.CreateAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
     end
 end)
 
 -- TODO: this is untested
 modutil.mod.Path.Wrap("SetupFlashbackPlayerUnitChronos", function(base,source,args)
     base(source,args)
-    SetThingProperty({Property = "GrannyTexture", Value = "", DestinationId = CurrentRun.Hero.ObjectId})
+    game.SetThingProperty({Property = "GrannyTexture", Value = "", DestinationId = game.CurrentRun.Hero.ObjectId})
+end)
+
+modutil.mod.Path.Wrap("MelBackToBedroomPresentation", function(base,source,args)
+    local grannyTexture = mod.GetDressGrannyTexture(config.dress)
+    if config.random_each_run then
+        grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
+        print("skin random", grannyTexture)
+    end
+    game.SetThingProperty({Property = "GrannyTexture", Value = grannyTexture, DestinationId = game.CurrentRun.Hero.ObjectId})
+    base(source,args)
 end)
 
 modutil.mod.Path.Wrap("SetupMap", function(base)
@@ -153,10 +168,19 @@ function mod.SetAnimationWrap(base,args)
         local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
         print("SetAnimation", origname, newname)
         args.Name = newname
-        base(args)
-        return
+        return base(args)
     end
-    base(args)
+    if game.MapState.BabyPolymorph then
+        local dress = mod.GetCurrentDress()
+        local dressdata = mod.DressData[dress]
+        if dressdata == nil or dressdata.TyphonRivalsPortraitMap == nil then
+            return base(args)
+        end
+        local newname = dressdata.TyphonRivalsPortraitMap[origname]
+        args.Name = newname or args.Name
+        return base(args)
+    end
+    return base(args)
 end
 
 function mod.SetAnimationWrap2(base,args)
@@ -172,22 +196,52 @@ modutil.mod.Path.Context.Wrap.Static("PlayEmoteAnimFromSource", function (source
 end)
 
 function mod.SetRandomDress()
+    local function RemoveCustomFromArray(array)
+        local retValue = {}
+        for key, value in pairs(array) do
+            if key ~= "Custom" then
+                retValue[key] = value
+            end
+        end
+        return retValue
+    end
     local randomDress = ""
+    local numOfFixedDress = 0
+    local numOfPresets = 0
+    local fixedDressList = RemoveCustomFromArray(mod.DressDisplayOrder)
     if game.GameState.ModFavoriteDressList ~= nil and #game.GameState.ModFavoriteDressList > 0 then
-        randomDress = game.GetRandomArrayValue(game.GameState.ModFavoriteDressList)
+        numOfFixedDress = #game.GameState.ModFavoriteDressList
+        fixedDressList = RemoveCustomFromArray(game.GameState.ModFavoriteDressList)
+        if game.Contains(game.GameState.ModFavoriteDressList, "Custom") then
+            numOfPresets = game.TableLength(mod.PresetTable) - 1 - ((mod.PresetTable["LastApplied"] and 1) or 0)
+            numOfFixedDress = numOfFixedDress - 1
+        end
     else
-        randomDress = game.GetRandomArrayValue(mod.DressDisplayOrder)
+        numOfFixedDress = #mod.DressDisplayOrder - 1
+        numOfPresets = game.TableLength(mod.PresetTable) - 1 - ((mod.PresetTable["LastApplied"] and 1) or 0)
+    end
+
+    local random = math.random(numOfFixedDress+numOfPresets)
+    print("numOfFixedDress", numOfFixedDress)
+    print("numOfPresets", numOfPresets)
+    print("random index", random)
+    if random > numOfFixedDress then
+        -- preset selected
+        randomDress = "Custom"
+        mod.SetRandomCustomPreset()
+    else
+        randomDress = fixedDressList[random]
     end
     print("Random dress", randomDress)
-    CurrentRun.Hero.ModDressData = randomDress
+    game.CurrentRun.Hero.ModDressData = randomDress
 end
 
 function mod.GetCurrentRunDress()
     -- if this is called, it means random is enabled
-    if CurrentRun.Hero.ModDressData == nil or CurrentRun.Hero.ModDressData == "" then
+    if game.CurrentRun.Hero.ModDressData == nil or game.CurrentRun.Hero.ModDressData == "" then
         mod.SetRandomDress()
     end
-    return CurrentRun.Hero.ModDressData
+    return game.CurrentRun.Hero.ModDressData
 end
 
 modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
@@ -198,7 +252,7 @@ modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
     if config.random_each_run then
         mod.SetRandomDress()
     else
-        CurrentRun.Hero.ModDressData = nil
+        game.CurrentRun.Hero.ModDressData = nil
     end
     return retValue
 end)
@@ -208,14 +262,25 @@ function mod.CheckDressInFavorite(dressName)
 end
 
 function mod.RemoveFavoriteDress(dressName)
-    local index = game.GetIndex(GameState.ModFavoriteDressList, dressName)
+    local index = game.GetIndex(game.GameState.ModFavoriteDressList, dressName)
     if index == 0 then
         print("trying to remove unknown dress")
         return
     end
-    game.RemoveIndexAndCollapse(GameState.ModFavoriteDressList, index)
+    game.RemoveIndexAndCollapse(game.GameState.ModFavoriteDressList, index)
 end
 
 function mod.AddFavoriteDress(dressName)
-    table.insert(GameState.ModFavoriteDressList, dressName)
+    table.insert(game.GameState.ModFavoriteDressList, dressName)
 end
+
+modutil.mod.Path.Wrap("SetupHeroObject", function (base,...)
+    base(...)
+    local dress = config.dress
+    if config.random_each_run then
+        dress = mod.GetCurrentRunDress()
+    end
+    if dress and mod.DressData[dress].DisableMelArmGlow then
+        game.StopAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
+    end
+end)

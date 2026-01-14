@@ -43,6 +43,10 @@ local function on_ready()
     if config.enabled == false then return end
     mod = modutil.mod.Mod.Register(_PLUGIN.guid)
 
+    import 'presets.lua'
+    import 'imgui.lua'
+    mod.ReadPresetsFromFile()
+
     import 'ponydata.lua'
     import 'ponylogic.lua'
     mod.PopulatePonyMenuData()
@@ -59,7 +63,6 @@ local function on_reload()
     if config.enabled == false then return end
 
     import 'reload.lua'
-    import 'imgui.lua'
 
     if config.debug_reload == false then return end
 
@@ -68,7 +71,7 @@ local function on_reload()
     import 'data.lua'
     import 'setupdata.lua'
 
-    ModUtil.Table.Merge(ScreenData,mod.DressScreenData)
+    ModUtil.Table.Merge(game.ScreenData,mod.DressScreenData)
     
 end
 

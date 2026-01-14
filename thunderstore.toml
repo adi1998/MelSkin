@@ -5,8 +5,8 @@ schemaVersion = "0.0.1"
 [package]
 namespace = "zerp"
 name = "MelSkin"
-versionNumber = "1.4.0"
-description = "Hades II mod allowing you to select a dress for Melinoe. Includes updated portraits for each Arachne dress. Options to add favorites and randomize dress on run start"
+versionNumber = "1.10.0"
+description = "Hades II mod allowing you to select a dress for Melinoe from one of Arachne's boons and some custom skins. Includes updated portraits for each Arachne dress. Options to add favorites and randomize dress on run start"
 websiteUrl = "https://github.com/adi1998/MelSkin"
 containsNsfwContent = false
 
@@ -18,7 +18,7 @@ SGG_Modding-ReLoad = "1.0.2"
 SGG_Modding-SJSON = "1.0.0"
 SGG_Modding-ModUtil = "4.0.1"
 PonyWarrior-PonyMenu = "0.11.5"
-
+zerp-MelSkinHelper = "0.1.0"
 
 [build]
 icon = "./icon.png"
@@ -49,3 +49,5 @@ communities = [ "hades-ii", ]
 
 [publish.categories]
 hades-ii = [ "mods", ]
+
+

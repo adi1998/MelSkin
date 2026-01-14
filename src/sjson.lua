@@ -1,7 +1,7 @@
 local guiPortraitsVFXFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\GUI_Portraits_VFX.sjson")
 local guiScreensVFXFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\GUI_Screens_VFX.sjson")
 local guiFile = rom.path.combine(rom.paths.Content(), "Game\\Obstacles\\GUI.sjson")
-local modPortraitPrefix = "zerp-MelSkin\\portraits\\"
+local modPortraitPrefix = "zerp-MelSkinPortraits\\"
 
 mod.BoonSelectAnims = {
     {
@@ -41,7 +41,7 @@ sjson.hook(guiPortraitsVFXFile, function(data)
             for dress, dressData in pairs(mod.DressData) do
                 if dressData.Portraits ~= nil and dressData.Portraits[origfilename] then
                     local newname = dress .. "_" .. origname
-                    print("sjson new name", newname)
+                    -- print("sjson new name", newname)
                     -- args.Name = newname
                     local newfilepath = modPortraitPrefix .. dress .. "\\" .. origfilename
                     local newentry = game.DeepCopyTable(entry)
@@ -101,7 +101,7 @@ local function AddPreviewSjson()
 
     local newSubItem = sjson.to_object({
         EditorOutlineDrawBounds = false,
-        Graphic = "zerp-MelSkin\\Box_Preview"
+        Graphic = "zerp-MelSkinPortraits\\Box_Preview"
     }, gui_order_2)
 
     local newItem = sjson.to_object({

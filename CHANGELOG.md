@@ -2,6 +2,43 @@
 
 ## [Unreleased]
 
+## [1.10.0] - 2026-01-13
+
+- Add option to save color presets
+- Add support for loading lower resolution player textures
+- Add initial random dress support for color presets
+
+## [1.9.0] - 2026-01-11
+
+- Add ghost arm slider
+- Disable arm glow for Alternate Time
+- Zoom during imgui menu
+- Dev: move exe to helper mod
+
+## [1.8.0] - 2026-01-07
+
+- Add color slider for dress and hair
+
+## [1.7.1] - 2025-12-19
+
+- Remove excessive logging during sjson hook
+
+## [1.7.0] - 2025-12-15
+
+- Add Alternate Time(replaced with ending young Mel) and DarkSide costume for Rivals Typhon.
+- Replace young Mel portrait with the ending one for Alternate Time
+
+## [1.6.1] - 2025-12-15
+
+- Update Dress menu background
+
+## [1.6.0] - 2025-12-06
+
+- Updates to Alternate Time by @Aunuch
+- Basic support for adding dresses through other mods
+
+## [1.5.0] - 2025-12-04
+
 - Add option to favorite dress for randomization.
 - Add a preview window for Mel.
 
@@ -62,7 +99,15 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.4.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.10.0...HEAD
+[1.10.0]: https://github.com/adi1998/MelSkin/compare/1.9.0...1.10.0
+[1.9.0]: https://github.com/adi1998/MelSkin/compare/1.8.0...1.9.0
+[1.8.0]: https://github.com/adi1998/MelSkin/compare/1.7.1...1.8.0
+[1.7.1]: https://github.com/adi1998/MelSkin/compare/1.7.0...1.7.1
+[1.7.0]: https://github.com/adi1998/MelSkin/compare/1.6.1...1.7.0
+[1.6.1]: https://github.com/adi1998/MelSkin/compare/1.6.0...1.6.1
+[1.6.0]: https://github.com/adi1998/MelSkin/compare/1.5.0...1.6.0
+[1.5.0]: https://github.com/adi1998/MelSkin/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/adi1998/MelSkin/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/adi1998/MelSkin/compare/1.2.1...1.3.0
 [1.2.1]: https://github.com/adi1998/MelSkin/compare/1.2.0...1.2.1

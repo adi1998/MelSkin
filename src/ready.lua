@@ -103,7 +103,7 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
         dress = mod.GetCurrentRunDress()
     end
     game.StopAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
-    if dress and not mod.DressData[dress].DisableMelArmGlow then
+    if dress and mod.DressData[dress] and not mod.DressData[dress].DisableMelArmGlow then
         game.CreateAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
     end
 end)
@@ -221,7 +221,10 @@ function mod.SetRandomDress()
         numOfPresets = game.TableLength(mod.PresetTable) - 1 - ((mod.PresetTable["LastApplied"] and 1) or 0)
     end
 
-    local random = math.random(numOfFixedDress+numOfPresets)
+    local totalOptions = numOfFixedDress+numOfPresets
+    -- this will only be zero if there are no presets and only Custom is favorited
+    totalOptions = (totalOptions == 0 and 1) or totalOptions
+    local random = math.random(totalOptions)
     print("numOfFixedDress", numOfFixedDress)
     print("numOfPresets", numOfPresets)
     print("random index", random)
@@ -280,7 +283,7 @@ modutil.mod.Path.Wrap("SetupHeroObject", function (base,...)
     if config.random_each_run then
         dress = mod.GetCurrentRunDress()
     end
-    if dress and mod.DressData[dress].DisableMelArmGlow then
+    if dress and mod.DressData[dress] and mod.DressData[dress].DisableMelArmGlow then
         game.StopAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
     end
 end)

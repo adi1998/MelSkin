@@ -55,6 +55,9 @@ local function on_ready()
     import 'setupdata.lua'
     import 'sjson.lua'
     import 'ready.lua'
+    if not mod.DressData[config.dress] then
+        config.dress = "None"
+    end
 end
 
 local function on_reload()

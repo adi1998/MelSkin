@@ -221,7 +221,7 @@ function mod.SetRandomDress()
         numOfPresets = game.TableLength(mod.PresetTable) - 1 - ((mod.PresetTable["LastApplied"] and 1) or 0)
     end
 
-    local totalOptions = numOfFixedDress+numOfPresets
+    local totalOptions = numOfFixedDress + numOfPresets
     -- this will only be zero if there are no presets and only Custom is favorited
     totalOptions = (totalOptions == 0 and 1) or totalOptions
     local random = math.random(totalOptions)

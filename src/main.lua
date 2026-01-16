@@ -44,6 +44,7 @@ local function on_ready()
     mod = modutil.mod.Mod.Register(_PLUGIN.guid)
 
     import 'presets.lua'
+    import 'presets_reload.lua'
     import 'imgui.lua'
     mod.ReadPresetsFromFile()
 
@@ -66,6 +67,7 @@ local function on_reload()
     if config.enabled == false then return end
 
     import 'reload.lua'
+    import 'presets_reload.lua'
 
     if config.debug_reload == false then return end
 

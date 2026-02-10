@@ -12,7 +12,7 @@ function mod.AddEntriesToDressData(dressdata,packages)
     if mod.DressData ~= nil then
         for dress, data in pairs(dressdata) do
             if mod.DressData[dress] == nil then
-                print("adding extertnal dress", dress, data.GrannyTexture)
+                print("adding external dress", dress, data.GrannyTexture)
                 mod.DressData[dress] = data
                 table.insert(mod.DressDisplayOrder,dress)
             end

@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Fix imgui random dress button
+- Fix for random dress mode breaking if no presets and only custom is favorited.
+
 ## [1.10.0] - 2026-01-13
 
 - Add option to save color presets

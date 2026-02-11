@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.10.1] - 2026-02-11
+
 - Fix imgui random dress button
 - Fix for random dress mode breaking if no presets and only custom is favorited.
 
@@ -102,7 +104,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.10.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.10.1...HEAD
+[1.10.1]: https://github.com/adi1998/MelSkin/compare/1.10.0...1.10.1
 [1.10.0]: https://github.com/adi1998/MelSkin/compare/1.9.0...1.10.0
 [1.9.0]: https://github.com/adi1998/MelSkin/compare/1.8.0...1.9.0
 [1.8.0]: https://github.com/adi1998/MelSkin/compare/1.7.1...1.8.0

@@ -274,7 +274,7 @@ function drawMenu()
     rom.ImGui.Separator()
 
     local value, checked = rom.ImGui.Checkbox("Random Dress Each Run", config.random_each_run)
-    if checked and value ~= previousConfig.random_each_run then
+    if checked then
         config.random_each_run = value
         previousConfig.random_each_run = value
         game.SetupCostume()

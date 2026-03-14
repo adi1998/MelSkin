@@ -287,3 +287,14 @@ modutil.mod.Path.Wrap("SetupHeroObject", function (base,...)
         game.StopAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
     end
 end)
+
+
+mod.openrgb_client = openrgb.connect("127.0.0.1", 6742)
+
+local version = mod.openrgb_client:negotiate_protocol(5)
+print("Protocol:", version)
+
+mod.openrgb_client:set_client_name("Lua52Client")
+
+local count = mod.openrgb_client:get_controller_count()
+print("Controllers:", count)

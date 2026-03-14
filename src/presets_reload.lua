@@ -92,6 +92,9 @@ function mod.ReloadCustomTexture(lastApplied)
         game.UnloadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})
         game.LoadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})
     end
+    if config.custom_dress_color and config.custom_dress then
+        mod.openrgb_client:UpdateLEDs(0,{config.dresscolor})
+    end
 end
 
 function mod.SetRandomCustomPreset()

@@ -33,7 +33,7 @@ mod.DressData = {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorA",
         Portraits = mod.Portraits,
-        Color = {55, 200, 91, 255}
+        Color = {20, 200, 40, 255}
     },
     Onyx =
     {
@@ -74,6 +74,7 @@ mod.DressData = {
     {
         GrannyTexture = "Models/Melinoe/MelinoeTransform_Color",
         ChildGrannyTexture = "Models/Melinoe/YoungMelTransform_Color",
+        Color = {70, 206, 125, 255},
     },
     ["Alternate Time"] =
     {

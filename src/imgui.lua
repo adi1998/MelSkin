@@ -77,6 +77,7 @@ function drawMenu()
                     previousConfig.dress = dressName
                     config.random_each_run = false
                     game.SetupCostume()
+                    game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
                 end
                 rom.ImGui.SetItemDefaultFocus()
             end
@@ -219,6 +220,7 @@ function drawMenu()
             if clicked then
                 game.thread(mod.ReloadCustomTexture, cdress)
                 SavePreset(true)
+                game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
             end
 
             text, selected = rom.ImGui.InputText("###preset name", presetNameBuffer, 100)
@@ -278,6 +280,7 @@ function drawMenu()
         config.random_each_run = value
         previousConfig.random_each_run = value
         game.SetupCostume()
+        game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
     end
 end
 

@@ -154,6 +154,7 @@ function mod.DressMouseOffButton(button)
     screen.SelectedItem = nil
 
     game.SetupCostume()
+
 end
 
 function mod.SetDress(screen,button)
@@ -163,6 +164,7 @@ function mod.SetDress(screen,button)
     config.dress = button.Dress
     config.random_each_run = false
     game.SetupCostume()
+    game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
     mod.DressSelectorReloadPage(screen)
 end
 
@@ -192,6 +194,7 @@ function mod.ToggleRandomDressSelection(screen, button)
         color = Color.Orange
     end
 	game.SetupCostume()
+    game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
     ModifyTextBox({Id = button.Id, Color = color})
     mod.DressSelectorReloadPage(screen)
 end

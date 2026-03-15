@@ -313,6 +313,7 @@ end)
 modutil.mod.Path.Wrap("SetLightBarColor", function (base, args)
     args = args or {}
     if args.Color and args.Color[_PLUGIN.guid .. "SwapWithDressColor"] then
+        print("Swapping default LightBarColor", mod.dump(args.Color))
         local dress = mod.GetCurrentDress()
         local dressData = mod.DressData[dress]
         local dressColor = dressData.Color
@@ -331,6 +332,7 @@ modutil.mod.Path.Wrap("SetLightBarColor", function (base, args)
             args.Color = game.DeepCopyTable(args.Color)
             args.Color[_PLUGIN.guid .. "SwapWithDressColor"] = nil
         end
+        print("Swapped LightBarColor", mod.dump(args.Color))
     end
     return base(args)
 end)

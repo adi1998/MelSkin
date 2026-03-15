@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.11.0] - 2026-03-15
+
 - Dualshock 4 and Dualsense controllers will now show the dress color in their light bars
 
 ## [1.10.1] - 2026-02-11
@@ -106,7 +108,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.10.1...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.11.0...HEAD
+[1.11.0]: https://github.com/adi1998/MelSkin/compare/1.10.1...1.11.0
 [1.10.1]: https://github.com/adi1998/MelSkin/compare/1.10.0...1.10.1
 [1.10.0]: https://github.com/adi1998/MelSkin/compare/1.9.0...1.10.0
 [1.9.0]: https://github.com/adi1998/MelSkin/compare/1.8.0...1.9.0

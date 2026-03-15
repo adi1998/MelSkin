@@ -239,6 +239,7 @@ function mod.SetRandomDress()
     end
     print("Random dress", randomDress)
     game.CurrentRun.Hero.ModDressData = randomDress
+    game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
 end
 
 function mod.GetCurrentRunDress()

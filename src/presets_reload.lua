@@ -107,7 +107,6 @@ function mod.SetRandomCustomPreset()
         print("random preset", randomPreset)
         LoadPreset()
         SavePreset(true)
-        game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
         mod.ReloadCustomTexture()
         -- mod.ResetMenuZoom()
     end

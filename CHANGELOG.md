@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Dualshock 4 and Dualsense controllers will now show the dress color in their light bars
+
 ## [1.10.1] - 2026-02-11
 
 - Fix imgui random dress button

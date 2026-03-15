@@ -98,6 +98,8 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
     end
     base(skipCostume)
     game.CostumeData.Costume_Default.GrannyTexture = ""
+
+    -- arm glow
     local dress = config.dress
     if config.random_each_run then
         dress = mod.GetCurrentRunDress()
@@ -237,6 +239,7 @@ function mod.SetRandomDress()
     end
     print("Random dress", randomDress)
     game.CurrentRun.Hero.ModDressData = randomDress
+    game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
 end
 
 function mod.GetCurrentRunDress()
@@ -278,6 +281,7 @@ function mod.AddFavoriteDress(dressName)
 end
 
 modutil.mod.Path.Wrap("SetupHeroObject", function (base,...)
+    game.CurrentRun.Hero.LightBarColor[_PLUGIN.guid .. "SwapWithDressColor"] = true
     base(...)
     local dress = config.dress
     if config.random_each_run then
@@ -286,4 +290,47 @@ modutil.mod.Path.Wrap("SetupHeroObject", function (base,...)
     if dress and mod.DressData[dress] and mod.DressData[dress].DisableMelArmGlow then
         game.StopAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
     end
+end)
+
+modutil.mod.Path.Wrap("ArachneArmorApply", function (base, screen, args)
+    base(screen, args)
+    game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
+end)
+
+modutil.mod.Path.Wrap("ProcessHeroTraitChanges", function (base, trait, reverse)
+    base(trait, reverse)
+    if trait.Costume and reverse then
+        game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
+    end
+end)
+
+modutil.mod.Path.Wrap("CreateNewHero", function (base, prevRun, args)
+    local hero = base(prevRun, args)
+    hero.LightBarColor[_PLUGIN.guid .. "SwapWithDressColor"] = true
+    return hero
+end)
+
+modutil.mod.Path.Wrap("SetLightBarColor", function (base, args)
+    args = args or {}
+    if args.Color and args.Color[_PLUGIN.guid .. "SwapWithDressColor"] then
+        local dress = mod.GetCurrentDress()
+        local dressData = mod.DressData[dress]
+        local dressColor = dressData.Color
+        if dress == "Custom" then
+            local preset = mod.PresetTable["LastApplied"] or mod.PresetTable["Default"]
+            local presetDress = preset.Dress or mod.PresetTable["Default"].Dress
+            if presetDress.Type == "Color" then
+                dressColor = { presetDress.R, presetDress.G, presetDress.B, 255 }
+            elseif presetDress.Type == "Base" then
+                dressColor = mod.DressData[presetDress.Base].Color
+            end
+        end
+        if dressColor then
+            args.Color = dressColor
+        else
+            args.Color = game.DeepCopyTable(args.Color)
+            args.Color[_PLUGIN.guid .. "SwapWithDressColor"] = nil
+        end
+    end
+    return base(args)
 end)

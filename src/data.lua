@@ -18,54 +18,63 @@ mod.DressData = {
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorC",
-        Portraits = mod.Portraits
+        Portraits = mod.Portraits,
+        Color = {206, 168, 238, 255}
     },
     Azure =
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorB",
-        Portraits = mod.Portraits
+        Portraits = mod.Portraits,
+        Color = {0, 89, 220, 255},
     },
     Emerald =
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorA",
-        Portraits = mod.Portraits
+        Portraits = mod.Portraits,
+        Color = {20, 200, 40, 255}
     },
     Onyx =
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorF",
-        Portraits = mod.Portraits
+        Portraits = mod.Portraits,
+        Color = {49, 41, 41, 255}
     },
     Fuchsia =
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorD",
-        Portraits = mod.Portraits
+        Portraits = mod.Portraits,
+        Color = {200, 69, 134, 255}
     },
     Gilded =
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorE",
-        Portraits = mod.Portraits
+        Portraits = mod.Portraits,
+        Color = {216, 171, 0, 255}
     },
     Moonlight =
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorG",
-        Portraits = mod.Portraits
+        Portraits = mod.Portraits,
+        Color = {204, 215, 243, 255}
     },
     Crimson =
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorH",
-        Portraits = mod.Portraits
+        Portraits = mod.Portraits,
+        Color = {220, 0, 0, 255},
     },
     ["Dark Side"] =
     {
         GrannyTexture = "Models/Melinoe/MelinoeTransform_Color",
         ChildGrannyTexture = "Models/Melinoe/YoungMelTransform_Color",
+        Color = {70, 206, 125, 255},
     },
     ["Alternate Time"] =
     {
@@ -76,14 +85,17 @@ mod.DressData = {
             Portrait_Mel_Child_Defiant_01_Exit = "Portrait_Melinoe_Child_Ending_Defiant_01_Exit",
         },
         DisableMelArmGlow = true,
+        Color = {134, 0, 0, 255}
     },
     Murderrrrr =
     {
-        GrannyTexture = "zerp-MelSkin/Halloween 2025"
+        GrannyTexture = "zerp-MelSkin/Halloween 2025",
+        Color = {176, 208, 66, 255},
     },
     None =
     {
-        GrannyTexture = ""
+        GrannyTexture = "",
+        Color = {202, 105, 29, 255}
     },
     Custom =
     {

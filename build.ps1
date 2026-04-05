@@ -15,4 +15,4 @@ rm -force -recurse data/zerp-MelSkinCustom
 
 rm -force data/update -ErrorAction SilentlyContinue
 
-# tcli build
+tcli build

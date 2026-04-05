@@ -14,7 +14,6 @@ local config = {
   use_exe = true,
   bright_dress = false,
   current_preset = "Default",
-  enable_shimmer_fix = false,
 }
 
 local configDesc = {
@@ -30,7 +29,6 @@ local configDesc = {
   use_exe = "DEBUG: set false to use the script instead of exe";
   bright_dress = "Use a bright dress as the custom dress base";
   current_preset = "current preset selected in the preset selector ImGui";
-  enable_shimmer_fix = "Mitigate shimmer for custom skins by using a lower res texture, model may look a bit blurry in some situations"
 }
 
 return config, configDesc

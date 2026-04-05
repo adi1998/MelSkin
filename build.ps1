@@ -9,9 +9,7 @@ mkdir data/Custom -force
 cp data/None.png data/Custom/custom.png
 python build_pkg.py -s .\data\Custom -t .\data\zerp-MelSkinCustom
 
-rm -force -recurse data/zerp-MelSkin
-rm -force -recurse data/zerp-MelSkinPortraits -ErrorAction SilentlyContinue  
-rm -force -recurse data/zerp-MelSkinCustom
+rm -force -recurse data/zerp-MelSkinPortraits -ErrorAction SilentlyContinue
 
 rm -force data/update -ErrorAction SilentlyContinue
 

@@ -14,10 +14,10 @@ print(source_path, target_path)
 
 pkg_textures = []
 
-pkg_path = target_path
+pkg_path = target_path + ".pkg"
 pkg_manifest_path = pkg_path + '_manifest'
 
-prefix = pkg_path.split("\\")[-1]
+prefix = target_path.split("\\")[-1]
 
 tex_list = os.listdir(source_path)
 

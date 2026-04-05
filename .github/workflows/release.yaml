@@ -57,7 +57,7 @@ jobs:
 
       - name: Install deppth2 and pyinstaller
         shell: pwsh
-        run: pip install deppth2 pillow lz4 PyTexturePacker
+        run: pip install pillow lz4 etcpak
 
       - name: Add .NET tools to PATH
         shell: pwsh

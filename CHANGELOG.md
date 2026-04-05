@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- fix shimmering for custom skin by using CG3H instead of deppth2 for texture packing
+
 ## [1.11.0] - 2026-03-15
 
 - Dualshock 4 and Dualsense controllers will now show the dress color in their light bars

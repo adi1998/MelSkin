@@ -30,3 +30,5 @@ tcli.exe
 *.psd
 *.spec
 *.exe
+
+/__pycache__/

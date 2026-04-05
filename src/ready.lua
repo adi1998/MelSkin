@@ -8,13 +8,9 @@
 --    values and functions later defined in `reload.lua`.
 
 mod.skinPackageList = {}
--- table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinSmall")
+table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinPortraits")
--- table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustom")
--- table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustomSmall")
-
-mod.smallPackageList = {_PLUGIN.guid .. "zerp-MelSkinCustomSmall", _PLUGIN.guid .. "zerp-MelSkinSmall"}
-mod.bigPackageList = {_PLUGIN.guid .. "zerp-MelSkinCustom", _PLUGIN.guid .. "zerp-MelSkin"}
+table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustom")
 
 function mod.GetCurrentDress()
     local costumes = game.GetHeroTraitValues("Costume")
@@ -68,11 +64,6 @@ end
 
 function mod.LoadSkinPackages()
     game.LoadPackages({Names = mod.skinPackageList})
-    if config.enable_shimmer_fix then
-        game.LoadPackages({Names = mod.smallPackageList})
-    else
-        game.LoadPackages({Names = mod.bigPackageList})
-    end
 end
 
 function mod.dump(o)

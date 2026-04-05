@@ -64,6 +64,7 @@ Sample mod for adding a skin https://github.com/adi1998/MelSkin_Example
 - @punishedmat on [Discord](https://discord.gg/bKvJTAJj), portrait replacements
 - [@PonyWarrior](https://github.com/PonyWarrior/), PonyMenu
 - @Aunuch on [Discord](https://discord.gg/bKvJTAJj), Updated Alternate Time skin
+- [@enderclem0](https://github.com/Enderclem0/) for [CG3H](https://github.com/Enderclem0/CG3H), texture packing script
 
 ## Issues
 

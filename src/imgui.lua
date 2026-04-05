@@ -52,20 +52,9 @@ function drawMenu()
 
     if not zoom then
         AdjustZoom({ Fraction = 2.8, Duration = 0.3 })
-        if config.enable_shimmer_fix then
-            game.UnloadPackages({Names = mod.smallPackageList})
-            game.LoadPackages({Names = mod.bigPackageList})
-        end
         game.thread(mod.ResetZoomAfterImGuiClose)
         zoom = true
     end
-
-    -- TODO: reenable once MelskinHelper is updated
-    -- local value, checked = rom.ImGui.Checkbox("Enable Shimmer Fix (for custom skins)", config.enable_shimmer_fix)
-    -- if checked and value ~= previousConfig.enable_shimmer_fix then
-    --     config.enable_shimmer_fix = value
-    --     previousConfig.enable_shimmer_fix = value
-    -- end
 
     rom.ImGui.Text("Select Dress")
     if rom.ImGui.BeginCombo("###dress", config.dress) then

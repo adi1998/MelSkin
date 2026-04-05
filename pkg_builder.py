@@ -364,8 +364,6 @@ def build_standalone_pkg(textures, output_path, output_manifest_path=None):
 
     # Terminator
     chunk.append(0xFF)
-    with open("rawchunk", "wb") as f:
-        f.write(bytes(chunk))
     # Compress chunk
     comp = lz4.block.compress(bytes(chunk), store_size=False)
 

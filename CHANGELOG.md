@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.12.0] - 2026-04-05
+
 - fix shimmering for custom skin by using CG3H instead of deppth2 for texture packing
 
 ## [1.11.0] - 2026-03-15
@@ -110,7 +112,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.11.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.12.0...HEAD
+[1.12.0]: https://github.com/adi1998/MelSkin/compare/1.11.0...1.12.0
 [1.11.0]: https://github.com/adi1998/MelSkin/compare/1.10.1...1.11.0
 [1.10.1]: https://github.com/adi1998/MelSkin/compare/1.10.0...1.10.1
 [1.10.0]: https://github.com/adi1998/MelSkin/compare/1.9.0...1.10.0

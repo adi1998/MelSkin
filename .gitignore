@@ -31,4 +31,4 @@ tcli.exe
 *.spec
 *.exe
 
-/__pycache__/
+**/__pycache__/

@@ -38,7 +38,7 @@ mod.ZagMelSubTemplate =
     InheritFrom = "Portrait_Base_01",
     FilePath = "",
     OffsetY = 32,
-    OffsetX = -135,
+    OffsetX = 0,
     SortMode = "Id"
 }
 
@@ -47,10 +47,10 @@ mod.ZagMelCombinedTemplate =
     Name = _PLUGIN.guid .. "Mel",
     InheritFrom = "Portrait_Base_01",
     FilePath = "",
-    OffsetY = 32,
-    OffsetX = -300,
-    Scale = 0.6,
-    Alpha = 0.5,
+    OffsetY = 10,
+    OffsetX = -185,
+    Scale = 0.64,
+    Alpha = 0.7,
     SortMode = "Id",
     CreateAnimations = {
         { Name = "" }
@@ -79,7 +79,7 @@ sjson.hook(guiPortraitsVFXFile, function(data)
     end
     for zagPortraitName, fileNames in pairs(mod.ZagMelMap) do
         for dress, dressData in pairs(mod.DressData) do
-            if dressData.Portraits ~= nil then
+            if dressData.Portraits ~= nil and dressData.Portraits[fileNames[1]] ~= nil then
                 local newSubPortrait = game.DeepCopyTable(mod.ZagMelSubTemplate)
 
                 local newPortrait = game.DeepCopyTable(mod.ZagMelCombinedTemplate)
@@ -102,10 +102,6 @@ sjson.hook(guiPortraitsVFXFile, function(data)
                 newPortraitExit.CreateAnimations[1].Name = newSubPortraitExit.Name
                 table.insert(newdata, newSubPortraitExit)
                 table.insert(newdata, newPortraitExit)
-                print(mod.dump(newSubPortrait))
-                print(mod.dump(newSubPortraitExit))
-                print(mod.dump(newPortrait))
-                print(mod.dump(newPortraitExit))
             end
         end
     end

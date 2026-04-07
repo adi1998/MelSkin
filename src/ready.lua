@@ -1,3 +1,4 @@
+---@diagnostic disable: cast-local-type
 ---@meta _
 -- globals we define are private to our plugin!
 ---@diagnostic disable: lowercase-global
@@ -167,9 +168,15 @@ function mod.SetAnimationWrap(base,args)
         return base(args)
     end
 
-    local zagOrigFileNames = mod.ZagMelMap[origname]
+    local zagOrigFileNames = mod.ZagMelMap[origname] or mod.ZagMelMap[string.sub(origname,1,string.len(origname)-5)]
     if zagOrigFileNames ~= nil then
-        local newname = (mod.GetCurrentDress() or "") .. origname
+        local dress = mod.GetCurrentDress()
+        local dressData = mod.DressData[dress or "None"]
+        local prefix = ""
+        if dressData and dressData.Portraits and dressData.Portraits[zagOrigFileNames[1]] then
+            prefix = dress
+        end
+        local newname = prefix .. origname
         args.Name = newname
         return base(args)
     end

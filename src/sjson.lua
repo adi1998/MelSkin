@@ -32,6 +32,31 @@ mod.BoonSelectObstacle =
     }
 }
 
+mod.ZagMelSubTemplate =
+{
+    Name = "",
+    InheritFrom = "Portrait_Base_01",
+    FilePath = "",
+    OffsetY = 32,
+    OffsetX = -135,
+    SortMode = "Id"
+}
+
+mod.ZagMelCombinedTemplate =
+{
+    Name = _PLUGIN.guid .. "Mel",
+    InheritFrom = "Portrait_Base_01",
+    FilePath = "",
+    OffsetY = 32,
+    OffsetX = -300,
+    Scale = 0.6,
+    Alpha = 0.5,
+    SortMode = "Id",
+    CreateAnimations = {
+        { Name = "" }
+    }
+}
+
 sjson.hook(guiPortraitsVFXFile, function(data)
     local newdata = {}
     for _, entry in ipairs(data.Animations) do
@@ -49,6 +74,38 @@ sjson.hook(guiPortraitsVFXFile, function(data)
                     newentry.FilePath = newfilepath
                     table.insert(newdata,newentry)
                 end
+            end
+        end
+    end
+    for zagPortraitName, fileNames in pairs(mod.ZagMelMap) do
+        for dress, dressData in pairs(mod.DressData) do
+            if dressData.Portraits ~= nil then
+                local newSubPortrait = game.DeepCopyTable(mod.ZagMelSubTemplate)
+
+                local newPortrait = game.DeepCopyTable(mod.ZagMelCombinedTemplate)
+                newPortrait.Name = dress .. zagPortraitName
+                newPortrait.FilePath = modPortraitPrefix .. dress .. "\\" .. fileNames[1]
+                newPortrait.CreateAnimations[1].Name = newPortrait.Name .. "SubPortrait"
+
+                newSubPortrait.Name = newPortrait.CreateAnimations[1].Name
+                newSubPortrait.FilePath = modPortraitPrefix .. fileNames[2]
+
+                table.insert(newdata, newSubPortrait)
+                table.insert(newdata, newPortrait)
+                local newSubPortraitExit = game.DeepCopyTable(newSubPortrait)
+                newSubPortraitExit.InheritFrom = newSubPortraitExit.InheritFrom .. "_Exit"
+                newSubPortraitExit.Name = newSubPortraitExit.Name .. "_Exit"
+
+                local newPortraitExit = game.DeepCopyTable(newPortrait)
+                newPortraitExit.InheritFrom = newPortraitExit.InheritFrom .. "_Exit"
+                newPortraitExit.Name = newPortraitExit.Name .. "_Exit"
+                newPortraitExit.CreateAnimations[1].Name = newSubPortraitExit.Name
+                table.insert(newdata, newSubPortraitExit)
+                table.insert(newdata, newPortraitExit)
+                print(mod.dump(newSubPortrait))
+                print(mod.dump(newSubPortraitExit))
+                print(mod.dump(newPortrait))
+                print(mod.dump(newPortraitExit))
             end
         end
     end

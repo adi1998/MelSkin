@@ -155,3 +155,11 @@ mod.PortraitNameFileMap = {
     Portrait_Mel_Pleased_01 = "Portraits_Melinoe_Pleased_01",
     Portrait_Mel_PleasedFlushed_01 = "Portraits_Melinoe_PleasedFlushed_01",
 }
+
+mod.ZagMelMap = {
+    ModsNikkelMHadesBiomes_Portrait_Zag_Default_01 = {"Portraits_Melinoe_01", "ZagDefault"},
+    ModsNikkelMHadesBiomes_Portrait_Zag_Serious_01 = {"Portraits_Melinoe_Intense_01", "ZagSerious"},
+    ModsNikkelMHadesBiomes_Portrait_Zag_Defiant_01 = {"Portraits_Melinoe_Intense_01", "ZagDefiant"},
+    ModsNikkelMHadesBiomes_Portrait_Zag_Empathetic_01 = {"Portraits_Melinoe_Empathetic_01", "ZagEmpathetic"},
+    ModsNikkelMHadesBiomes_Portrait_Zag_Unwell_01 = {"Portraits_Melinoe_Hesitant_01", "ZagUnwell"},
+}

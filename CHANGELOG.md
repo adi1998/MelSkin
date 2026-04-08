@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.13.0] - 2026-04-08
+
 - ghost Melinoe in Zagreus' Journey now uses custom protraits if available
 
 ## [1.12.0] - 2026-04-05
@@ -114,7 +116,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.12.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.13.0...HEAD
+[1.13.0]: https://github.com/adi1998/MelSkin/compare/1.12.0...1.13.0
 [1.12.0]: https://github.com/adi1998/MelSkin/compare/1.11.0...1.12.0
 [1.11.0]: https://github.com/adi1998/MelSkin/compare/1.10.1...1.11.0
 [1.10.1]: https://github.com/adi1998/MelSkin/compare/1.10.0...1.10.1

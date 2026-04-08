@@ -168,7 +168,7 @@ function mod.SetAnimationWrap(base,args)
         return base(args)
     end
 
-    local zagOrigFileNames = mod.ZagMelMap[origname] or mod.ZagMelMap[string.sub(origname,1,string.len(origname)-5)]
+    local zagOrigFileNames = mod.ZagMelMap[origname] or mod.ZagMelMap[origname:sub(1,-6)]
     if zagOrigFileNames ~= nil then
         local dress = mod.GetCurrentDress()
         local dressData = mod.DressData[dress or "None"]

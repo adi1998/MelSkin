@@ -4,7 +4,7 @@
 
 ## [1.13.0] - 2026-04-08
 
-- ghost Melinoe in Zagreus' Journey now uses custom protraits if available
+- ghost Melinoe in Zagreus' Journey now uses custom portraits if available
 
 ## [1.12.0] - 2026-04-05
 

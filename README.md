@@ -32,20 +32,20 @@ Favorites are only available through PonyMenu.
 | __Murderrrrr by burn__ | | | | |
 | ![Murderrrrr](images/skins/Murderrrrr.png) | | | | |
 
-## [Beta] Color selector
+## Color selector
 
-Experimental color selector to allow setting any* dress and hair color. Only works with the ImGui menu (default toggle keybind: INSERT).
+A color selector to allow setting any* dress and hair color. Only works with the ImGui menu (default toggle keybind: INSERT).
 
 To activate, select `Custom` in the Dress drop-down and edit dress/hair colors and hit Apply. You can also use this menu to save/load presets.
 
-Note: If the ImGui interface is unresponsive, try disabling vsync and setting a framecap though the ingame settings menu.
+Note: If the ImGui interface is unresponsive, try disabling vsync and setting a framerate cap though the ingame settings menu.
 
 | ![1](images/colorslider/1.png) | ![2](images/colorslider/2.png) |
 | - | - |
 
 <br>
 
-Includes initial support for selecting a random preset on run start. `Custom` should be favorited in the PonyMenu UI if there are other favorites selected.
+Includes support for selecting a random preset on run start. `Custom` should be favorited in the PonyMenu UI if there are other favorites selected.
 
 | ![3](images/colorslider/3.png) | ![4](images/colorslider/4.png) |
 | - | - |
@@ -64,7 +64,7 @@ Sample mod for adding a skin https://github.com/adi1998/MelSkin_Example
 - @punishedmat on [Discord](https://discord.gg/bKvJTAJj), portrait replacements
 - [@PonyWarrior](https://github.com/PonyWarrior/), PonyMenu
 - @Aunuch on [Discord](https://discord.gg/bKvJTAJj), Updated Alternate Time skin
-- [@enderclem0](https://github.com/Enderclem0/) for [CG3H](https://github.com/Enderclem0/CG3H), texture packing script
+- [@enderclem0](https://github.com/Enderclem0/) for [CG3H](https://github.com/Enderclem0/CG3H)'s texture packing script
 
 ## Issues
 

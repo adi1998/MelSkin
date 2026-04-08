@@ -160,6 +160,7 @@ end
 
 function mod.SetAnimationWrap(base,args)
     local origname = args.Name
+
     local origfilename = mod.PortraitNameFileMap[origname]
     if origfilename ~= nil then
         local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname

@@ -74,6 +74,13 @@ mod.DressData = {
     {
         GrannyTexture = "Models/Melinoe/MelinoeTransform_Color",
         ChildGrannyTexture = "Models/Melinoe/YoungMelTransform_Color",
+        Portraits = {
+            Portraits_Melinoe_01 = true,
+            Portraits_Melinoe_Hesitant_01 = true,
+            Portraits_Melinoe_Casual_01 = true,
+            Portraits_Melinoe_Proud_01 = true,
+        },
+        DisablePortraitBlink = true,
         Color = {70, 206, 125, 255},
     },
     ["Alternate Time"] =

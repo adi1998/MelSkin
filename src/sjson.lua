@@ -72,6 +72,11 @@ sjson.hook(guiPortraitsVFXFile, function(data)
                     local newentry = game.DeepCopyTable(entry)
                     newentry.Name = newname
                     newentry.FilePath = newfilepath
+
+                    if dressData.DisablePortraitBlink and newentry.CreateAnimations and type(newentry.CreateAnimations) == "table" then
+                        newentry.CreateAnimations[#newentry.CreateAnimations] = nil
+                    end
+
                     table.insert(newdata,newentry)
                 end
             end

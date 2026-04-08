@@ -1,10 +1,10 @@
-function UdpatePortraitNameFileMap()
+function UdpatePortraitNameFileMap(map)
     local tempMap = {}
-    for k,v in pairs(mod.PortraitNameFileMap) do
+    for k,v in pairs(map) do
         tempMap[k .. "_Exit"] = v
     end
     for k,v in pairs(tempMap) do
-        mod.PortraitNameFileMap[k] = v
+        map[k] = v
     end
 end
 
@@ -25,4 +25,5 @@ end
 
 public.AddEntriesToDressData = mod.AddEntriesToDressData
 
-UdpatePortraitNameFileMap()
+UdpatePortraitNameFileMap(mod.PortraitNameFileMap)
+-- UdpatePortraitNameFileMap(mod.ZagMelMap)

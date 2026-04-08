@@ -1,3 +1,4 @@
+---@diagnostic disable: cast-local-type
 ---@meta _
 -- globals we define are private to our plugin!
 ---@diagnostic disable: lowercase-global
@@ -66,17 +67,20 @@ function mod.LoadSkinPackages()
     game.LoadPackages({Names = mod.skinPackageList})
 end
 
-function mod.dump(o)
-   if type(o) == 'table' then
-      local s = '{ '
-      for k,v in pairs(o) do
-         if type(k) ~= 'number' then k = '"'..k..'"' end
-         s = s .. '['..k..'] = ' .. mod.dump(v) .. ','
-      end
-      return s .. '} '
-   else
-      return tostring(o)
-   end
+function mod.dump(o, depth)
+    depth = depth or 0
+    if type(o) == 'table' then
+        local s = "\n" .. string.rep("\t", depth) .. '{\n'
+        for k,v in pairs(o) do
+            if type(k) ~= 'number' then k = '"'..k..'"' end
+            s = s .. string.rep("\t",(depth+1)) .. '['..k..'] = ' .. mod.dump(v, depth + 1) .. ',\n'
+        end
+        return s .. string.rep("\t", depth) .. '}'
+    elseif type(o) == "string" then
+        return "\"" .. o .. "\""
+    else
+        return tostring(o)
+    end
 end
 
 modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
@@ -156,6 +160,7 @@ end
 
 function mod.SetAnimationWrap(base,args)
     local origname = args.Name
+
     local origfilename = mod.PortraitNameFileMap[origname]
     if origfilename ~= nil then
         local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
@@ -163,6 +168,20 @@ function mod.SetAnimationWrap(base,args)
         args.Name = newname
         return base(args)
     end
+
+    local zagOrigFileNames = mod.ZagMelMap[origname] or mod.ZagMelMap[origname:sub(1,-6)]
+    if zagOrigFileNames ~= nil then
+        local dress = mod.GetCurrentDress()
+        local dressData = mod.DressData[dress or "None"]
+        local prefix = ""
+        if dressData and dressData.Portraits and dressData.Portraits[zagOrigFileNames[1]] then
+            prefix = dress
+        end
+        local newname = prefix .. origname
+        args.Name = newname
+        return base(args)
+    end
+
     if game.MapState.BabyPolymorph then
         local dress = mod.GetCurrentDress()
         local dressdata = mod.DressData[dress]

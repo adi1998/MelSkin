@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- ghost Melinoe in Zagreus' Journey now uses custom protraits if available
+
 ## [1.12.0] - 2026-04-05
 
 - fix shimmering for custom skin by using CG3H instead of deppth2 for texture packing

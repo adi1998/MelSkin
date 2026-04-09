@@ -5,6 +5,7 @@ mod.DressScreenData = {
         Name = "DressSelector",
         RowStartX = -(ScreenCenterX * 0.65),
         RowStartY = -(ScreenCenterY * 0.5),
+        BlockPause = true,
         ComponentData = {
             DefaultGroup = "Combat_Menu_TraitTray_Backing",
             UseNativeScreenCenter = true,

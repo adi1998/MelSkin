@@ -11,6 +11,7 @@
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinPortraits")
+table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinObstacles")
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustom")
 
 function mod.GetCurrentDress()

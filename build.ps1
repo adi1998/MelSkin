@@ -3,6 +3,9 @@ param([switch]$local)
 if ($local) {
     deppth2 hpk -c BC7 -s .\textures\portraits -t .\data\zerp-MelSkinPortraits
 }
+
+deppth2 hpk -c BC7 -s .\textures\obstacles -t .\data\zerp-MelSkinObstacles
+
 python build_pkg.py -s .\textures\skins -t .\data\zerp-MelSkin
 
 mkdir data/Custom -force

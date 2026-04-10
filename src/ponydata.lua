@@ -3,8 +3,8 @@ mod.DressScreenData = {
         Components = {},
         OpenSound = "/SFX/Menu Sounds/HadesLocationTextAppear",
         Name = "DressSelector",
-        RowStartX = -(ScreenCenterX * 0.65),
-        RowStartY = -(ScreenCenterY * 0.5),
+        RowStartX = -(game.ScreenCenterX * 0.65),
+        RowStartY = -(game.ScreenCenterY * 0.5),
         BlockPause = true,
         ComponentData = {
             DefaultGroup = "Combat_Menu_TraitTray_Backing",
@@ -15,24 +15,24 @@ mod.DressScreenData = {
                 Graphic = "",
                 GroupName = "Combat_Menu_TraitTray_Backing",
                 Scale = 10,
-                X = ScreenCenterX,
-                Y = ScreenCenterY,
+                X = game.ScreenCenterX,
+                Y = game.ScreenCenterY,
             },
 
             Background =
             {
                 Graphic = "MelSkin_Box_Preview",
                 GroupName = "Combat_Menu_TraitTray",
-                X = ScreenCenterX,
-                Y = ScreenCenterY,
+                X = game.ScreenCenterX,
+                Y = game.ScreenCenterY,
                 Scale = 1,
                 Text = "Select Dress",
                 TextArgs =
                 {
                     FontSize = 32,
                     Width = 750,
-                    OffsetY = -(ScreenCenterY * 0.825),
-                    Color = Color.White,
+                    OffsetY = -(game.ScreenCenterY * 0.825),
+                    Color = game.Color.White,
                     Font = "P22UndergroundSCHeavy",
                     ShadowBlur = 0,
                     ShadowColor = { 0, 0, 0, 0 },
@@ -54,7 +54,7 @@ mod.DressScreenData = {
                         {
                             FontSize = 22,
                             Width = 720,
-                            Color = Color.White,
+                            Color = game.Color.White,
                             Font = "P22UndergroundSCMedium",
                             ShadowBlur = 0,
                             ShadowColor = { 0, 0, 0, 1 },
@@ -95,7 +95,7 @@ mod.DressScreenData = {
                             OnMouseOffFunctionName = "MouseOffContextualAction",
                         },
                         Text = "{SL} Select",
-                        TextArgs = UIData.ContextualButtonFormatRight,
+                        TextArgs = game.UIData.ContextualButtonFormatRight,
                     },
 
                     FavoriteButton =
@@ -114,7 +114,7 @@ mod.DressScreenData = {
                             ControlHotkeys = { "ItemPin" }
                         },
                         Text = "{IP} Add/Remove Favorite",
-                        TextArgs = UIData.ContextualButtonFormatRight,
+                        TextArgs = game.UIData.ContextualButtonFormatRight,
                     },
 
                     ResetFavoriteButton =
@@ -132,7 +132,7 @@ mod.DressScreenData = {
                             ControlHotkeys = { "MenuLeft" },
                         },
                         Text = "{ML} Reset Favorites",
-                        TextArgs = UIData.ContextualButtonFormatLeft,
+                        TextArgs = game.UIData.ContextualButtonFormatLeft,
                     },
                     SelectAllFavoriteButton =
                     {
@@ -149,7 +149,7 @@ mod.DressScreenData = {
                             ControlHotkeys = { "MenuRight" },
                         },
                         Text = "{MR} Favorite All",
-                        TextArgs = UIData.ContextualButtonFormatLeft,
+                        TextArgs = game.UIData.ContextualButtonFormatLeft,
                     }
                 }
             }

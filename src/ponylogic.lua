@@ -47,6 +47,7 @@ function mod.OpenDressSelector()
     end
 
     mod.ApplyMenuZoom()
+    game.thread(mod.StartHeroRotation)
 
     mod.DressSelectorLoadPage(screen)
     game.SetColor({ Id = components.BackgroundTint.Id, Color = game.Color.Black })
@@ -208,6 +209,7 @@ function mod.CloseDressSelector(screen)
     game.notifyExistingWaiters("DressSelector")
     mod.ResetMenuZoom()
 	game.SetupCostume()
+    game.killTaggedThreads("StartHeroRotation")
 end
 
 function mod.ToggleFavriteDressSelection(screen, button)
@@ -287,4 +289,43 @@ function mod.ResetMenuZoom()
 
     game.thread(game.LockCamera,{Id = game.CurrentRun.Hero.ObjectId, Duration = 0.3})
     game.AdjustZoom({ Fraction = defaultZoom, Duration = 0.3 })
+end
+
+local function radius(angle, a, b)
+    angle = math.rad(angle)
+    local cos_angle = math.cos(angle)
+    local sin_angle = math.sin(angle)
+    local term_x = cos_angle/a
+    local term_y = sin_angle/b
+    local sqr_term_x = term_x^2
+    local sqr_term_y = term_y^2
+    local sqrt_term = math.sqrt(sqr_term_x + sqr_term_y)
+    local r = 1/sqrt_term
+    local distance = math.sqrt((r*cos_angle)^2 + (r*sin_angle)^2)
+    return distance
+end
+
+function mod.StartHeroRotation()
+    local angle = game.GetAngle({Id = game.CurrentRun.Hero.ObjectId})
+    -- angle = math.deg(angle)
+    angle = math.floor(angle)
+    while true do
+        game.SetAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = angle, CompleteAngle = true})
+        game.waitUnmodified(1/180, "StartHeroRotation")
+        local ratio = radius(angle, 1, 2.45)
+        angle = (angle + ratio)%360
+        print(angle, ratio)
+    end
+    game.SetUnitProperty({ Property = "RotationSpeed", Value = 200, DestinationId = game.CurrentRun.Hero.ObjectId })
+    -- while true do
+    --     local dur = 2
+    --     game.SetAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = 000, Duration = dur, EaseIn = 1.0, EaseOut = 1.0,CompleteAngle = true})
+    --     game.waitUnmodified(dur, "StartHeroRotation")
+    --     game.SetAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = 90, Duration = dur, EaseIn = 1.0, EaseOut = 1.0,CompleteAngle = true})
+    --     game.waitUnmodified(dur, "StartHeroRotation")
+    --     game.SetAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = 180, Duration = dur, EaseIn = 1.0, EaseOut = 1.0,CompleteAngle = true})
+    --     game.waitUnmodified(dur, "StartHeroRotation")
+    --     game.SetAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = 270, Duration = dur,EaseIn = 1.0, EaseOut = 1.0, CompleteAngle = true})
+    --     game.waitUnmodified(dur, "StartHeroRotation")
+    -- end
 end

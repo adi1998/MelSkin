@@ -54,9 +54,9 @@ function drawMenu()
 
     if not zoom then
         AdjustZoom({ Fraction = 2.8, Duration = 0.3 })
+        game.thread(mod.StartHeroRotation)
         game.thread(mod.ResetZoomAfterImGuiClose)
         zoom = true
-        game.thread(mod.StartHeroRotation)
     end
 
     rom.ImGui.Text("Select Dress")
@@ -282,6 +282,7 @@ function mod.ResetZoomAfterImGuiClose()
     end
     zoom = false
     mod.ResetMenuZoom()
+    game.killTaggedThreads(_PLUGIN.guid .. "StartHeroRotation")
 end
 
 function LoadPreset(lastApplied)

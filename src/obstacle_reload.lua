@@ -38,20 +38,31 @@ function mod.SpawnDressObstacleHubMain()
     game.SetupObstacle(shelfObstacle)
 end
 
+function mod.MelinoeDressPresentationIn()
+    game.wait( 0.4, game.RoomThreadName)
+    game.CreateAnimation({ Name = "TeleportDisappear", DestinationId = game.CurrentRun.Hero.ObjectId })
+    game.wait( 0.05, game.RoomThreadName )
+    game.SetAlpha({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 1.0, Duration = 0 })
+end
+
 function mod.OpenDressSelectorFromObstacle(obstacle, args, user)
     local storedLocation
     local storedAngle
     if obstacle.ObjectId == 566827 then
         storedLocation = game.GetLocation({Id = game.CurrentRun.Hero.ObjectId})
         storedAngle = game.GetAngle({Id = game.CurrentRun.Hero.ObjectId})
+        game.SetAlpha({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 0, Duration = 0 })
         game.Teleport({ Id = game.CurrentRun.Hero.ObjectId, DestinationId = 566827, OffsetX = -590, OffsetY = -520 })
         game.SetAngle({ Id = game.CurrentRun.Hero.ObjectId, Angle = 315 })
+        game.thread(mod.MelinoeDressPresentationIn)
     end
 
     mod.OpenDressSelector()
 
     if obstacle.ObjectId == 566827 then
+        game.SetAlpha({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 0, Duration = 0 })
         game.Teleport({ Id = game.CurrentRun.Hero.ObjectId, OffsetX = storedLocation.X, OffsetY = storedLocation.Y })
         game.SetGoalAngle({ Id = game.CurrentRun.Hero.ObjectId, Angle = storedAngle, CompleteAngle = true })
+        game.thread(mod.MelinoeDressPresentationIn)
     end
 end

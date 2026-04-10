@@ -305,18 +305,50 @@ local function radius(angle, a, b)
     return distance
 end
 
+local function get_tangent(angle, a, b)
+    angle = math.rad(angle)
+    local sa = math.sin(angle)
+    if math.abs(sa) < 1e-10 then
+        return math.pi / 2
+    end
+    local tan_T = -(b^3 / a^3) * (math.cos(angle) / math.sin(angle))
+    return math.atan(tan_T)
+end
+
+local function ellipse_point(a, b, alpha)
+    local ca, sa = math.cos(alpha), math.sin(alpha)
+    local denom = math.sqrt(b^2 * ca^2 + a^2 * sa^2)
+    return a*b*ca/denom, a*b*sa/denom
+end
+
+local function ellipse_speed_factor(a, b, alpha, eps)
+    eps = eps or 1e-5
+    local x1, y1 = ellipse_point(a, b, alpha - eps)
+    local x2, y2 = ellipse_point(a, b, alpha + eps)
+    local dxda = (x2 - x1) / (2*eps)
+    local dyda = (y2 - y1) / (2*eps)
+    return math.sqrt(dxda^2 + dyda^2)
+end
+
+-- call each frame with dt
+local function step(a, b, alpha, speed, dt)
+    local ds_da = ellipse_speed_factor(a, b, alpha)
+    return (speed / ds_da) * dt
+end
+
+
 function mod.StartHeroRotation()
     local angle = game.GetAngle({Id = game.CurrentRun.Hero.ObjectId})
     -- angle = math.deg(angle)
     angle = math.floor(angle)
+    angle = 0
     while true do
-        game.SetAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = angle, CompleteAngle = true})
-        game.waitUnmodified(1/180, "StartHeroRotation")
-        local ratio = radius(angle, 1, 2.45)
+        game.SetGoalAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = angle})
+        game.waitUnmodified(1/60, "StartHeroRotation")
+        local ratio = math.deg(step(2.85, 1, math.rad(angle), 2, 1/60))
         angle = (angle + ratio)%360
         print(angle, ratio)
     end
-    game.SetUnitProperty({ Property = "RotationSpeed", Value = 200, DestinationId = game.CurrentRun.Hero.ObjectId })
     -- while true do
     --     local dur = 2
     --     game.SetAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = 000, Duration = dur, EaseIn = 1.0, EaseOut = 1.0,CompleteAngle = true})

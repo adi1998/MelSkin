@@ -8,6 +8,7 @@ local dressMenuObstacleSjson = {
         Graphic = _PLUGIN.guid .. "Obstacles" .. "\\Erebus_WebThread_01",
         Tallness = 1155,
         Offset = { X = 0, Y = 0 },
+        OffsetZ = 100,
         Points = {
             { X = -485, Y = -298 },
             { X = 435, Y = 146 },

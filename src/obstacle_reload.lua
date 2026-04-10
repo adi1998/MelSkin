@@ -1,6 +1,6 @@
 local dressMenuObstacle = {
     Name = _PLUGIN.guid .. "DressMenuObstacle",
-    InteractDistance = 200,
+    InteractDistance = 160,
     UseText = "{I} Change Dress",
     OnUsedFunctionName = _PLUGIN.guid .. '.' .. "OpenDressSelectorFromObstacle",
     Activate = true,
@@ -8,27 +8,33 @@ local dressMenuObstacle = {
 
 function mod.SpawnDressObstaclePreRun()
     local dressObstacle = game.DeepCopyTable(dressMenuObstacle)
-    print("spawning dress obstacle")
+    print("spawning dress menu obstacle")
+    dressObstacle.InteractOffsetX = 30
+    dressObstacle.InteractOffsetY = 100
     dressObstacle.ObjectId = game.SpawnObstacle({
         Name = _PLUGIN.guid .. "DressMenuObstacle",
         Group = "Standing",
-        DestinationId = 558175,
-        OffsetX = 500,
-        OffsetY = 0,
+        DestinationId = 587351, -- chair id
+        OffsetX = 100,
+        OffsetY = -200,
+        OffSetZ = 300,
         AttachedTable = dressObstacle,
     })
     dressObstacle.ActivateIds = { dressObstacle.ObjectId }
     game.SetupObstacle(dressObstacle)
 
-    -- brighness fix
+    game.FlipHorizontal({ Id = dressObstacle.ObjectId })
+
+    -- brighness fix, it just works
     game.SetThingProperty({Property = "AddColor", Value = true, DestinationId = dressObstacle.ObjectId })
-    game.SetColor({ Id = dressObstacle.ObjectId, Color = {0,0,0,1} }) -- it just works
+    game.SetColor({ Id = dressObstacle.ObjectId, Color = {0,0,0,1} })
 end
 
 function mod.SpawnDressObstacleHubMain()
     local shelfObstacle = game.DeepCopyTable(dressMenuObstacle)
     shelfObstacle.ObjectId = 566827 -- shelf id
     shelfObstacle.ActivateIds = { shelfObstacle.ObjectId }
+    print("making shelf interactable")
     game.SetupObstacle(shelfObstacle)
 end
 

@@ -78,7 +78,6 @@ mod.DressScreenData = {
                         {
                             OnPressedFunctionName = _PLUGIN.guid .. '.' .. 'CloseDressSelector',
                             ControlHotkeys = { "Cancel", },
-                            MouseControlHotkeys  = { "Cancel", "Inventory", },
                         },
                     },
 

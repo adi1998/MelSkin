@@ -209,7 +209,7 @@ function mod.CloseDressSelector(screen)
     game.notifyExistingWaiters("DressSelector")
     mod.ResetMenuZoom()
 	game.SetupCostume()
-    game.killTaggedThreads("StartHeroRotation")
+    game.killTaggedThreads(_PLUGIN.guid .. "StartHeroRotation")
 end
 
 function mod.ToggleFavriteDressSelection(screen, button)
@@ -335,11 +335,11 @@ end
 
 function mod.StartHeroRotation()
     local angle = 0
-    local step = 1
+    local step = 0.5
     while true do
         local angle_used = math.deg(world_to_screen(math.rad(angle)))
         game.SetGoalAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = angle_used})
-        game.waitUnmodified(1/60, "StartHeroRotation")
+        game.waitUnmodified(1/120, _PLUGIN.guid .. "StartHeroRotation")
         angle = (angle + step)%360
     end
 end

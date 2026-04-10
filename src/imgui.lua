@@ -35,6 +35,7 @@ rom.gui.add_imgui(function()
     elseif zoom then
         zoom = false
         mod.ResetMenuZoom()
+        game.killTaggedThreads(_PLUGIN.guid .. "StartHeroRotation")
     end
 end)
 
@@ -45,6 +46,7 @@ rom.gui.add_to_menu_bar(function()
     elseif zoom then
         zoom = false
         mod.ResetMenuZoom()
+        game.killTaggedThreads(_PLUGIN.guid .. "StartHeroRotation")
     end
 end)
 
@@ -54,6 +56,7 @@ function drawMenu()
         AdjustZoom({ Fraction = 2.8, Duration = 0.3 })
         game.thread(mod.ResetZoomAfterImGuiClose)
         zoom = true
+        game.thread(mod.StartHeroRotation)
     end
 
     rom.ImGui.Text("Select Dress")

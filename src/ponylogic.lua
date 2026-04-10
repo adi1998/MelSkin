@@ -291,73 +291,55 @@ function mod.ResetMenuZoom()
     game.AdjustZoom({ Fraction = defaultZoom, Duration = 0.3 })
 end
 
-local function radius(angle, a, b)
-    angle = math.rad(angle)
-    local cos_angle = math.cos(angle)
-    local sin_angle = math.sin(angle)
-    local term_x = cos_angle/a
-    local term_y = sin_angle/b
-    local sqr_term_x = term_x^2
-    local sqr_term_y = term_y^2
-    local sqrt_term = math.sqrt(sqr_term_x + sqr_term_y)
-    local r = 1/sqrt_term
-    local distance = math.sqrt((r*cos_angle)^2 + (r*sin_angle)^2)
-    return distance
+-- courtsey of @magic_gonads
+local world_to_screen
+local screen_to_world
+
+local a,b = 1, 0 -- or 0.5, 0 if it's the wrong way around
+local c,d = 0, 0.5 -- or 0, 1 if it's the wrong way around
+
+function world_to_screen(world_angle)
+    local t = world_angle
+
+    -- world coords
+    -- assuming z = 0
+    -- don't need radius as it will cancel in atan2
+    local x = math.cos(t)
+    local y = math.sin(t)
+
+    -- world coords -> screen coords
+    local x2 = a*x + b*y
+    local y2 = c*x + d*y
+
+    -- screen angle
+    return math.atan2(y2,x2) -- y first in lua's atan2
 end
 
-local function get_tangent(angle, a, b)
-    angle = math.rad(angle)
-    local sa = math.sin(angle)
-    if math.abs(sa) < 1e-10 then
-        return math.pi / 2
-    end
-    local tan_T = -(b^3 / a^3) * (math.cos(angle) / math.sin(angle))
-    return math.atan(tan_T)
-end
+function screen_to_world(screen_angle)
+    local t = screen_angle
 
-local function ellipse_point(a, b, alpha)
-    local ca, sa = math.cos(alpha), math.sin(alpha)
-    local denom = math.sqrt(b^2 * ca^2 + a^2 * sa^2)
-    return a*b*ca/denom, a*b*sa/denom
-end
+    -- screen coords
+    -- don't need radius as it will cancel in atan2
+    local x = math.cos(t)
+    local y = math.sin(t)
 
-local function ellipse_speed_factor(a, b, alpha, eps)
-    eps = eps or 1e-5
-    local x1, y1 = ellipse_point(a, b, alpha - eps)
-    local x2, y2 = ellipse_point(a, b, alpha + eps)
-    local dxda = (x2 - x1) / (2*eps)
-    local dyda = (y2 - y1) / (2*eps)
-    return math.sqrt(dxda^2 + dyda^2)
-end
+    -- world coords -> screen coords
+    -- assuming z = 0
+    -- don't need to divide by determinant as it will cancel in atan2
+    local x2 = d*x - b*y
+    local y2 = a*y - c*x
 
--- call each frame with dt
-local function step(a, b, alpha, speed, dt)
-    local ds_da = ellipse_speed_factor(a, b, alpha)
-    return (speed / ds_da) * dt
+    -- world angle
+    return math.atan2(y2,x2) -- y first in lua's atan2
 end
-
 
 function mod.StartHeroRotation()
-    local angle = game.GetAngle({Id = game.CurrentRun.Hero.ObjectId})
-    -- angle = math.deg(angle)
-    angle = math.floor(angle)
-    angle = 0
+    local angle = 0
+    local step = 1
     while true do
-        game.SetGoalAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = angle})
+        local angle_used = math.deg(world_to_screen(math.rad(angle)))
+        game.SetGoalAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = angle_used})
         game.waitUnmodified(1/60, "StartHeroRotation")
-        local ratio = math.deg(step(2.85, 1, math.rad(angle), 2, 1/60))
-        angle = (angle + ratio)%360
-        print(angle, ratio)
+        angle = (angle + step)%360
     end
-    -- while true do
-    --     local dur = 2
-    --     game.SetAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = 000, Duration = dur, EaseIn = 1.0, EaseOut = 1.0,CompleteAngle = true})
-    --     game.waitUnmodified(dur, "StartHeroRotation")
-    --     game.SetAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = 90, Duration = dur, EaseIn = 1.0, EaseOut = 1.0,CompleteAngle = true})
-    --     game.waitUnmodified(dur, "StartHeroRotation")
-    --     game.SetAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = 180, Duration = dur, EaseIn = 1.0, EaseOut = 1.0,CompleteAngle = true})
-    --     game.waitUnmodified(dur, "StartHeroRotation")
-    --     game.SetAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = 270, Duration = dur,EaseIn = 1.0, EaseOut = 1.0, CompleteAngle = true})
-    --     game.waitUnmodified(dur, "StartHeroRotation")
-    -- end
 end

@@ -70,6 +70,7 @@ local function on_reload()
     import 'presets_reload.lua'
     import 'obstacle_reload.lua'
     import 'ponylogic.lua'
+    import 'imgui.lua'
     if config.debug_reload == false then return end
 
     import 'ponydata.lua'

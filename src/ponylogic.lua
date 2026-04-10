@@ -259,8 +259,15 @@ function mod.ApplyMenuZoom()
     if game.HeroHasTrait("TorchAutofireAspect") then
         offsetY = -110
     end
-    game.thread(game.LockCamera,{Id = game.CurrentRun.Hero.ObjectId, OffsetX = -265, OffsetY = offsetY, Duration = 0.3})
-    game.AdjustZoom({ Fraction = 2.8, Duration = 0.3 })
+
+    if game.CurrentHubRoom and game.CurrentHubRoom.Name == "Hub_Main" then
+        game.thread(game.LockCamera,{Id = game.CurrentRun.Hero.ObjectId, OffsetX = -530, OffsetY = offsetY, Duration = 0.35})
+        game.AdjustZoom({ Fraction = 1.4, Duration = 0.35 })
+        game.SetScale({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 1.7 })
+    else
+        game.thread(game.LockCamera,{Id = game.CurrentRun.Hero.ObjectId, OffsetX = -265, OffsetY = offsetY, Duration = 0.35})
+        game.AdjustZoom({ Fraction = 2.8, Duration = 0.35 })
+    end
 end
 
 function mod.ResetMenuZoom()
@@ -289,6 +296,9 @@ function mod.ResetMenuZoom()
 
     game.thread(game.LockCamera,{Id = game.CurrentRun.Hero.ObjectId, Duration = 0.3})
     game.AdjustZoom({ Fraction = defaultZoom, Duration = 0.3 })
+    if game.CurrentHubRoom and game.CurrentHubRoom.Name == "Hub_Main" then
+        game.SetScale({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 1 })
+    end
 end
 
 -- courtsey of @magic_gonads

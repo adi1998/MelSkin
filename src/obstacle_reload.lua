@@ -40,7 +40,14 @@ end
 
 function mod.MelinoeDressPresentationIn()
     game.wait( 0.4, game.RoomThreadName)
-    game.CreateAnimation({ Name = "TeleportDisappear", DestinationId = game.CurrentRun.Hero.ObjectId })
+    game.CreateAnimation({ Name = "TeleportDisappear", DestinationId = game.CurrentRun.Hero.ObjectId, Scale = 0.9 })
+    game.wait( 0.05, game.RoomThreadName )
+    game.SetAlpha({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 1.0, Duration = 0 })
+end
+
+function mod.MelinoeDressPresentationOut()
+    game.wait( 0.4, game.RoomThreadName)
+    game.CreateAnimation({ Name = "TeleportDisappear", DestinationId = game.CurrentRun.Hero.ObjectId, Scale = 0.53 })
     game.wait( 0.05, game.RoomThreadName )
     game.SetAlpha({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 1.0, Duration = 0 })
 end
@@ -63,6 +70,6 @@ function mod.OpenDressSelectorFromObstacle(obstacle, args, user)
         game.SetAlpha({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 0, Duration = 0 })
         game.Teleport({ Id = game.CurrentRun.Hero.ObjectId, OffsetX = storedLocation.X, OffsetY = storedLocation.Y })
         game.SetGoalAngle({ Id = game.CurrentRun.Hero.ObjectId, Angle = storedAngle, CompleteAngle = true })
-        game.thread(mod.MelinoeDressPresentationIn)
+        game.thread(mod.MelinoeDressPresentationOut)
     end
 end

@@ -14,9 +14,11 @@ While the mod has been tested decently well it is recommended to backup your sav
 
 ## Usage
 
+NEW: The menu can now be opened from Crossroads by interacting with Arachne's silk stand in the training grounds or the shelf/cabinet in Melinoe's stand.
+
 Use the Imgui menu (default toggle keybind: INSERT) or PonyMenu(new submenu in inventory) to select the dress.
 
-Favorites are only available through PonyMenu.
+Favorites are only available through the ingame menu.
 
 | ![PonyDressList](images/PonyDressList.png) | ![ImguiSubmenu](images/ImguiSubmenu.png) |
 | :-: | :-: |

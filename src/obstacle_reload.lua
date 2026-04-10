@@ -1,6 +1,6 @@
 local dressMenuObstacle = {
     Name = _PLUGIN.guid .. "DressMenuObstacle",
-    InteractDistance = 160,
+    InteractDistance = 120,
     UseText = "{I} Change Dress",
     OnUsedFunctionName = _PLUGIN.guid .. '.' .. "OpenDressSelectorFromObstacle",
     Activate = true,
@@ -9,14 +9,14 @@ local dressMenuObstacle = {
 function mod.SpawnDressObstaclePreRun()
     local dressObstacle = game.DeepCopyTable(dressMenuObstacle)
     print("spawning dress menu obstacle")
-    dressObstacle.InteractOffsetX = 30
+    dressObstacle.InteractOffsetX = -130
     dressObstacle.InteractOffsetY = 100
     dressObstacle.ObjectId = game.SpawnObstacle({
         Name = _PLUGIN.guid .. "DressMenuObstacle",
         Group = "Standing",
         DestinationId = 587351, -- chair id
         OffsetX = 100,
-        OffsetY = -200,
+        OffsetY = -180,
         OffSetZ = 300,
         AttachedTable = dressObstacle,
     })

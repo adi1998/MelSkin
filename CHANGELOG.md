@@ -4,6 +4,7 @@
 
 - Adds interactable objects in the Crossroads for a more immersive dress changing UX
 - KB/M users can now exit the ingame menu using the Esc key
+- PonyMenu is now optional for ingame menu
 
 ## [1.13.0] - 2026-04-08
 

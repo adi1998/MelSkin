@@ -344,12 +344,14 @@ function screen_to_world(screen_angle)
 end
 
 function mod.StartHeroRotation()
-    local angle = 0
-    local step = 0.5
+    local angle = 270
+    local updateRate = 120
+    local denom = 60*updateRate/360
     while true do
+        local step = config.preview_rpm/denom
         local angle_used = math.deg(world_to_screen(math.rad(angle)))
         game.SetGoalAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = angle_used})
-        game.waitUnmodified(1/120, _PLUGIN.guid .. "StartHeroRotation")
+        game.waitUnmodified(1/updateRate, _PLUGIN.guid .. "StartHeroRotation")
         angle = (angle + step)%360
     end
 end

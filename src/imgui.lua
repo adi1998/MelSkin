@@ -274,6 +274,14 @@ function drawMenu()
         game.SetupCostume()
         game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
     end
+
+    local selected
+    value, selected = rom.ImGui.SliderInt("###rpm", config.preview_rpm, 0, 200, '%d%')
+    if selected and value ~= previousConfig.preview_rpm then
+        config.preview_rpm = value
+        previousConfig.preview_rpm = value
+    end
+    rom.ImGui.SameLine(); rom.ImGui.Text("RPM")
 end
 
 function mod.ResetZoomAfterImGuiClose()

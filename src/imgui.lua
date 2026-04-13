@@ -35,6 +35,7 @@ rom.gui.add_imgui(function()
     elseif zoom then
         zoom = false
         mod.ResetMenuZoom()
+        game.killTaggedThreads(_PLUGIN.guid .. "StartHeroRotation")
     end
 end)
 
@@ -45,6 +46,7 @@ rom.gui.add_to_menu_bar(function()
     elseif zoom then
         zoom = false
         mod.ResetMenuZoom()
+        game.killTaggedThreads(_PLUGIN.guid .. "StartHeroRotation")
     end
 end)
 
@@ -52,6 +54,7 @@ function drawMenu()
 
     if not zoom then
         AdjustZoom({ Fraction = 2.8, Duration = 0.3 })
+        game.thread(mod.StartHeroRotation)
         game.thread(mod.ResetZoomAfterImGuiClose)
         zoom = true
     end
@@ -271,6 +274,14 @@ function drawMenu()
         game.SetupCostume()
         game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
     end
+
+    local selected
+    value, selected = rom.ImGui.SliderInt("###rpm", config.preview_rpm, 0, 200, '%d%')
+    if selected and value ~= previousConfig.preview_rpm then
+        config.preview_rpm = value
+        previousConfig.preview_rpm = value
+    end
+    rom.ImGui.SameLine(); rom.ImGui.Text("RPM")
 end
 
 function mod.ResetZoomAfterImGuiClose()
@@ -279,6 +290,7 @@ function mod.ResetZoomAfterImGuiClose()
     end
     zoom = false
     mod.ResetMenuZoom()
+    game.killTaggedThreads(_PLUGIN.guid .. "StartHeroRotation")
 end
 
 function LoadPreset(lastApplied)

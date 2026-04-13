@@ -50,11 +50,11 @@ local function on_ready()
 
     import 'ponydata.lua'
     import 'ponylogic.lua'
-    mod.PopulatePonyMenuData()
 
     import 'data.lua'
     import 'setupdata.lua'
     import 'sjson.lua'
+    import 'obstacle.lua'
     import 'ready.lua'
     if not mod.DressData[config.dress] then
         config.dress = "None"
@@ -68,22 +68,38 @@ local function on_reload()
 
     import 'reload.lua'
     import 'presets_reload.lua'
+    import 'obstacle_reload.lua'
 
     if config.debug_reload == false then return end
 
     import 'ponydata.lua'
-    import 'ponylogic.lua'
     import 'data.lua'
     import 'setupdata.lua'
 
     ModUtil.Table.Merge(game.ScreenData,mod.DressScreenData)
-    
+end
+
+local function on_ready_late()
+    if config.enabled == false then return end
+
+    import "ponylogic_late.lua"
+    mod.PopulatePonyMenuData()
+end
+
+local function on_reload_late()
+    if config.enabled == false then return end
 end
 
 -- this allows us to limit certain functions to not be reloaded.
-local loader = reload.auto_single()
+local loader = reload.auto_multiple()
 
 -- this runs only when modutil and the game's lua is ready
 modutil.once_loaded.game(function()
-    loader.load(on_ready, on_reload)
+    loader.load("early", on_ready, on_reload)
+end)
+
+mods.on_all_mods_loaded(function()
+	modutil.once_loaded.game(function()
+		loader.load("late", on_ready_late, on_reload_late)
+	end)
 end)

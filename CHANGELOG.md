@@ -2,13 +2,18 @@
 
 ## [Unreleased]
 
+- Adds interactable objects in the Crossroads for a more immersive dress changing UX
+- KB/M users can now exit the ingame menu using the Esc key
+- PonyMenu is now optional for ingame menu
+- Dress selection menu now has Melinoe slowly rotate in place
+
 ## [1.13.0] - 2026-04-08
 
-- ghost Melinoe in Zagreus' Journey now uses custom portraits if available
+- Ghost Melinoe in Zagreus' Journey now uses custom portraits if available
 
 ## [1.12.0] - 2026-04-05
 
-- fix shimmering for custom skin by using CG3H instead of deppth2 for texture packing
+- Fix shimmering for custom skin by using CG3H instead of deppth2 for texture packing
 
 ## [1.11.0] - 2026-03-15
 

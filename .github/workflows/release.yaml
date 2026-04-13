@@ -55,9 +55,9 @@ jobs:
         shell: pwsh
         run: dotnet tool install -g tcli
 
-      - name: Install pillow, lz4 and etcpak
+      - name: Install pip packages
         shell: pwsh
-        run: pip install pillow lz4 etcpak
+        run: pip install pillow lz4 etcpak deppth2 PyTexturePacker
 
       - name: Add .NET tools to PATH
         shell: pwsh

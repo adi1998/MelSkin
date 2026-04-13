@@ -14,7 +14,12 @@ While the mod has been tested decently well it is recommended to backup your sav
 
 ## Usage
 
-NEW: The menu can now be opened from Crossroads by interacting with Arachne's silk stand in the training grounds or the shelf/cabinet in Melinoe's stand.
+NEW: The menu can now also be opened from Crossroads by interacting with Arachne's silk stand in the training grounds or the shelf/cabinet in Melinoe's tent.
+
+| ![ShelfInteract](images/ShelfInteract.png) | ![ArachneInteract](images/ArachneInteract.png) |
+| - | - |
+
+<br>
 
 Use the Imgui menu (default toggle keybind: INSERT) or PonyMenu(new submenu in inventory) to select the dress.
 

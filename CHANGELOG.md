@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+- Add custom Chaos skin and portraits by @jarlulsfark on Discord
+- Add support for portrait overlay modifications
+- Add LaurelCinderSpawner hue shift support for unique custom skins
+- Add custom arm glow support for unique custom skins
+- Custom boon select screen portraits now have fade in/out animations
+
+## [1.14.0] - 2026-04-13
+
 - Adds interactable objects in the Crossroads for a more immersive dress changing UX
 - KB/M users can now exit the ingame menu using the Esc key
 - PonyMenu is now optional for ingame menu
@@ -121,7 +129,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.13.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.14.0...HEAD
+[1.14.0]: https://github.com/adi1998/MelSkin/compare/1.13.0...1.14.0
 [1.13.0]: https://github.com/adi1998/MelSkin/compare/1.12.0...1.13.0
 [1.12.0]: https://github.com/adi1998/MelSkin/compare/1.11.0...1.12.0
 [1.11.0]: https://github.com/adi1998/MelSkin/compare/1.10.1...1.11.0

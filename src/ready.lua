@@ -95,11 +95,8 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
     base(skipCostume)
     game.CostumeData.Costume_Default.GrannyTexture = ""
 
-    -- arm glow
-    local dress = config.dress
-    if config.random_each_run then
-        dress = mod.GetCurrentRunDress()
-    end
+    -- arm glow and laurel spawner setup
+    local dress = mod.GetCurrentDress()
 
     local laurelCindersSpawner = "LaurelCindersSpawner"
     if dress and mod.DressData[dress] and mod.DressData[dress].LaurelCinderHue then

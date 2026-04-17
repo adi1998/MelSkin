@@ -5,7 +5,7 @@
 - Add custom Chaos skin and portraits by @jarlulsfark on Discord
 - Add support for portrait overlay modifications
 - Add LaurelCinderSpawner hue shift support for unique custom skins
-- Add custom arm glow support for unique custom skins
+- Add custom arm glow color support for unique custom skins
 - Custom boon select screen portraits now have fade in/out animations
 
 ## [1.14.0] - 2026-04-13

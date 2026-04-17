@@ -57,8 +57,69 @@ mod.ZagMelCombinedTemplate =
     }
 }
 
+local function modifyNewEntryOverlays(entry, modifications, anim_data_table, prefix)
+    if type(modifications) ~= "table" then
+        return {}
+    end
+    local createAnimations = entry.CreateAnimations or {}
+    local new_entries = {}
+    for animName, mod_table in pairs(modifications) do
+        if type(mod_table) == "string" and mod_table == "nil" then
+            local index = 0
+            for i, animEntry in ipairs(createAnimations) do
+                if animEntry.Name == animName then
+                    index = i
+                    break
+                end
+            end
+            if index > 0 then
+                game.RemoveIndexAndCollapse(createAnimations, index)
+            end
+        elseif type(mod_table) == "table" then
+            local animData = game.DeepCopyTable(anim_data_table[animName])
+            for key, value in pairs(mod_table) do
+                if key == "VisualFx" and type(value) == "table" and value.Name == "LaurelBurnIris" then
+                    local laurelAnim = game.DeepCopyTable(anim_data_table[value.Name])
+                    local laurelSubAnims = laurelAnim.Random or {}
+                    for _, subAnim in ipairs(laurelSubAnims) do
+                        local subAnimData = game.DeepCopyTable(anim_data_table[subAnim.Name])
+                        subAnimData.Hue = value.Hue or subAnimData.Hue
+                        subAnimData.Name = prefix .. subAnimData.Name
+                        subAnim.Name = subAnimData.Name
+                        table.insert(new_entries, subAnimData)
+                    end
+                    laurelAnim.Name = prefix .. laurelAnim.Name
+                    table.insert(new_entries, laurelAnim)
+                    animData[key] = laurelAnim.Name
+                else
+                    if key == "UpdateChainTo" and value and animData.ChainTo then
+                        animData.ChainTo = prefix .. animData.ChainTo
+                    else
+                        animData[key] = value
+                    end
+                end
+            end
+            for i, animEntry in ipairs(createAnimations) do
+                if animEntry.Name == animName then
+                    animEntry.Name = prefix .. animEntry.Name
+                end
+            end
+            animData.Name = prefix .. animData.Name
+            table.insert(new_entries, animData)
+        end
+    end
+    entry.CreateAnimations = createAnimations
+    return new_entries
+end
+
 sjson.hook(guiPortraitsVFXFile, function(data)
     local newdata = {}
+    local name_data_map = {}
+    for _, entry in ipairs(data.Animations) do
+        if type(entry.Name) == "string" then
+            name_data_map[entry.Name] = entry
+        end
+    end
     for _, entry in ipairs(data.Animations) do
         local origname = entry.Name
         local origfilename = mod.PortraitNameFileMap[origname]
@@ -72,6 +133,14 @@ sjson.hook(guiPortraitsVFXFile, function(data)
                     local newentry = game.DeepCopyTable(entry)
                     newentry.Name = newname
                     newentry.FilePath = newfilepath
+                    local newSubEntries = modifyNewEntryOverlays(newentry, dressData.PortraitOverlayModifacations, name_data_map, dress)
+                    for _, value in pairs(newSubEntries) do
+                        table.insert(newdata, value)
+                    end
+                    if dress == "Chaos" then
+                        print(mod.dump(newSubEntries))
+                        print(mod.dump(newentry))
+                    end
                     table.insert(newdata,newentry)
                 end
             end

@@ -92,6 +92,59 @@ mod.DressData = {
         GrannyTexture = "zerp-MelSkin/Halloween 2025",
         Color = {176, 208, 66, 255},
     },
+    Chaos =
+    {
+        GrannyTexture = "zerp-MelSkin/Chaos",
+        Portraits = mod.Portraits,
+        PortraitOverlayModifacations = {
+            Portrait_Mel_Body2_Wiggle1_In = "nil",
+            Portrait_Mel_Body1_Wiggle2_In = "nil",
+            Portrait_Mel_Body2_Wiggle2_In = {
+                Hue = 0.327,
+		        Saturation = 0.5,
+                UpdateChainTo = true,
+            },
+            Portrait_Mel_Body1_Wiggle1_In = {
+                Hue = 0.327,
+		        Saturation = 0.5,
+                UpdateChainTo = true,
+            },
+            Portrait_Mel_Body2_Wiggle2 = {
+                Hue = 0.327,
+		        Saturation = 0.5,
+            },
+            Portrait_Mel_Body1_Wiggle1 = {
+                Hue = 0.327,
+		        Saturation = 0.5,
+            },
+            Portrait_Mel_Body2_ArmGlow = {
+                Hue = 0.385,
+            },
+            Portrait_Mel_Body1_ArmGlow = {
+                Hue = 0.385,
+            },
+            Portrait_Mel_LaurelGlow = {
+                Hue = -0.24,
+                VisualFx = { Name = "LaurelBurnIris", Hue = -0.24 },
+            },
+            Portrait_Mel_Hesitant_LaurelGlow = {
+                Hue = -0.24,
+                VisualFx = { Name = "LaurelBurnIris", Hue = -0.24 },
+            },
+            Portrait_Mel_Intense_LaurelGlow = {
+                Hue = -0.24,
+                VisualFx = { Name = "LaurelBurnIris", Hue = -0.24 },
+            },
+            Portrait_Mel_Pleased_LaurelGlow = {
+                Hue = -0.24,
+                VisualFx = { Name = "LaurelBurnIris", Hue = -0.24 },
+            },
+            Portrait_Mel_Vulnerable_LaurelGlow = {
+                Hue = -0.24,
+                VisualFx = { Name = "LaurelBurnIris", Hue = -0.24 },
+            },
+        }
+    },
     None =
     {
         GrannyTexture = "",
@@ -115,6 +168,7 @@ mod.DressDisplayOrder = {
     "Dark Side",
     "Alternate Time",
     "Murderrrrr",
+    "Chaos",
     "None",
     "Custom"
 }

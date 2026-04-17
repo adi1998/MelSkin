@@ -233,3 +233,115 @@ local function AddPreviewSjson()
 end
 
 AddPreviewSjson()
+
+local melinoeGeneralVfxFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\Melinoe_General_VFX.sjson")
+
+sjson.hook(melinoeGeneralVfxFile, function (data)
+    local new_data = {}
+    local name_data_map = {}
+    for _, entry in ipairs(data.Animations) do
+        if type(entry.Name) == "string" then
+            name_data_map[entry.Name] = entry
+        end
+    end
+
+    for dress, dressData in pairs(mod.DressData) do
+        local laurelCinderSpawner = game.DeepCopyTable(name_data_map["LaurelCindersSpawner"])
+        local laurelCinders = game.DeepCopyTable(name_data_map["LaurelCinders"])
+        local laurelBurnA = game.DeepCopyTable(name_data_map["LaurelBurnA"])
+        local laurelBurnB = game.DeepCopyTable(name_data_map["LaurelBurnB"])
+        local laurelBurnC = game.DeepCopyTable(name_data_map["LaurelBurnC"])
+        local laurelBurnD = game.DeepCopyTable(name_data_map["LaurelBurnD"])
+
+        local laurelCinderSpawnerAmbient = game.DeepCopyTable(name_data_map["LaurelCindersSpawnerAmbient"])
+        local laurelCindersAmbient = game.DeepCopyTable(name_data_map["LaurelCindersAmbient"])
+        local laurelBurnAAmbient = game.DeepCopyTable(name_data_map["LaurelBurnA_Ambient"])
+        local laurelBurnBAmbient = game.DeepCopyTable(name_data_map["LaurelBurnB_Ambient"])
+        local laurelBurnCAmbient = game.DeepCopyTable(name_data_map["LaurelBurnC_Ambient"])
+        local laurelBurnDAmbient = game.DeepCopyTable(name_data_map["LaurelBurnD_Ambient"])
+
+        local melArmGlow = game.DeepCopyTable(name_data_map["MelArmGlow"])
+
+        if dressData.ArmGlowHue then
+            melArmGlow.Hue = dressData.ArmGlowHue
+            melArmGlow.Name = dress .. melArmGlow.Name
+
+            laurelCinderSpawner.CreateAnimations = {
+                { Name = melArmGlow.Name }
+            }
+            table.insert(new_data, melArmGlow)
+        end
+        if dressData.LaurelCinderHue then
+
+            laurelBurnA.Hue = dressData.LaurelCinderHue
+            laurelBurnA.Name = dress .. laurelBurnA.Name
+
+            laurelBurnB.Hue = dressData.LaurelCinderHue
+            laurelBurnB.Name = dress .. laurelBurnB.Name
+
+            laurelBurnA.Hue = dressData.LaurelCinderHue
+            laurelBurnA.Name = dress .. laurelBurnA.Name
+
+            laurelBurnA.Hue = dressData.LaurelCinderHue
+            laurelBurnA.Name = dress .. laurelBurnA.Name
+
+            laurelCinders.Random = {
+                { Name = laurelBurnA.Name },
+                { Name = laurelBurnB.Name },
+                { Name = laurelBurnC.Name },
+                { Name = laurelBurnD.Name },
+            }
+
+            laurelCinders.Name = dress .. laurelCinders.Name
+            laurelCinderSpawner.VisualFx = laurelCinders.Name
+
+            --ambient
+            laurelBurnAAmbient.Hue = dressData.LaurelCinderHue
+            laurelBurnAAmbient.Name = dress .. laurelBurnAAmbient.Name
+
+            laurelBurnBAmbient.Hue = dressData.LaurelCinderHue
+            laurelBurnBAmbient.Name = dress .. laurelBurnBAmbient.Name
+
+            laurelBurnCAmbient.Hue = dressData.LaurelCinderHue
+            laurelBurnCAmbient.Name = dress .. laurelBurnCAmbient.Name
+
+            laurelBurnDAmbient.Hue = dressData.LaurelCinderHue
+            laurelBurnDAmbient.Name = dress .. laurelBurnDAmbient.Name
+
+            laurelCindersAmbient.Random = {
+                { Name = laurelBurnAAmbient.Name },
+                { Name = laurelBurnBAmbient.Name },
+                { Name = laurelBurnCAmbient.Name },
+                { Name = laurelBurnDAmbient.Name },
+            }
+
+            laurelCindersAmbient.Name = dress .. laurelCindersAmbient.Name
+            laurelCinderSpawnerAmbient.VisualFx = laurelCindersAmbient.Name
+
+            laurelCinderSpawnerAmbient.Name = dress .. laurelCinderSpawnerAmbient.Name
+
+            laurelCinderSpawner.ChildAnimation = laurelCinderSpawnerAmbient.Name
+
+            table.insert(new_data, laurelCinders)
+            table.insert(new_data, laurelBurnA)
+            table.insert(new_data, laurelBurnB)
+            table.insert(new_data, laurelBurnC)
+            table.insert(new_data, laurelBurnD)
+            table.insert(new_data, laurelCinderSpawnerAmbient)
+            table.insert(new_data, laurelCindersAmbient)
+            table.insert(new_data, laurelBurnAAmbient)
+            table.insert(new_data, laurelBurnBAmbient)
+            table.insert(new_data, laurelBurnCAmbient)
+            table.insert(new_data, laurelBurnDAmbient)
+        end
+
+        if dressData.ArmGlowHue or dressData.LaurelCinderHue then
+            laurelCinderSpawner.Name = dress .. laurelCinderSpawner.Name
+            table.insert(new_data, laurelCinderSpawner)
+        end
+    end
+    for _, value in ipairs(new_data) do
+        table.insert(data.Animations, value)
+    end
+    return data
+end)

@@ -143,7 +143,10 @@ mod.DressData = {
                 Hue = -0.24,
                 VisualFx = { Name = "LaurelBurnIris", Hue = -0.24 },
             },
-        }
+        },
+        Color = {197, 64, 220, 255},
+        ArmGlowHue = 0.385,
+        LaurelCinderHue = -0.24,
     },
     None =
     {

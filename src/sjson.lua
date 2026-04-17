@@ -98,6 +98,8 @@ mod.ZagMelCombinedTemplate =
     }
 }
 
+local uniqueMap = {}
+
 local function modifyNewEntryOverlays(entry, modifications, anim_data_table, prefix)
     if type(modifications) ~= "table" then
         return {}
@@ -127,10 +129,16 @@ local function modifyNewEntryOverlays(entry, modifications, anim_data_table, pre
                         subAnimData.Hue = value.Hue or subAnimData.Hue
                         subAnimData.Name = prefix .. subAnimData.Name
                         subAnim.Name = subAnimData.Name
-                        table.insert(new_entries, subAnimData)
+                        if not uniqueMap[subAnimData.Name] then
+                            table.insert(new_entries, subAnimData)
+                        end
+                        uniqueMap[subAnimData.Name] = true
                     end
                     laurelAnim.Name = prefix .. laurelAnim.Name
-                    table.insert(new_entries, laurelAnim)
+                    if not uniqueMap[laurelAnim.Name] then
+                        table.insert(new_entries, laurelAnim)
+                    end
+                    uniqueMap[laurelAnim.Name] = true
                     animData[key] = laurelAnim.Name
                 else
                     if key == "UpdateChainTo" and value and animData.ChainTo then
@@ -146,7 +154,10 @@ local function modifyNewEntryOverlays(entry, modifications, anim_data_table, pre
                 end
             end
             animData.Name = prefix .. animData.Name
-            table.insert(new_entries, animData)
+            if not uniqueMap[animData.Name] then
+                table.insert(new_entries, animData)
+            end
+            uniqueMap[animData.Name] = true
         end
     end
     entry.CreateAnimations = createAnimations

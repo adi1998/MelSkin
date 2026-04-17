@@ -137,10 +137,6 @@ sjson.hook(guiPortraitsVFXFile, function(data)
                     for _, value in pairs(newSubEntries) do
                         table.insert(newdata, value)
                     end
-                    if dress == "Chaos" then
-                        print(mod.dump(newSubEntries))
-                        print(mod.dump(newentry))
-                    end
                     table.insert(newdata,newentry)
                 end
             end

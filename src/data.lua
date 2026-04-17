@@ -145,7 +145,14 @@ mod.DressData = {
             },
         },
         Color = {197, 64, 220, 255},
-        ArmGlowHue = 0.385,
+        ArmGlow = {
+            StartRed = 0.5,
+            StartGreen = 0.2,
+            StartBlue = 0.8,
+            EndRed = 0.8,
+            EndGreen = 0.3,
+            EndBlue = 1,
+        },
         LaurelCinderHue = -0.24,
     },
     None =

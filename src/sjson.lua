@@ -260,16 +260,12 @@ sjson.hook(melinoeGeneralVfxFile, function (data)
         local laurelBurnCAmbient = game.DeepCopyTable(name_data_map["LaurelBurnC_Ambient"])
         local laurelBurnDAmbient = game.DeepCopyTable(name_data_map["LaurelBurnD_Ambient"])
 
-        local melArmGlow = game.DeepCopyTable(name_data_map["MelArmGlow"])
+        -- local melArmGlow = game.DeepCopyTable(name_data_map["MelArmGlow"])
 
-        if dressData.ArmGlowHue then
-            melArmGlow.Hue = dressData.ArmGlowHue
-            melArmGlow.Name = dress .. melArmGlow.Name
-
+        if dressData.ArmGlow then
             laurelCinderSpawner.CreateAnimations = {
-                { Name = melArmGlow.Name }
+                { Name = dress .. "MelArmGlow" }
             }
-            table.insert(new_data, melArmGlow)
         end
         if dressData.LaurelCinderHue then
 
@@ -279,11 +275,11 @@ sjson.hook(melinoeGeneralVfxFile, function (data)
             laurelBurnB.Hue = dressData.LaurelCinderHue
             laurelBurnB.Name = dress .. laurelBurnB.Name
 
-            laurelBurnA.Hue = dressData.LaurelCinderHue
-            laurelBurnA.Name = dress .. laurelBurnA.Name
+            laurelBurnC.Hue = dressData.LaurelCinderHue
+            laurelBurnC.Name = dress .. laurelBurnC.Name
 
-            laurelBurnA.Hue = dressData.LaurelCinderHue
-            laurelBurnA.Name = dress .. laurelBurnA.Name
+            laurelBurnD.Hue = dressData.LaurelCinderHue
+            laurelBurnD.Name = dress .. laurelBurnD.Name
 
             laurelCinders.Random = {
                 { Name = laurelBurnA.Name },
@@ -335,7 +331,7 @@ sjson.hook(melinoeGeneralVfxFile, function (data)
             table.insert(new_data, laurelBurnDAmbient)
         end
 
-        if dressData.ArmGlowHue or dressData.LaurelCinderHue then
+        if dressData.ArmGlow or dressData.LaurelCinderHue then
             laurelCinderSpawner.Name = dress .. laurelCinderSpawner.Name
             table.insert(new_data, laurelCinderSpawner)
         end
@@ -344,4 +340,31 @@ sjson.hook(melinoeGeneralVfxFile, function (data)
         table.insert(data.Animations, value)
     end
     return data
+end)
+
+local melinoe1BaseVfxFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\Melinoe_1Base_VFX.sjson")
+
+sjson.hook(melinoe1BaseVfxFile, function (data)
+    local newdata = {}
+    for _, entry in ipairs(data.Animations) do
+        if entry.Name == "MelArmGlow" then
+            for dress, dressData in pairs(mod.DressData) do
+                if dressData.ArmGlow then
+                    local newentry = game.DeepCopyTable(entry)
+                    newentry.StartRed = dressData.ArmGlow.StartRed or newentry.StartRed
+                    newentry.StartGreen = dressData.ArmGlow.StartGreen or newentry.StartGreen
+                    newentry.StartBlue = dressData.ArmGlow.StartBlue or newentry.StartBlue
+                    newentry.EndRed = dressData.ArmGlow.EndRed or newentry.EndRed
+                    newentry.EndGreen = dressData.ArmGlow.EndGreen or newentry.EndGreen
+
+                    newentry.Name = dress .. newentry.Name
+                    table.insert(newdata, newentry)
+                end
+            end
+            break
+        end
+    end
+    for _, value in ipairs(newdata) do
+        table.insert(data.Animations, value)
+    end
 end)

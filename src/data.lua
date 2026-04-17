@@ -92,10 +92,19 @@ mod.DressData = {
     {
         GrannyTexture = "zerp-MelSkin/Halloween 2025",
         Color = {176, 208, 66, 255},
+        ArmGlow = {
+            StartRed = 0.6,
+            StartGreen = 0.9,
+            StartBlue = 0.1,
+            EndRed = 0.7,
+            EndGreen = 1,
+            EndBlue = 0.1,
+        }
     },
     Chaos =
     {
         GrannyTexture = "zerp-MelSkin/Chaos",
+        BoonPortrait = true,
         Portraits = mod.Portraits,
         PortraitOverlayModifacations = {
             Portrait_Mel_Body2_Wiggle1_In = "nil",
@@ -147,9 +156,9 @@ mod.DressData = {
         },
         Color = {197, 64, 220, 255},
         ArmGlow = {
-            StartRed = 0.5,
+            StartRed = 0.9,
             StartGreen = 0.2,
-            StartBlue = 0.8,
+            StartBlue = 0.9,
             EndRed = 0.8,
             EndGreen = 0.3,
             EndBlue = 1,

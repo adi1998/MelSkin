@@ -75,6 +75,7 @@ mod.DressData = {
         GrannyTexture = "Models/Melinoe/MelinoeTransform_Color",
         ChildGrannyTexture = "Models/Melinoe/YoungMelTransform_Color",
         Color = {70, 206, 125, 255},
+        LaurelCinderHue = 0.408,
     },
     ["Alternate Time"] =
     {

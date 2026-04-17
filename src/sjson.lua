@@ -8,15 +8,44 @@ mod.BoonSelectAnims = {
         Name = "BoonSelectMelIn",
         FilePath = "",
         Material = "Unlit",
-        OffsetX = -640,
+        StartOffsetX = -660,
+        EndOffsetX = -640,
         VisualFx = "BoonSelectMelFxLoop",
         VisualFxIntervalMin = 0.5,
         VisualFxIntervalMax = 0.5,
         VisualFxCap = 1,
+        EndAlpha = 1.0,
+        Duration = 0.1,
+        HoldLastFrame = true,
+        NumFrames = 1,
+        StartFrame = 1,
+        StartOffsetY = 50,
+        EndOffsetY = 0,
+        EndBlue = 1.0,
+		EndGreen = 1.0,
+		EndRed = 1.0,
+        StartAlpha = 0,
     },
     {
         Name = "BoonSelectMelOut",
         FilePath = "",
+        Material = "Unlit",
+        EndAlpha = 0.0,
+		EndBlue = 0.0,
+		EndGreen = 0.0,
+		EndRed = 0.0,
+		StartAlpha = 1.0,
+		StartBlue = 1.0,
+		StartGreen = 1.0,
+		StartRed = 1.0,
+		EndFrame = 1,
+		HoldLastFrame = false,
+		StartFrame = 1,
+		EndOffsetX = -620,
+		StartOffsetX = -640,
+        StartOffsetY = 0,
+        EndOffsetY = -50,
+        Duration = 0.05
     }
 }
 
@@ -182,7 +211,7 @@ sjson.hook(guiScreensVFXFile, function (data)
                 local newfilepath = modPortraitPrefix .. dress .. "\\" .. "BoonSelectMelIn0015"
                 local newentry = game.DeepCopyTable(entry)
                 newentry.Name = newname
-                if origname == "BoonSelectMelIn" then
+                if origname == "BoonSelectMelIn" or true then
                     newentry.FilePath = newfilepath
                 end
                 table.insert(data.Animations,newentry)

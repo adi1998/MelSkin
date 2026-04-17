@@ -35,11 +35,9 @@ modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
     if dressData ~= nil and dressData.BoonPortrait then
         game.ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonSelectObstacle.Name
     end
-    print("OpenUpgradeChoiceMenu",game.ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic)
     base(source,args)
     -- resetting base value
     game.ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonSelectObstacle.Name
-    print("OpenUpgradeChoiceMenu",game.ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic)
 end)
 
 modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, button)
@@ -52,7 +50,6 @@ modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, butt
                 args.Name = dress .. "_" .. args.Name
                 setAlpha = true
             end
-            print("SetAnimation", mod.dump(args))
             local val = base(args)
             if setAlpha then
                 game.SetAlpha({ Id = args.DestinationId, Fraction = 0, Duration = 0.1 })
@@ -383,11 +380,4 @@ modutil.mod.Path.Wrap("SetLightBarColor", function (base, args)
         print("Swapped LightBarColor", mod.dump(args.Color))
     end
     return base(args)
-end)
-
-modutil.mod.Path.Wrap("SetAnimation", function (base, args)
-    print(mod.dump(args))
-    local val = base(args)
-    print(mod.dump(args))
-    return val
 end)

@@ -110,7 +110,6 @@ function  mod.DressSelectorLoadPage(screen)
             if config.random_each_run == true and game.CurrentRun.Hero.ModDressData == text then
                 color = game.Color.Orange
             end
-            print(text)
             game.CreateTextBox({
                 Id = screen.Components[dressKey].Id,
                 Text = text,
@@ -160,8 +159,6 @@ end
 
 function mod.SetDress(screen,button)
     local dressGrannyTexture = mod.GetDressGrannyTexture(button.Dress)
-    print("Dress", button.Dress)
-    print("DressGrannyTexture", dressGrannyTexture)
     config.dress = button.Dress
     config.random_each_run = false
     game.SetupCostume()
@@ -173,7 +170,6 @@ function mod.DressSelectorReloadPage(screen)
     local ids = {}
     for i, component in pairs(screen.Components) do
         if component.RandomButtonId == "RandomButtonId" then
-            print("randombuttonreload", screen.Components[i].Text)
             screen.Components[i].Color = game.Color.White
             if config.random_each_run then
                 screen.Components[i].Color = game.Color.Orange

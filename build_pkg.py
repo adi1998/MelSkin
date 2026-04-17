@@ -22,13 +22,14 @@ prefix = target_path.split("\\")[-1]
 tex_list = os.listdir(source_path)
 
 for tex in tex_list:
-    pkg_textures.append({
-        'name': f"{prefix}\\" + tex[:-4],
-        'png_path': os.path.abspath(source_path + "/" + tex),
-        'width': 512,
-        'height': 512,
-        'fmt': 0x1C,
-        'mip_count': 6,
-    })
+    if tex[-4:] == ".png":
+        pkg_textures.append({
+            'name': f"{prefix}\\" + tex[:-4],
+            'png_path': os.path.abspath(source_path + "/" + tex),
+            'width': 512,
+            'height': 512,
+            'fmt': 0x1C,
+            'mip_count': 6,
+        })
 
 build_standalone_pkg(pkg_textures, pkg_path)

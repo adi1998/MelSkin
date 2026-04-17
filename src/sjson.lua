@@ -8,15 +8,16 @@ mod.BoonSelectAnims = {
         Name = "BoonSelectMelIn",
         FilePath = "",
         Material = "Unlit",
-        StartOffsetX = -660,
-        EndOffsetX = -640,
+        StartOffsetX = -10,
+        EndOffsetX = 0,
+        OffsetX = -640,
         VisualFx = "BoonSelectMelFxLoop",
         VisualFxIntervalMin = 0.5,
         VisualFxIntervalMax = 0.5,
         VisualFxCap = 1,
         EndAlpha = 1.0,
-        Duration = 0.1,
-        HoldLastFrame = true,
+        Duration = 0.15,
+        HoldLastFrame = false,
         NumFrames = 1,
         StartFrame = 1,
         StartOffsetY = 50,
@@ -25,6 +26,7 @@ mod.BoonSelectAnims = {
 		EndGreen = 1.0,
 		EndRed = 1.0,
         StartAlpha = 0,
+        ChainTo = "BoonSelectMelStatic",
     },
     {
         Name = "BoonSelectMelOut",
@@ -40,13 +42,23 @@ mod.BoonSelectAnims = {
 		StartRed = 1.0,
 		EndFrame = 1,
 		HoldLastFrame = false,
+        NumFrames = 1,
 		StartFrame = 1,
-		EndOffsetX = -620,
-		StartOffsetX = -640,
+		EndOffsetX = 10,
+        StartOffsetX = 0,
+		OffsetX = -640,
         StartOffsetY = 0,
         EndOffsetY = -50,
-        Duration = 0.05
-    }
+        Duration = 0.1
+    },
+    {
+		Name = "BoonSelectMelStatic",
+		FilePath = "",
+		Material = "Unlit",
+		OffsetX = -640,
+		Duration = 2,
+		Loop = true,
+	}
 }
 
 mod.BoonSelectObstacle =
@@ -213,6 +225,9 @@ sjson.hook(guiScreensVFXFile, function (data)
                 newentry.Name = newname
                 if origname == "BoonSelectMelIn" or true then
                     newentry.FilePath = newfilepath
+                end
+                if origname == "BoonSelectMelIn" then
+                    newentry.ChainTo = dress .. "_" .. newentry.ChainTo
                 end
                 table.insert(data.Animations,newentry)
             end

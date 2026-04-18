@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Update Chaos portraits
+
 ## [1.15.1] - 2026-04-18
 
 - Update readme preview for Chaos

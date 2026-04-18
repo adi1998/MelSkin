@@ -110,22 +110,22 @@ mod.DressData = {
             Portrait_Mel_Body2_Wiggle1_In = "nil",
             Portrait_Mel_Body1_Wiggle2_In = "nil",
             Portrait_Mel_Body2_Wiggle2_In = {
-                Hue = 0.327,
-		        Saturation = 0.5,
+                Hue = 0.44,
+		        Saturation = 0.3,
                 UpdateChainTo = true,
             },
             Portrait_Mel_Body1_Wiggle1_In = {
-                Hue = 0.327,
-		        Saturation = 0.5,
+                Hue = 0.44,
+		        Saturation = 0.3,
                 UpdateChainTo = true,
             },
             Portrait_Mel_Body2_Wiggle2 = {
-                Hue = 0.327,
-		        Saturation = 0.5,
+                Hue = 0.44,
+		        Saturation = 0.3,
             },
             Portrait_Mel_Body1_Wiggle1 = {
-                Hue = 0.327,
-		        Saturation = 0.5,
+                Hue = 0.44,
+		        Saturation = 0.3,
             },
             Portrait_Mel_Body2_ArmGlow = {
                 Hue = 0.385,

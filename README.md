@@ -16,8 +16,10 @@ While the mod has been tested decently well it is recommended to backup your sav
 
 NEW: The menu can now also be opened from Crossroads by interacting with Arachne's silk stand in the training grounds or the shelf/cabinet in Melinoe's tent.
 
-| ![ShelfInteract](images/ShelfInteract.png) | ![ArachneInteract](images/ArachneInteract.png) |
-| - | - |
+<div style="display: flex; justify-content: space-between;">
+  <img src="images/ShelfInteract.png" alt="ShelfInteract" width="49.7%">
+  <img src="images/ArachneInteract.png" alt="ArachneInteract" width="49.7%">
+</div>
 
 <br>
 
@@ -25,9 +27,14 @@ Use the Imgui menu (default toggle keybind: INSERT) or PonyMenu(new submenu in i
 
 Favorites are only available through the ingame menu.
 
-| ![PonyDressList](images/PonyDressList.png) | ![ImguiSubmenu](images/ImguiSubmenu.png) |
-| :-: | :-: |
-| ![PonyInv](images/PonyInv.png) | ![ImguiWindow](images/ImguiWindow.png) |
+<div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+  <img src="images/PonyDressList.png" alt="PonyDressList" width="49.7%">
+  <img src="images/ImguiSubmenu.png" alt="ImguiSubmenu" width="49.7%">
+</div>
+<div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+  <img src="images/PonyInv.png" alt="PonyInv" width="49.7%">
+  <img src="images/PonyInv.png" alt="PonyInv" width="49.7%">
+</div>
 
 ## Skins
 

@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+- Update readme preview for Chaos
+
+## [1.15.0] - 2026-04-17
+
 - Add custom Chaos skin and portraits by @jarlulsfark on Discord
 - Add support for portrait overlay modifications
 - Add LaurelCinderSpawner hue shift support for unique custom skins
@@ -129,7 +133,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.14.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.15.0...HEAD
+[1.15.0]: https://github.com/adi1998/MelSkin/compare/1.14.0...1.15.0
 [1.14.0]: https://github.com/adi1998/MelSkin/compare/1.13.0...1.14.0
 [1.13.0]: https://github.com/adi1998/MelSkin/compare/1.12.0...1.13.0
 [1.12.0]: https://github.com/adi1998/MelSkin/compare/1.11.0...1.12.0

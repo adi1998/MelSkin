@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.15.2] - 2026-04-18
+
 - Update Chaos portraits
 
 ## [1.15.1] - 2026-04-18
@@ -137,7 +139,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.15.1...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.15.2...HEAD
+[1.15.2]: https://github.com/adi1998/MelSkin/compare/1.15.1...1.15.2
 [1.15.1]: https://github.com/adi1998/MelSkin/compare/1.15.0...1.15.1
 [1.15.0]: https://github.com/adi1998/MelSkin/compare/1.14.0...1.15.0
 [1.14.0]: https://github.com/adi1998/MelSkin/compare/1.13.0...1.14.0

@@ -54,15 +54,19 @@ To activate, select `Custom` in the Dress drop-down and edit dress/hair colors a
 
 Note: If the ImGui interface is unresponsive, try disabling vsync and setting a framerate cap though the ingame settings menu.
 
-| ![1](images/colorslider/1.png) | ![2](images/colorslider/2.png) |
-| - | - |
+<div style="display: flex; justify-content: space-between;">
+  <img src="images/colorslider/1.png" alt="1" width="49.7%">
+  <img src="images/colorslider/2.png" alt="2" width="49.7%">
+</div>
 
 <br>
 
 Includes support for selecting a random preset on run start. `Custom` should be favorited in the PonyMenu UI if there are other favorites selected.
 
-| ![3](images/colorslider/3.png) | ![4](images/colorslider/4.png) |
-| - | - |
+<div style="display: flex; justify-content: space-between;">
+  <img src="images/colorslider/3.png" alt="3" width="49.7%">
+  <img src="images/colorslider/4.png" alt="4" width="49.7%">
+</div>
 
 ## Contributing skins to this mod
 

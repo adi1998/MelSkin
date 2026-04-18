@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.15.1] - 2026-04-18
+
 - Update readme preview for Chaos
 
 ## [1.15.0] - 2026-04-17
@@ -133,7 +135,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.15.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.15.1...HEAD
+[1.15.1]: https://github.com/adi1998/MelSkin/compare/1.15.0...1.15.1
 [1.15.0]: https://github.com/adi1998/MelSkin/compare/1.14.0...1.15.0
 [1.14.0]: https://github.com/adi1998/MelSkin/compare/1.13.0...1.14.0
 [1.13.0]: https://github.com/adi1998/MelSkin/compare/1.12.0...1.13.0

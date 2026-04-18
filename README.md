@@ -28,12 +28,13 @@ Use the Imgui menu (default toggle keybind: INSERT) or PonyMenu(new submenu in i
 Favorites are only available through the ingame menu.
 
 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-  <img src="images/PonyDressList.png" alt="PonyDressList" width="49.7%">
-  <img src="images/ImguiSubmenu.png" alt="ImguiSubmenu" width="49.7%">
+  <img src="images/PonyDressList.png" alt="PonyDressList" width="48%">
+  <img src="images/ImguiSubmenu.png" alt="ImguiSubmenu" width="48%">
 </div>
+<br>
 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-  <img src="images/PonyInv.png" alt="PonyInv" width="49.7%">
-  <img src="images/PonyInv.png" alt="PonyInv" width="49.7%">
+  <img src="images/PonyInv.png" alt="PonyInv" width="48%">
+  <img src="images/PonyInv.png" alt="PonyInv" width="48%">
 </div>
 
 ## Skins

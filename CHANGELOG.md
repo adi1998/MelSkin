@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Using the Dark Side spell now switches to the correct laurel cinders and arm glow animations.
+
 ## [1.15.2] - 2026-04-18
 
 - Update Chaos portraits

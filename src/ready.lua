@@ -91,20 +91,7 @@ function mod.dump(o, depth)
     end
 end
 
-modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
-    local grannyTexture = mod.GetDressGrannyTexture(config.dress)
-    if config.random_each_run then
-        grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
-    end
-    if (not skipCostume) or game.MapState.BabyPolymorph then
-        game.CostumeData.Costume_Default.GrannyTexture = grannyTexture
-    end
-    base(skipCostume)
-    game.CostumeData.Costume_Default.GrannyTexture = ""
-
-    -- arm glow and laurel spawner setup
-    local dress = mod.GetCurrentDress()
-
+function mod.SetupExtraAnimations(dress)
     local laurelCindersSpawner = "LaurelCindersSpawner"
     if dress and mod.DressData[dress] and mod.DressData[dress].LaurelCinderHue then
         laurelCindersSpawner  = dress .. laurelCindersSpawner
@@ -127,6 +114,29 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
             game.MapState[_PLUGIN.guid .. "PrevArmGlowAnimation"] = "MelArmGlow"
         end
     end
+end
+
+modutil.mod.Path.Wrap("SetPlayerDarkside", function (base, flag)
+    base(flag)
+    if game.Contains({"SpellTransform", "NightmareSequence"}, flag) then
+        mod.SetupExtraAnimations("Dark Side")
+    end
+end)
+
+modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
+    local grannyTexture = mod.GetDressGrannyTexture(config.dress)
+    if config.random_each_run then
+        grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
+    end
+    if (not skipCostume) or game.MapState.BabyPolymorph then
+        game.CostumeData.Costume_Default.GrannyTexture = grannyTexture
+    end
+    base(skipCostume)
+    game.CostumeData.Costume_Default.GrannyTexture = ""
+
+    -- arm glow and laurel spawner setup
+    local dress = mod.GetCurrentDress()
+    mod.SetupExtraAnimations(dress)
 end)
 
 -- TODO: this is untested

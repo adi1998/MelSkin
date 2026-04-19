@@ -8,16 +8,57 @@ mod.BoonSelectAnims = {
         Name = "BoonSelectMelIn",
         FilePath = "",
         Material = "Unlit",
+        StartOffsetX = -10,
+        EndOffsetX = 0,
         OffsetX = -640,
         VisualFx = "BoonSelectMelFxLoop",
         VisualFxIntervalMin = 0.5,
         VisualFxIntervalMax = 0.5,
         VisualFxCap = 1,
+        EndAlpha = 1.0,
+        Duration = 0.15,
+        HoldLastFrame = false,
+        NumFrames = 1,
+        StartFrame = 1,
+        StartOffsetY = 50,
+        EndOffsetY = 0,
+        EndBlue = 1.0,
+		EndGreen = 1.0,
+		EndRed = 1.0,
+        StartAlpha = 0,
+        ChainTo = "BoonSelectMelStatic",
     },
     {
         Name = "BoonSelectMelOut",
         FilePath = "",
-    }
+        Material = "Unlit",
+        EndAlpha = 0.0,
+		EndBlue = 0.0,
+		EndGreen = 0.0,
+		EndRed = 0.0,
+		StartAlpha = 1.0,
+		StartBlue = 1.0,
+		StartGreen = 1.0,
+		StartRed = 1.0,
+		EndFrame = 1,
+		HoldLastFrame = false,
+        NumFrames = 1,
+		StartFrame = 1,
+		EndOffsetX = 10,
+        StartOffsetX = 0,
+		OffsetX = -640,
+        StartOffsetY = 0,
+        EndOffsetY = -50,
+        Duration = 0.1
+    },
+    {
+		Name = "BoonSelectMelStatic",
+		FilePath = "",
+		Material = "Unlit",
+		OffsetX = -640,
+		Duration = 2,
+		Loop = true,
+	}
 }
 
 mod.BoonSelectObstacle =
@@ -57,8 +98,80 @@ mod.ZagMelCombinedTemplate =
     }
 }
 
+local uniqueMap = {}
+
+local function modifyNewEntryOverlays(entry, modifications, anim_data_table, prefix)
+    if type(modifications) ~= "table" then
+        return {}
+    end
+    local createAnimations = entry.CreateAnimations or {}
+    local new_entries = {}
+    for animName, mod_table in pairs(modifications) do
+        if type(mod_table) == "string" and mod_table == "nil" then
+            local index = 0
+            for i, animEntry in ipairs(createAnimations) do
+                if animEntry.Name == animName then
+                    index = i
+                    break
+                end
+            end
+            if index > 0 then
+                game.RemoveIndexAndCollapse(createAnimations, index)
+            end
+        elseif type(mod_table) == "table" then
+            local animData = game.DeepCopyTable(anim_data_table[animName])
+            for key, value in pairs(mod_table) do
+                if key == "VisualFx" and type(value) == "table" and value.Name == "LaurelBurnIris" then
+                    local laurelAnim = game.DeepCopyTable(anim_data_table[value.Name])
+                    local laurelSubAnims = laurelAnim.Random or {}
+                    for _, subAnim in ipairs(laurelSubAnims) do
+                        local subAnimData = game.DeepCopyTable(anim_data_table[subAnim.Name])
+                        subAnimData.Hue = value.Hue or subAnimData.Hue
+                        subAnimData.Name = prefix .. subAnimData.Name
+                        subAnim.Name = subAnimData.Name
+                        if not uniqueMap[subAnimData.Name] then
+                            table.insert(new_entries, subAnimData)
+                        end
+                        uniqueMap[subAnimData.Name] = true
+                    end
+                    laurelAnim.Name = prefix .. laurelAnim.Name
+                    if not uniqueMap[laurelAnim.Name] then
+                        table.insert(new_entries, laurelAnim)
+                    end
+                    uniqueMap[laurelAnim.Name] = true
+                    animData[key] = laurelAnim.Name
+                else
+                    if key == "UpdateChainTo" and value and animData.ChainTo then
+                        animData.ChainTo = prefix .. animData.ChainTo
+                    else
+                        animData[key] = value
+                    end
+                end
+            end
+            for i, animEntry in ipairs(createAnimations) do
+                if animEntry.Name == animName then
+                    animEntry.Name = prefix .. animEntry.Name
+                end
+            end
+            animData.Name = prefix .. animData.Name
+            if not uniqueMap[animData.Name] then
+                table.insert(new_entries, animData)
+            end
+            uniqueMap[animData.Name] = true
+        end
+    end
+    entry.CreateAnimations = createAnimations
+    return new_entries
+end
+
 sjson.hook(guiPortraitsVFXFile, function(data)
     local newdata = {}
+    local name_data_map = {}
+    for _, entry in ipairs(data.Animations) do
+        if type(entry.Name) == "string" then
+            name_data_map[entry.Name] = entry
+        end
+    end
     for _, entry in ipairs(data.Animations) do
         local origname = entry.Name
         local origfilename = mod.PortraitNameFileMap[origname]
@@ -66,17 +179,14 @@ sjson.hook(guiPortraitsVFXFile, function(data)
             for dress, dressData in pairs(mod.DressData) do
                 if dressData.Portraits ~= nil and dressData.Portraits[origfilename] then
                     local newname = dress .. "_" .. origname
-                    -- print("sjson new name", newname)
-                    -- args.Name = newname
                     local newfilepath = modPortraitPrefix .. dress .. "\\" .. origfilename
                     local newentry = game.DeepCopyTable(entry)
                     newentry.Name = newname
                     newentry.FilePath = newfilepath
-
-                    if dressData.DisablePortraitBlink and newentry.CreateAnimations and type(newentry.CreateAnimations) == "table" then
-                        newentry.CreateAnimations[#newentry.CreateAnimations] = nil
+                    local newSubEntries = modifyNewEntryOverlays(newentry, dressData.PortraitOverlayModifacations, name_data_map, dress)
+                    for _, value in pairs(newSubEntries) do
+                        table.insert(newdata, value)
                     end
-
                     table.insert(newdata,newentry)
                 end
             end
@@ -124,8 +234,11 @@ sjson.hook(guiScreensVFXFile, function (data)
                 local newfilepath = modPortraitPrefix .. dress .. "\\" .. "BoonSelectMelIn0015"
                 local newentry = game.DeepCopyTable(entry)
                 newentry.Name = newname
-                if origname == "BoonSelectMelIn" then
+                if origname == "BoonSelectMelIn" or true then
                     newentry.FilePath = newfilepath
+                end
+                if origname == "BoonSelectMelIn" then
+                    newentry.ChainTo = dress .. "_" .. newentry.ChainTo
                 end
                 table.insert(data.Animations,newentry)
             end
@@ -175,3 +288,138 @@ local function AddPreviewSjson()
 end
 
 AddPreviewSjson()
+
+local melinoeGeneralVfxFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\Melinoe_General_VFX.sjson")
+
+sjson.hook(melinoeGeneralVfxFile, function (data)
+    local new_data = {}
+    local name_data_map = {}
+    for _, entry in ipairs(data.Animations) do
+        if type(entry.Name) == "string" then
+            name_data_map[entry.Name] = entry
+        end
+    end
+
+    for dress, dressData in pairs(mod.DressData) do
+        local laurelCinderSpawner = game.DeepCopyTable(name_data_map["LaurelCindersSpawner"])
+        local laurelCinders = game.DeepCopyTable(name_data_map["LaurelCinders"])
+        local laurelBurnA = game.DeepCopyTable(name_data_map["LaurelBurnA"])
+        local laurelBurnB = game.DeepCopyTable(name_data_map["LaurelBurnB"])
+        local laurelBurnC = game.DeepCopyTable(name_data_map["LaurelBurnC"])
+        local laurelBurnD = game.DeepCopyTable(name_data_map["LaurelBurnD"])
+
+        local laurelCinderSpawnerAmbient = game.DeepCopyTable(name_data_map["LaurelCindersSpawnerAmbient"])
+        local laurelCindersAmbient = game.DeepCopyTable(name_data_map["LaurelCindersAmbient"])
+        local laurelBurnAAmbient = game.DeepCopyTable(name_data_map["LaurelBurnA_Ambient"])
+        local laurelBurnBAmbient = game.DeepCopyTable(name_data_map["LaurelBurnB_Ambient"])
+        local laurelBurnCAmbient = game.DeepCopyTable(name_data_map["LaurelBurnC_Ambient"])
+        local laurelBurnDAmbient = game.DeepCopyTable(name_data_map["LaurelBurnD_Ambient"])
+
+        -- local melArmGlow = game.DeepCopyTable(name_data_map["MelArmGlow"])
+
+        if dressData.ArmGlow then
+            laurelCinderSpawner.CreateAnimations = {
+                { Name = dress .. "MelArmGlow" }
+            }
+        end
+        if dressData.LaurelCinderHue then
+
+            laurelBurnA.Hue = dressData.LaurelCinderHue
+            laurelBurnA.Name = dress .. laurelBurnA.Name
+
+            laurelBurnB.Hue = dressData.LaurelCinderHue
+            laurelBurnB.Name = dress .. laurelBurnB.Name
+
+            laurelBurnC.Hue = dressData.LaurelCinderHue
+            laurelBurnC.Name = dress .. laurelBurnC.Name
+
+            laurelBurnD.Hue = dressData.LaurelCinderHue
+            laurelBurnD.Name = dress .. laurelBurnD.Name
+
+            laurelCinders.Random = {
+                { Name = laurelBurnA.Name },
+                { Name = laurelBurnB.Name },
+                { Name = laurelBurnC.Name },
+                { Name = laurelBurnD.Name },
+            }
+
+            laurelCinders.Name = dress .. laurelCinders.Name
+            laurelCinderSpawner.VisualFx = laurelCinders.Name
+
+            --ambient
+            laurelBurnAAmbient.Hue = dressData.LaurelCinderHue
+            laurelBurnAAmbient.Name = dress .. laurelBurnAAmbient.Name
+
+            laurelBurnBAmbient.Hue = dressData.LaurelCinderHue
+            laurelBurnBAmbient.Name = dress .. laurelBurnBAmbient.Name
+
+            laurelBurnCAmbient.Hue = dressData.LaurelCinderHue
+            laurelBurnCAmbient.Name = dress .. laurelBurnCAmbient.Name
+
+            laurelBurnDAmbient.Hue = dressData.LaurelCinderHue
+            laurelBurnDAmbient.Name = dress .. laurelBurnDAmbient.Name
+
+            laurelCindersAmbient.Random = {
+                { Name = laurelBurnAAmbient.Name },
+                { Name = laurelBurnBAmbient.Name },
+                { Name = laurelBurnCAmbient.Name },
+                { Name = laurelBurnDAmbient.Name },
+            }
+
+            laurelCindersAmbient.Name = dress .. laurelCindersAmbient.Name
+            laurelCinderSpawnerAmbient.VisualFx = laurelCindersAmbient.Name
+
+            laurelCinderSpawnerAmbient.Name = dress .. laurelCinderSpawnerAmbient.Name
+
+            laurelCinderSpawner.ChildAnimation = laurelCinderSpawnerAmbient.Name
+
+            table.insert(new_data, laurelCinders)
+            table.insert(new_data, laurelBurnA)
+            table.insert(new_data, laurelBurnB)
+            table.insert(new_data, laurelBurnC)
+            table.insert(new_data, laurelBurnD)
+            table.insert(new_data, laurelCinderSpawnerAmbient)
+            table.insert(new_data, laurelCindersAmbient)
+            table.insert(new_data, laurelBurnAAmbient)
+            table.insert(new_data, laurelBurnBAmbient)
+            table.insert(new_data, laurelBurnCAmbient)
+            table.insert(new_data, laurelBurnDAmbient)
+        end
+
+        if dressData.ArmGlow or dressData.LaurelCinderHue then
+            laurelCinderSpawner.Name = dress .. laurelCinderSpawner.Name
+            table.insert(new_data, laurelCinderSpawner)
+        end
+    end
+    for _, value in ipairs(new_data) do
+        table.insert(data.Animations, value)
+    end
+    return data
+end)
+
+local melinoe1BaseVfxFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\Melinoe_1Base_VFX.sjson")
+
+sjson.hook(melinoe1BaseVfxFile, function (data)
+    local newdata = {}
+    for _, entry in ipairs(data.Animations) do
+        if entry.Name == "MelArmGlow" then
+            for dress, dressData in pairs(mod.DressData) do
+                if dressData.ArmGlow then
+                    local newentry = game.DeepCopyTable(entry)
+                    newentry.StartRed = dressData.ArmGlow.StartRed or newentry.StartRed
+                    newentry.StartGreen = dressData.ArmGlow.StartGreen or newentry.StartGreen
+                    newentry.StartBlue = dressData.ArmGlow.StartBlue or newentry.StartBlue
+                    newentry.EndRed = dressData.ArmGlow.EndRed or newentry.EndRed
+                    newentry.EndGreen = dressData.ArmGlow.EndGreen or newentry.EndGreen
+
+                    newentry.Name = dress .. newentry.Name
+                    table.insert(newdata, newentry)
+                end
+            end
+            break
+        end
+    end
+    for _, value in ipairs(newdata) do
+        table.insert(data.Animations, value)
+    end
+end)

@@ -82,6 +82,7 @@ mod.DressData = {
         },
         DisablePortraitBlink = true,
         Color = {70, 206, 125, 255},
+        LaurelCinderHue = 0.408,
     },
     ["Alternate Time"] =
     {
@@ -98,6 +99,78 @@ mod.DressData = {
     {
         GrannyTexture = "zerp-MelSkin/Halloween 2025",
         Color = {176, 208, 66, 255},
+        ArmGlow = {
+            StartRed = 0.6,
+            StartGreen = 0.9,
+            StartBlue = 0.1,
+            EndRed = 0.7,
+            EndGreen = 1,
+            EndBlue = 0.1,
+        }
+    },
+    Chaos =
+    {
+        GrannyTexture = "zerp-MelSkin/Chaos",
+        BoonPortrait = true,
+        Portraits = mod.Portraits,
+        PortraitOverlayModifacations = {
+            Portrait_Mel_Body2_Wiggle1_In = "nil",
+            Portrait_Mel_Body1_Wiggle2_In = "nil",
+            Portrait_Mel_Body2_Wiggle2_In = {
+                Hue = 0.44,
+		        Saturation = 0.3,
+                UpdateChainTo = true,
+            },
+            Portrait_Mel_Body1_Wiggle1_In = {
+                Hue = 0.44,
+		        Saturation = 0.3,
+                UpdateChainTo = true,
+            },
+            Portrait_Mel_Body2_Wiggle2 = {
+                Hue = 0.44,
+		        Saturation = 0.3,
+            },
+            Portrait_Mel_Body1_Wiggle1 = {
+                Hue = 0.44,
+		        Saturation = 0.3,
+            },
+            Portrait_Mel_Body2_ArmGlow = {
+                Hue = 0.385,
+            },
+            Portrait_Mel_Body1_ArmGlow = {
+                Hue = 0.385,
+            },
+            Portrait_Mel_LaurelGlow = {
+                Hue = -0.24,
+                VisualFx = { Name = "LaurelBurnIris", Hue = -0.24 },
+            },
+            Portrait_Mel_Hesitant_LaurelGlow = {
+                Hue = -0.24,
+                VisualFx = { Name = "LaurelBurnIris", Hue = -0.24 },
+            },
+            Portrait_Mel_Intense_LaurelGlow = {
+                Hue = -0.24,
+                VisualFx = { Name = "LaurelBurnIris", Hue = -0.24 },
+            },
+            Portrait_Mel_Pleased_LaurelGlow = {
+                Hue = -0.24,
+                VisualFx = { Name = "LaurelBurnIris", Hue = -0.24 },
+            },
+            Portrait_Mel_Vulnerable_LaurelGlow = {
+                Hue = -0.24,
+                VisualFx = { Name = "LaurelBurnIris", Hue = -0.24 },
+            },
+        },
+        Color = {197, 64, 220, 255},
+        ArmGlow = {
+            StartRed = 0.9,
+            StartGreen = 0.2,
+            StartBlue = 0.9,
+            EndRed = 0.8,
+            EndGreen = 0.3,
+            EndBlue = 1,
+        },
+        LaurelCinderHue = -0.24,
     },
     None =
     {
@@ -122,6 +195,7 @@ mod.DressDisplayOrder = {
     "Dark Side",
     "Alternate Time",
     "Murderrrrr",
+    "Chaos",
     "None",
     "Custom"
 }

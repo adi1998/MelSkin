@@ -11,6 +11,7 @@
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinPortraits")
+table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinObstacles")
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustom")
 
 function mod.GetCurrentDress()
@@ -44,11 +45,18 @@ modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, butt
         if args.Name == "BoonSelectMelOut" then
             local dress = mod.GetCurrentDress()
             local dressData = mod.DressData[dress]
+            local setAlpha = false
             if dressData ~= nil and dressData.BoonPortrait then
                 args.Name = dress .. "_" .. args.Name
+                setAlpha = true
             end
+            local val = base(args)
+            if setAlpha then
+                game.SetAlpha({ Id = args.DestinationId, Fraction = 0, Duration = 0.1 })
+            end
+            return val
         end
-        base(args)
+        return base(args)
     end)
 end)
 
@@ -83,6 +91,38 @@ function mod.dump(o, depth)
     end
 end
 
+function mod.SetupExtraAnimations(dress)
+    local laurelCindersSpawner = "LaurelCindersSpawner"
+    if dress and mod.DressData[dress] and mod.DressData[dress].LaurelCinderHue then
+        laurelCindersSpawner  = dress .. laurelCindersSpawner
+    end
+    if game.MapState[_PLUGIN.guid .. "LaurelCindersSpawner"] ~= laurelCindersSpawner then
+        game.StopAnimation({ Name = game.MapState[_PLUGIN.guid .. "LaurelCindersSpawner"], DestinationId = game.CurrentRun.Hero.ObjectId })
+        game.CreateAnimation({ Name = laurelCindersSpawner, DestinationId = game.CurrentRun.Hero.ObjectId })
+        game.MapState[_PLUGIN.guid .. "LaurelCindersSpawner"] = laurelCindersSpawner
+    end
+
+    game.StopAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
+    game.StopAnimation({ Name = dress .. "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
+    game.StopAnimation({ Name = game.MapState[_PLUGIN.guid .. "PrevArmGlowAnimation"], DestinationId = game.CurrentRun.Hero.ObjectId })
+    if dress and mod.DressData[dress] and not mod.DressData[dress].DisableMelArmGlow then
+        if mod.DressData[dress].ArmGlow then
+            game.CreateAnimation({ Name = dress .. "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
+            game.MapState[_PLUGIN.guid .. "PrevArmGlowAnimation"] = dress .. "MelArmGlow"
+        else
+            game.CreateAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
+            game.MapState[_PLUGIN.guid .. "PrevArmGlowAnimation"] = "MelArmGlow"
+        end
+    end
+end
+
+modutil.mod.Path.Wrap("SetPlayerDarkside", function (base, flag)
+    base(flag)
+    if game.Contains({"SpellTransform", "NightmareSequence"}, flag) then
+        mod.SetupExtraAnimations("Dark Side")
+    end
+end)
+
 modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
     local grannyTexture = mod.GetDressGrannyTexture(config.dress)
     if config.random_each_run then
@@ -94,15 +134,9 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
     base(skipCostume)
     game.CostumeData.Costume_Default.GrannyTexture = ""
 
-    -- arm glow
-    local dress = config.dress
-    if config.random_each_run then
-        dress = mod.GetCurrentRunDress()
-    end
-    game.StopAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
-    if dress and mod.DressData[dress] and not mod.DressData[dress].DisableMelArmGlow then
-        game.CreateAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
-    end
+    -- arm glow and laurel spawner setup
+    local dress = mod.GetCurrentDress()
+    mod.SetupExtraAnimations(dress)
 end)
 
 -- TODO: this is untested
@@ -296,6 +330,17 @@ modutil.mod.Path.Wrap("SetupHeroObject", function (base,...)
     local dress = config.dress
     if config.random_each_run then
         dress = mod.GetCurrentRunDress()
+    end
+    if dress and mod.DressData[dress] and (mod.DressData[dress].ArmGlow or mod.DressData[dress].LaurelCinderHue) then
+        game.StopAnimation({ Name = "LaurelCindersSpawner", DestinationId = game.CurrentRun.Hero.ObjectId })
+        game.StopAnimation({ Name = game.MapState[_PLUGIN.guid .. "LaurelCindersSpawner"], DestinationId = game.CurrentRun.Hero.ObjectId })
+        game.CreateAnimation({ Name = dress .. "LaurelCindersSpawner", DestinationId = game.CurrentRun.Hero.ObjectId })
+        game.MapState[_PLUGIN.guid .. "LaurelCindersSpawner"] = dress .. "LaurelCindersSpawner"
+        if mod.DressData[dress].ArmGlow then
+            game.MapState[_PLUGIN.guid .. "PrevArmGlowAnimation"] = dress .. "MelArmGlow"
+        end
+    else
+        game.MapState[_PLUGIN.guid .. "LaurelCindersSpawner"] = "LaurelCindersSpawner"
     end
     if dress and mod.DressData[dress] and mod.DressData[dress].DisableMelArmGlow then
         game.StopAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })

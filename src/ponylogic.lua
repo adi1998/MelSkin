@@ -1,8 +1,8 @@
 function mod.OpenDressSelector()
-    if IsScreenOpen("DressSelector") then
+    if game.IsScreenOpen("DressSelector") then
         return
     end
-    local screen = DeepCopyTable(ScreenData.DressSelector)
+    local screen = game.DeepCopyTable(game.ScreenData.DressSelector)
     screen.Amount = 0
     screen.FirstPage = 0
     screen.LastPage = 0
@@ -10,16 +10,16 @@ function mod.OpenDressSelector()
     local components = screen.Components
 
     if config.random_each_run then
-        screen.ComponentData.Background.Children.RandomDressButton.TextArgs.Color = Color.Orange
+        screen.ComponentData.Background.Children.RandomDressButton.TextArgs.Color = game.Color.Orange
     end
 
     if game.GameState ~= nil and game.GameState.ModFavoriteDressList == nil then
         game.GameState.ModFavoriteDressList = {}
     end
 
-    OnScreenOpened(screen)
-    HideCombatUI(screen.Name)
-    CreateScreenFromData(screen, screen.ComponentData)
+    game.OnScreenOpened(screen)
+    game.HideCombatUI(screen.Name)
+    game.CreateScreenFromData(screen, screen.ComponentData)
 
     local index = 0
     screen.DressList = {}
@@ -47,15 +47,16 @@ function mod.OpenDressSelector()
     end
 
     mod.ApplyMenuZoom()
+    game.thread(mod.StartHeroRotation)
 
     mod.DressSelectorLoadPage(screen)
-    SetColor({ Id = components.BackgroundTint.Id, Color = Color.Black })
-    SetAlpha({ Id = components.BackgroundTint.Id, Fraction = 0.0, Duration = 0 })
-    SetAlpha({ Id = components.BackgroundTint.Id, Fraction = 0.9, Duration = 0.3 })
-    wait(0.3)
-    SetConfigOption({ Name = "ExclusiveInteractGroup", Value = "Combat_Menu_TraitTray" })
+    game.SetColor({ Id = components.BackgroundTint.Id, Color = game.Color.Black })
+    game.SetAlpha({ Id = components.BackgroundTint.Id, Fraction = 0.0, Duration = 0 })
+    game.SetAlpha({ Id = components.BackgroundTint.Id, Fraction = 0.9, Duration = 0.3 })
+    game.wait(0.3)
+    game.SetConfigOption({ Name = "ExclusiveInteractGroup", Value = "Combat_Menu_TraitTray" })
     screen.KeepOpen = true
-    HandleScreenInput(screen)
+    game.HandleScreenInput(screen)
 end
 
 function  mod.DressSelectorLoadPage(screen)
@@ -64,14 +65,14 @@ function  mod.DressSelectorLoadPage(screen)
     if pageDress then
         for i, dressButtonData in pairs(pageDress) do
             local dressKey = "DressKey" .. dressButtonData.index
-            screen.Components[dressKey] = CreateScreenComponent({
+            screen.Components[dressKey] = game.CreateScreenComponent({
                 Name = "ButtonDefault",
                 Group = "Combat_Menu_TraitTray",
                 Scale = 1.1,
                 ScaleX = 0.85,
                 ToDestroy = true
             })
-            SetInteractProperty({
+            game.SetInteractProperty({
                 DestinationId = screen.Components[dressKey].Id,
                 Property = "TooltipOffsetY",
                 Value = 100
@@ -91,26 +92,25 @@ function  mod.DressSelectorLoadPage(screen)
                     Group = "Combat_Menu_TraitTray",
                     ToDestroy = true
                 }
-                screen.Components[dressKey.."Icon"] = CreateScreenComponent(icon)
+                screen.Components[dressKey.."Icon"] = game.CreateScreenComponent(icon)
                 screen.Components[dressKey].Icon = screen.Components[dressKey.."Icon"]
             end
 
-            Attach({
+            game.Attach({
                 Id = screen.Components[dressKey].Id,
                 DestinationId = screen.Components.Background.Id,
                 OffsetX = dressButtonData.offsetX,
                 OffsetY = dressButtonData.offsetY
             })
             local text = dressButtonData.key
-            local color = Color.White
+            local color = game.Color.White
             if config.dress == text and config.random_each_run == false then
-                color = Color.Orange
+                color = game.Color.Orange
             end
             if config.random_each_run == true and game.CurrentRun.Hero.ModDressData == text then
-                color = Color.Orange
+                color = game.Color.Orange
             end
-            print(text)
-            CreateTextBox({
+            game.CreateTextBox({
                 Id = screen.Components[dressKey].Id,
                 Text = text,
                 FontSize = 20,
@@ -125,7 +125,7 @@ function  mod.DressSelectorLoadPage(screen)
                 Justification = "Center"
             })
             if mod.CheckDressInFavorite(dressButtonData.key) then
-                Attach({
+                game.Attach({
                     Id = screen.Components[dressKey .. "Icon"].Id,
                     DestinationId = screen.Components[dressKey].Id,
                     OffsetX = -125,
@@ -159,8 +159,6 @@ end
 
 function mod.SetDress(screen,button)
     local dressGrannyTexture = mod.GetDressGrannyTexture(button.Dress)
-    print("Dress", button.Dress)
-    print("DressGrannyTexture", dressGrannyTexture)
     config.dress = button.Dress
     config.random_each_run = false
     game.SetupCostume()
@@ -172,42 +170,42 @@ function mod.DressSelectorReloadPage(screen)
     local ids = {}
     for i, component in pairs(screen.Components) do
         if component.RandomButtonId == "RandomButtonId" then
-            print("randombuttonreload", screen.Components[i].Text)
-            screen.Components[i].Color = Color.White
+            screen.Components[i].Color = game.Color.White
             if config.random_each_run then
-                screen.Components[i].Color = Color.Orange
+                screen.Components[i].Color = game.Color.Orange
             end
-            ModifyTextBox({Id = screen.Components[i].Id, Color = screen.Components[i].Color})
+            game.ModifyTextBox({Id = screen.Components[i].Id, Color = screen.Components[i].Color})
         end
         if component.ToDestroy then
             table.insert(ids, component.Id)
         end
     end
-    Destroy({ Ids = ids })
+    game.Destroy({ Ids = ids })
     mod.DressSelectorLoadPage(screen)
 end
 
 function mod.ToggleRandomDressSelection(screen, button)
     config.random_each_run = config.random_each_run == false
-    local color = Color.White
+    local color = game.Color.White
     if config.random_each_run then
-        color = Color.Orange
+        color = game.Color.Orange
     end
 	game.SetupCostume()
     game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
-    ModifyTextBox({Id = button.Id, Color = color})
+    game.ModifyTextBox({Id = button.Id, Color = color})
     mod.DressSelectorReloadPage(screen)
 end
 
 function mod.CloseDressSelector(screen)
-    ShowCombatUI(screen.Name)
-    SetConfigOption({ Name = "ExclusiveInteractGroup", Value = nil })
-    OnScreenCloseStarted(screen)
-    CloseScreen(GetAllIds(screen.Components), 0.15)
-    OnScreenCloseFinished(screen)
-    notifyExistingWaiters("DressSelector")
+    game.ShowCombatUI(screen.Name)
+    game.SetConfigOption({ Name = "ExclusiveInteractGroup", Value = nil })
+    game.OnScreenCloseStarted(screen)
+    game.CloseScreen(game.GetAllIds(screen.Components), 0.15)
+    game.OnScreenCloseFinished(screen)
+    game.notifyExistingWaiters("DressSelector")
     mod.ResetMenuZoom()
 	game.SetupCostume()
+    game.killTaggedThreads(_PLUGIN.guid .. "StartHeroRotation")
 end
 
 function mod.ToggleFavriteDressSelection(screen, button)
@@ -239,32 +237,39 @@ function mod.ApplyMenuZoom()
     if game.CurrentRun.CurrentRoom ~= nil then
         if game.CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
             for id, _ in pairs( game.CurrentRun.CurrentRoom.CameraZoomWeights ) do
-                SetCameraZoomWeight({ Id = id, Weight = 1, ZoomSpeed = 1.0 })
+                game.SetCameraZoomWeight({ Id = id, Weight = 1, ZoomSpeed = 1.0 })
             end
         end
     end
 
-    if CurrentHubRoom ~= nil then
-        if CurrentHubRoom.CameraZoomWeights ~= nil then
-            for id, _ in pairs( CurrentHubRoom.CameraZoomWeights ) do
-                SetCameraZoomWeight({ Id = id, Weight = 1, ZoomSpeed = 1.0 })
+    if game.CurrentHubRoom ~= nil then
+        if game.CurrentHubRoom.CameraZoomWeights ~= nil then
+            for id, _ in pairs( game.CurrentHubRoom.CameraZoomWeights ) do
+                game.SetCameraZoomWeight({ Id = id, Weight = 1, ZoomSpeed = 1.0 })
             end
         end
     end
 
-    ClearCameraClamp({ LerpTime = 0 })
+    game.ClearCameraClamp({ LerpTime = 0 })
     local offsetY = -70
-    if HeroHasTrait("TorchAutofireAspect") then
+    if game.HeroHasTrait("TorchAutofireAspect") then
         offsetY = -110
     end
-    game.thread(LockCamera,{Id = game.CurrentRun.Hero.ObjectId, OffsetX = -265, OffsetY = offsetY, Duration = 0.3})
-    AdjustZoom({ Fraction = 2.8, Duration = 0.3 })
+
+    if game.CurrentHubRoom and game.CurrentHubRoom.Name == "Hub_Main" then
+        game.thread(game.LockCamera,{Id = game.CurrentRun.Hero.ObjectId, OffsetX = -530, OffsetY = offsetY, Duration = 0.35})
+        game.AdjustZoom({ Fraction = 1.4, Duration = 0.35 })
+        game.SetScale({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 1.7 })
+    else
+        game.thread(game.LockCamera,{Id = game.CurrentRun.Hero.ObjectId, OffsetX = -265, OffsetY = offsetY, Duration = 0.35})
+        game.AdjustZoom({ Fraction = 2.8, Duration = 0.35 })
+    end
 end
 
 function mod.ResetMenuZoom()
     local defaultZoom = 1.0
-    if CurrentHubRoom ~= nil then
-        defaultZoom = CurrentHubRoom.ZoomFraction or defaultZoom
+    if game.CurrentHubRoom ~= nil then
+        defaultZoom = game.CurrentHubRoom.ZoomFraction or defaultZoom
     else
         defaultZoom = game.CurrentRun.CurrentRoom.ZoomFraction or defaultZoom
     end
@@ -272,27 +277,77 @@ function mod.ResetMenuZoom()
     if game.CurrentRun.CurrentRoom ~= nil then
         if game.CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
             for id, weight in pairs( game.CurrentRun.CurrentRoom.CameraZoomWeights ) do
-                SetCameraZoomWeight({ Id = id, Weight = weight, ZoomSpeed = 1.0 })
+                game.SetCameraZoomWeight({ Id = id, Weight = weight, ZoomSpeed = 1.0 })
             end
         end
     end
 
-    if CurrentHubRoom ~= nil then
-        if CurrentHubRoom.CameraZoomWeights ~= nil then
-            for id, weight in pairs( CurrentHubRoom.CameraZoomWeights ) do
-                SetCameraZoomWeight({ Id = id, Weight = weight, ZoomSpeed = 1.0 })
+    if game.CurrentHubRoom ~= nil then
+        if game.CurrentHubRoom.CameraZoomWeights ~= nil then
+            for id, weight in pairs( game.CurrentHubRoom.CameraZoomWeights ) do
+                game.SetCameraZoomWeight({ Id = id, Weight = weight, ZoomSpeed = 1.0 })
             end
         end
     end
 
-    game.thread(LockCamera,{Id = game.CurrentRun.Hero.ObjectId, Duration = 0.3})
-    AdjustZoom({ Fraction = defaultZoom, Duration = 0.3 })
+    game.thread(game.LockCamera,{Id = game.CurrentRun.Hero.ObjectId, Duration = 0.3})
+    game.AdjustZoom({ Fraction = defaultZoom, Duration = 0.3 })
+    if game.CurrentHubRoom and game.CurrentHubRoom.Name == "Hub_Main" then
+        game.SetScale({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 1 })
+    end
 end
 
-function mod.PopulatePonyMenuData()
-    mod.ponyMenu = rom.mods["PonyWarrior-PonyMenu"]
-    if mod.ponyMenu ~= nil and mod.ponyMenu.CommandData ~= nil then
-        ModUtil.Table.Merge(ScreenData,mod.DressScreenData)
-        table.insert(mod.ponyMenu.CommandData,mod.DressCommandData)
+-- courtsey of @magic_gonads
+local world_to_screen
+local screen_to_world
+
+local a,b = 1, 0 -- or 0.5, 0 if it's the wrong way around
+local c,d = 0, 0.5 -- or 0, 1 if it's the wrong way around
+
+function world_to_screen(world_angle)
+    local t = world_angle
+
+    -- world coords
+    -- assuming z = 0
+    -- don't need radius as it will cancel in atan2
+    local x = math.cos(t)
+    local y = math.sin(t)
+
+    -- world coords -> screen coords
+    local x2 = a*x + b*y
+    local y2 = c*x + d*y
+
+    -- screen angle
+    return math.atan2(y2,x2) -- y first in lua's atan2
+end
+
+function screen_to_world(screen_angle)
+    local t = screen_angle
+
+    -- screen coords
+    -- don't need radius as it will cancel in atan2
+    local x = math.cos(t)
+    local y = math.sin(t)
+
+    -- world coords -> screen coords
+    -- assuming z = 0
+    -- don't need to divide by determinant as it will cancel in atan2
+    local x2 = d*x - b*y
+    local y2 = a*y - c*x
+
+    -- world angle
+    return math.atan2(y2,x2) -- y first in lua's atan2
+end
+
+function mod.StartHeroRotation()
+    local angle = 270
+    local updateRate = 120
+    local denom = 60*updateRate/360
+    while true do
+        local step = config.preview_rpm/denom
+        local angle_used = math.deg(world_to_screen(math.rad(angle)))
+        game.SetGoalAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = angle_used})
+        game.waitUnmodified(1/updateRate, _PLUGIN.guid .. "StartHeroRotation")
+        angle = (angle + step)%360
     end
 end

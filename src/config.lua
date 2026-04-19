@@ -14,6 +14,7 @@ local config = {
   use_exe = true,
   bright_dress = false,
   current_preset = "Default",
+  preview_rpm = 10,
 }
 
 local configDesc = {
@@ -28,7 +29,8 @@ local configDesc = {
   custom_arm_color = "Set a custom arm glow hue";
   use_exe = "DEBUG: set false to use the script instead of exe";
   bright_dress = "Use a bright dress as the custom dress base";
-  current_preset = "current preset selected in the preset selector ImGui";
+  current_preset = "Current preset selected in the preset selector ImGui";
+  preview_rpm = "Melinoe's rotation rate during the dress selection screen";
 }
 
 return config, configDesc

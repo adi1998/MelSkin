@@ -32,3 +32,11 @@ table.insert(game.HubRoomData.Hub_Main.StartUnthreadedEvents, {
 table.insert(game.HubRoomData.Hub_PreRun.StartUnthreadedEvents, {
     FunctionName = _PLUGIN.guid .. "." .. "SpawnDressObstaclePreRun"
 })
+
+modutil.mod.Path.Wrap("DeathAreaSwitchRoom", function (base, source, args)
+	if args.Name == "Hub_Main" then
+		game.Destroy({Id = mod.dressObstacleId})
+        mod.dressObstacleId = nil
+	end
+	return base(source, args)
+end)

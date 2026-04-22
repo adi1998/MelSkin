@@ -8,7 +8,6 @@ local dressMenuObstacle = {
 
 function mod.SpawnDressObstaclePreRun()
     local dressObstacle = game.DeepCopyTable(dressMenuObstacle)
-    print("spawning dress menu obstacle")
     dressObstacle.InteractOffsetX = -130
     dressObstacle.InteractOffsetY = 100
     dressObstacle.ObjectId = game.SpawnObstacle({
@@ -28,6 +27,7 @@ function mod.SpawnDressObstaclePreRun()
     -- brighness fix, it just works
     game.SetThingProperty({Property = "AddColor", Value = true, DestinationId = dressObstacle.ObjectId })
     game.SetColor({ Id = dressObstacle.ObjectId, Color = {0,0,0,1} })
+    mod.dressObstacleId = dressObstacle.ObjectId
 end
 
 function mod.SpawnDressObstacleHubMain()

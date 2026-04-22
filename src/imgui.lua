@@ -28,6 +28,8 @@ local zoom = false
 local presetNameBuffer = ""
 local prevPresetBuffer = ""
 
+PrevReloadCustomTextureResult = true
+
 rom.gui.add_imgui(function()
     if rom.ImGui.Begin("Dress Selector") then
         drawMenu()
@@ -83,9 +85,7 @@ function drawMenu()
         if checked and value ~= previousConfig.custom_dress then
             config.custom_dress = value
             previousConfig.custom_dress = value
-        end
-
-        
+        end        
 
         if config.custom_dress then
             rom.ImGui.SameLine()
@@ -133,8 +133,23 @@ function drawMenu()
         end
     
         if not config.custom_dress_color and config.custom_dress then
+            
+            rom.ImGui.SameLine();
+            local value, checked = rom.ImGui.Checkbox("PNG", config.custom_dress_base_png)
+            if checked then
+                config.custom_dress_base_png = value
+                if value then
+                    config.custom_dress_base = mod.CustomDressPNGOrder[1] or "<none>"
+                else
+                    config.custom_dress_base = mod.CustomDressDisplayOrder[1] or "None"
+                end
+            end
+            local dressList = mod.CustomDressDisplayOrder
+            if config.custom_dress_base_png then
+                dressList = mod.CustomDressPNGOrder
+            end
             if rom.ImGui.BeginCombo("###cdress", config.custom_dress_base) then
-                for _, dressName in ipairs(mod.CustomDressDisplayOrder) do
+                for _, dressName in ipairs(dressList) do
                     if rom.ImGui.Selectable(dressName, (dressName == config.custom_dress_base)) then
                         if dressName ~= previousConfig.custom_dress_base then
                             -- mod.ReloadCustomTexture()
@@ -146,6 +161,16 @@ function drawMenu()
                     end
                 end
                 rom.ImGui.EndCombo()
+            end
+            if config.custom_dress_base_png then
+                rom.ImGui.SameLine();
+                local clicked = rom.ImGui.Button("Refresh")
+                if clicked then
+                    mod.ReadAndUpdatePNGList()
+                    if not game.Contains(mod.CustomDressPNGOrder, config.custom_dress_base)  then
+                        config.custom_dress_base = mod.CustomDressPNGOrder[1] or "<none>"
+                    end
+                end
             end
         end
 
@@ -210,9 +235,14 @@ function drawMenu()
         if config.custom_arm_color or config.custom_dress or config.custom_hair_color then
             local clicked = rom.ImGui.Button("Apply")
             if clicked then
-                game.thread(mod.ReloadCustomTexture, cdress)
+                PrevReloadCustomTextureResult = mod.ReloadCustomTexture(cdress)
                 SavePreset(true)
                 game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
+            end
+            
+            if not PrevReloadCustomTextureResult then
+                rom.ImGui.SameLine();
+                rom.ImGui.Text("Error applying custom texture, check logs for more details") 
             end
 
             text, selected = rom.ImGui.InputText("###preset name", presetNameBuffer, 100)
@@ -318,6 +348,12 @@ function LoadPreset(lastApplied)
         if preset.Dress.Type == "Base" then
             config.custom_dress_color = false
             config.custom_dress_base = preset.Dress.Base
+            config.custom_dress_base_png = false
+        end
+        if preset.Dress.Type == "PNG" then
+            config.custom_dress_color = false
+            config.custom_dress_base = preset.Dress.Base
+            config.custom_dress_base_png = true
         end
     else
         config.custom_dress = false
@@ -353,9 +389,15 @@ function SavePreset(lastApplied)
             Bright = config.bright_dress
         }
     end
-    if config.custom_dress and not config.custom_dress_color then
+    if config.custom_dress and not config.custom_dress_color and not config.custom_dress_base_png then
         preset.Dress = {
             Type = "Base",
+            Base = config.custom_dress_base
+        }
+    end
+    if config.custom_dress and not config.custom_dress_color and config.custom_dress_base_png then
+        preset.Dress = {
+            Type = "PNG",
             Base = config.custom_dress_base
         }
     end

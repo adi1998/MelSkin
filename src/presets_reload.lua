@@ -5,7 +5,7 @@ local presetFilePath = rom.path.combine(configPath, presetFileName)
 
 local pluginsData = rom.path.combine(rom.paths.plugins_data(), _PLUGIN.guid .. "Helper")
 local plugins = rom.path.combine(rom.paths.plugins(), _PLUGIN.guid .. "Helper")
-local colorMapExePath = "start /b /wait \"\" \"" .. rom.path.combine(pluginsData, "colormap.exe") .. "\""
+local colorMapExePath = "\"" .. rom.path.combine(pluginsData, "colormap.exe") .. "\""
 local colorMapScriptPath = "python \"" .. rom.path.combine(plugins, "colormap.py") .. "\""
 
 function mod.ReadPresetsFromFile()
@@ -77,8 +77,11 @@ function mod.ReloadCustomTexture(lastApplied)
     if config.custom_hair_color then
         rgbCommand = rgbCommand .. " --hair " .. tostring(config.haircolor.r) .. "," .. tostring(config.haircolor.g) .. "," .. tostring(config.haircolor.b)
     end
-    if config.custom_dress and not config.custom_dress_color then
+    if config.custom_dress and not config.custom_dress_color and not config.custom_dress_base_png then
         rgbCommand = rgbCommand .. " --base " .. config.custom_dress_base
+    end
+    if config.custom_dress and not config.custom_dress_color and config.custom_dress_base_png then
+        rgbCommand = rgbCommand .. " --base " .. "\"Cache/" .. config.custom_dress_base .. "\""
     end
     if config.custom_arm_color then
         rgbCommand = rgbCommand .. " --arm " .. tostring(config.arm_hue)
@@ -86,12 +89,14 @@ function mod.ReloadCustomTexture(lastApplied)
     if config.bright_dress then
         rgbCommand = rgbCommand .. " --bright "
     end
+    -- rgbCommand = rgbCommand .. " & exit /b %ERRORLEVEL%"
     print("running", rgbCommand)
-    local handle = os.execute(rgbCommand)
+    local success, exit_type, code = os.execute(rgbCommand)
     if not lastApplied then
         game.UnloadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})
         game.LoadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})
     end
+    return success
 end
 
 function mod.SetRandomCustomPreset()
@@ -110,3 +115,21 @@ function mod.SetRandomCustomPreset()
         mod.ReloadCustomTexture()
     end
 end
+
+function mod.ReadAndUpdatePNGList()
+    local folder = rom.path.combine(rom.paths.plugins_data(), _PLUGIN.guid, "Cache")
+    local p = io.popen('dir "' .. folder .. '" /b')
+    local pngs = {}
+    if p then
+        for file in p:lines() do
+            print(file)
+            if file:lower():match("%.png$") then
+                table.insert(pngs, file:match("(.+)%..+$"))
+            end
+        end
+        p:close()
+    end
+    mod.CustomDressPNGOrder = pngs
+end
+
+ mod.ReadAndUpdatePNGList()

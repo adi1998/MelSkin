@@ -47,6 +47,7 @@ local function on_ready()
     import 'presets_reload.lua'
     import 'imgui.lua'
     mod.ReadPresetsFromFile()
+    mod.ReadAndUpdatePNGList()
 
     import 'ponydata.lua'
     import 'ponylogic.lua'

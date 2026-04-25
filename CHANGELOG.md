@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.16.0] - 2026-04-25
+
 - Using the Dark Side spell now switches to the correct laurel cinders and arm glow animations.
 - Temporariliy disables Custom skins(recolors) due to incompatibility.
 
@@ -142,7 +144,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.15.2...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.16.0...HEAD
+[1.16.0]: https://github.com/adi1998/MelSkin/compare/1.15.2...1.16.0
 [1.15.2]: https://github.com/adi1998/MelSkin/compare/1.15.1...1.15.2
 [1.15.1]: https://github.com/adi1998/MelSkin/compare/1.15.0...1.15.1
 [1.15.0]: https://github.com/adi1998/MelSkin/compare/1.14.0...1.15.0

@@ -47,7 +47,7 @@ Favorites are only available through the ingame menu.
 | __Murderrrrr by burn__ | __Chaos by jarlulsfark__ | | | |
 | ![Murderrrrr](images/skins/Murderrrrr.png) | ![Chaos](images/skins/Chaos.png) | | | |
 
-## Color selector
+## [Disabled Temporariliy] ~~Color selector~~
 
 A color selector to allow setting any* dress and hair color. Only works with the ImGui menu (default toggle keybind: INSERT).
 

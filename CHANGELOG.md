@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 - Using the Dark Side spell now switches to the correct laurel cinders and arm glow animations.
+- Temporariliy disables Custom skins(recolors) due to incompatibility.
 
 ## [1.15.2] - 2026-04-18
 

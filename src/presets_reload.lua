@@ -87,9 +87,7 @@ function mod.ReloadCustomTexture(lastApplied)
         rgbCommand = rgbCommand .. " --bright "
     end
     print("running", rgbCommand)
-
-    -- TODO: find alternative
-    -- local handle = os.execute(rgbCommand)
+    local handle = os.execute(rgbCommand)
     if not lastApplied then
         game.UnloadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})
         game.LoadPackages({Names = {_PLUGIN.guid .. "zerp-MelSkinCustom"}})

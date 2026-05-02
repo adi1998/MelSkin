@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.16.1] - 2026-05-02
+
 - Re-enabled Custom skins(recolors).
 
 ## [1.16.0] - 2026-04-25
@@ -146,7 +148,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.16.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.16.1...HEAD
+[1.16.1]: https://github.com/adi1998/MelSkin/compare/1.16.0...1.16.1
 [1.16.0]: https://github.com/adi1998/MelSkin/compare/1.15.2...1.16.0
 [1.15.2]: https://github.com/adi1998/MelSkin/compare/1.15.1...1.15.2
 [1.15.1]: https://github.com/adi1998/MelSkin/compare/1.15.0...1.15.1

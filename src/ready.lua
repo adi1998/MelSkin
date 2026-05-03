@@ -40,6 +40,17 @@ modutil.mod.Path.Wrap("OpenUpgradeChoiceMenu", function (base,source,args)
     game.ScreenData.UpgradeChoice.ComponentData.ShopBackground.Graphic = mod.BoonSelectObstacle.Name
 end)
 
+modutil.mod.Path.Wrap("CreateScreenFromData", function (base, screen, componentData, args)
+    if screen.Name == "ProvokeFatesScreen" then
+        local dress = mod.GetCurrentDress()
+        local dressData = mod.DressData[dress]
+        if dressData ~= nil and dressData.BoonPortrait then
+            componentData.ShopBackground.Graphic = dress .. "_" .. mod.BoonSelectObstacle.Name
+        end
+    end
+    base(screen, componentData, args)
+end)
+
 modutil.mod.Path.Context.Wrap("CloseUpgradeChoiceScreen", function (screen, button)
     modutil.mod.Path.Wrap("SetAnimation", function (base,args)
         if args.Name == "BoonSelectMelOut" then

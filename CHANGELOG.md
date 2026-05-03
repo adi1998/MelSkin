@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Provoking the Fates compat, the provocation screen will now show custom portrait if available
+
 ## [1.16.1] - 2026-05-02
 
 - Re-enabled Custom skins(recolors).

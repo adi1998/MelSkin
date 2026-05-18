@@ -47,7 +47,7 @@ function mod.OpenDressSelector()
         })
     end
 
-    mod.ApplyMenuZoom()
+    mod.ApplyMenuZoom(screen)
     game.thread(mod.StartHeroRotation)
 
     mod.DressSelectorLoadPage(screen)
@@ -201,6 +201,7 @@ function mod.ToggleRandomDressSelection(screen, button)
 end
 
 function mod.CloseDressSelector(screen)
+    game.Destroy({Ids = {screen.ZoomLockId}})
     game.ShowCombatUI(screen.Name)
     game.SetConfigOption({ Name = "ExclusiveInteractGroup", Value = nil })
     game.OnScreenCloseStarted(screen)
@@ -236,7 +237,7 @@ function mod.FavoriteAll(screen, button)
     mod.DressSelectorReloadPage(screen)
 end
 
-function mod.ApplyMenuZoom()
+function mod.ApplyMenuZoom(screen)
 
     if game.CurrentRun.CurrentRoom ~= nil then
         if game.CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
@@ -260,12 +261,20 @@ function mod.ApplyMenuZoom()
         offsetY = -110
     end
 
+    local lockId = game.CurrentRun.Hero.ObjectId
+
+    if game.CurrentRun.Hero.ObjectId ~= 39999 then
+        local location = game.GetLocation({Id = game.CurrentRun.Hero.ObjectId})
+        lockId = game.SpawnObstacle({ Name = "InvisibleTarget", LocationX = location.X, LocationY = location.Y })
+        screen.ZoomLockId = lockId
+    end
+
     if game.CurrentHubRoom and game.CurrentHubRoom.Name == "Hub_Main" then
-        game.thread(game.LockCamera,{Id = game.CurrentRun.Hero.ObjectId, OffsetX = -530, OffsetY = offsetY, Duration = 0.35})
+        game.thread(game.LockCamera,{Id = lockId, OffsetX = -530, OffsetY = offsetY, Duration = 0.35})
         game.AdjustZoom({ Fraction = 1.4, Duration = 0.35 })
         game.SetScale({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 1.7 })
     else
-        game.thread(game.LockCamera,{Id = game.CurrentRun.Hero.ObjectId, OffsetX = -265, OffsetY = offsetY, Duration = 0.35})
+        game.thread(game.LockCamera,{Id = lockId, OffsetX = -265, OffsetY = offsetY, Duration = 0.35})
         game.AdjustZoom({ Fraction = 2.8, Duration = 0.35 })
     end
 end

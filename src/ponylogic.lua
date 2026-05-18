@@ -7,6 +7,7 @@ function mod.OpenDressSelector()
     screen.FirstPage = 0
     screen.LastPage = 0
     screen.CurrentPage = screen.FirstPage
+    screen.dress_config_suffix = ((game.CurrentRun.Hero.ObjectId == 39999) and "2") or ""
     local components = screen.Components
 
     if config.random_each_run then
@@ -104,7 +105,7 @@ function  mod.DressSelectorLoadPage(screen)
             })
             local text = dressButtonData.key
             local color = game.Color.White
-            if config.dress == text and config.random_each_run == false then
+            if config["dress" .. screen.dress_config_suffix] == text and config.random_each_run == false then
                 color = game.Color.Orange
             end
             if config.random_each_run == true and game.CurrentRun.Hero.ModDressData == text then
@@ -146,7 +147,11 @@ function mod.DressMouseOverButton(button)
 
 	-- update just for preview
     local dressGrannyTexture = mod.GetDressGrannyTexture(button.Dress)
-    game.SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = game.CurrentRun.Hero.ObjectId})
+    if screen.dress_config_suffix == "" then
+        game.SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = game.CurrentRun.Hero.ObjectId})
+    else
+        game.SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = game.CurrentRun.Hero2.ObjectId})
+    end
 end
 
 function mod.DressMouseOffButton(button)
@@ -154,12 +159,11 @@ function mod.DressMouseOffButton(button)
     screen.SelectedItem = nil
 
     game.SetupCostume()
-
 end
 
 function mod.SetDress(screen,button)
     local dressGrannyTexture = mod.GetDressGrannyTexture(button.Dress)
-    config.dress = button.Dress
+    config["dress" .. screen.dress_config_suffix] = button.Dress
     config.random_each_run = false
     game.SetupCostume()
     game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })

@@ -1,6 +1,7 @@
 local config = {
   enabled = true;
   dress = "None";
+  dress2 = "None";
   random_each_run = false;
   debug_reload = false;
   dresscolor = { r = 202, g = 105, b = 28 },
@@ -19,6 +20,7 @@ local config = {
 
 local configDesc = {
   dress = "Select a skin from Lavender, Azure, Emerald, Onyx, Fuchsia, Gilded, Moonlight, Crimson, and more";
+  dress2 = "Select a skin for player 2 when Coop mod is installed";
   random_each_run = "Choose a dress randomly at the start of the run.";
   debug_reload = "Meant for dev/debug purposes";
   arm_hue = "Hue shift for Mel Arm Glow (0-360)";

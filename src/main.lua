@@ -59,6 +59,9 @@ local function on_ready()
     if not mod.DressData[config.dress] then
         config.dress = "None"
     end
+    if not mod.DressData[config.dress2] then
+        config.dress2 = "None"
+    end
 end
 
 local function on_reload()

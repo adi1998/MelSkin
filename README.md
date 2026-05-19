@@ -73,17 +73,15 @@ Includes support for selecting a random preset on run start. `Custom` should be 
 
 The mod also supports the [Co-op mod](https://www.nexusmods.com/hades2/mods/125) by TheNormalnij.
 
-To apply the skins open the menu seperately for each player using their respective input device.
+The active player can be switched by using the Gift/Reroll button.
 
 ImGui menu is not supprted for applying co-op skins, either use PonyMenu or Arachne's silk stand in the Crossroads.
 
-![Co-op](images/coop.png)
+![Co-op](images/coop.jpg)
 
 ### Some known issues
 
-- Skin can only be selected using the mouse for both players.
 - Random skin can sometimes apply the same skin over both players.
-- The Melinoe dress preview doesn't work properly for the Player 1.
 - Color selector skin cannot be different for both players.
 
 ## Contributing skins to this mod

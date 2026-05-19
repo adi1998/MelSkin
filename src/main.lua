@@ -61,7 +61,7 @@ local function on_ready()
         config.dress = "None"
     end
     if not mod.DressData[config.dress2] then
-        config.dress2 = "None"
+        config.dress2 = "Azure"
     end
 end
 

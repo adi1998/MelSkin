@@ -1,7 +1,7 @@
 local config = {
   enabled = true;
   dress = "None";
-  dress2 = "None";
+  dress2 = "Azure";
   random_each_run = false;
   debug_reload = false;
   dresscolor = { r = 202, g = 105, b = 28 },

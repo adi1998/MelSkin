@@ -119,7 +119,7 @@ function mod.DressSelectorLoadPage(screen)
                 teleportHere = true
                 color = game.Color.Orange
             end
-            if config.random_each_run == true and (game.CurrentRun["Hero" .. screen.dress_config_suffix] or {}).ModDressData == text then
+            if config.random_each_run == true and (mod["Hero" .. screen.dress_config_suffix] or {}).ModDressData == text then
                 teleportHere = true
                 color = game.Color.Orange
             end
@@ -163,9 +163,9 @@ function mod.DressMouseOverButton(button)
 	-- update just for preview
     local dressGrannyTexture = mod.GetDressGrannyTexture(button.Dress)
     if screen.dress_config_suffix == "" then
-        game.SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = game.CurrentRun.Hero.ObjectId})
+        game.SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = mod.Player1Id})
     else
-        game.SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = game.CurrentRun.Hero2.ObjectId})
+        game.SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = mod.Player2Id})
     end
 end
 
@@ -284,7 +284,7 @@ function mod.ApplyMenuZoom(screen, id)
 
     local lockId = id
 
-    if game.CurrentRun.Hero.ObjectId ~= 39999 then
+    if id ~= 39999 then
         local location = game.GetLocation({Id = id})
         lockId = game.SpawnObstacle({ Name = "InvisibleTarget", LocationX = location.X, LocationY = location.Y })
         screen.ZoomLockId = lockId
@@ -392,11 +392,11 @@ function mod.SwitchPlayer(screen, button)
     local newPlayer = (currentPlayer == 1 and 2) or 1
     -- mod.ResetMenuZoom()
     game.killTaggedThreads(_PLUGIN.guid .. "StartHeroRotation")
-    game.wait(0.3)
+    game.wait(0.1)
     screen.dress_config_suffix = ((newPlayer == 2) and "2") or ""
-    game.thread(mod.StartHeroRotation, (newPlayer == 2 and 39999) or game.CurrentRun.Hero.ObjectId)
+    game.thread(mod.StartHeroRotation, (newPlayer == 2 and 39999) or mod.Player1Id)
     game.Destroy({Ids = {screen.ZoomLockId}})
-    mod.ApplyMenuZoom(screen, (newPlayer == 2 and 39999) or game.CurrentRun.Hero.ObjectId)
+    mod.ApplyMenuZoom(screen, (newPlayer == 2 and 39999) or mod.Player1Id)
     mod.DressSelectorReloadPage(screen)
 end
 
@@ -418,6 +418,6 @@ end
 --     return base()
 -- end)
 
-game.ZerpMelskinOpenDressSelector = function()
-	return _G["zerp-MelSkin.OpenDressSelector"]()
-end
+-- game.ZerpMelskinOpenDressSelector = function()
+-- 	return _G["zerp-MelSkin.OpenDressSelector"]()
+-- end

@@ -8,6 +8,9 @@
 --     so you will most likely want to have it reference
 --    values and functions later defined in `reload.lua`.
 
+mod.Player1Id = 40000
+mod.Player2Id = 39999
+
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinPortraits")
@@ -138,6 +141,12 @@ modutil.mod.Path.Wrap("SetPlayerDarkside", function (base, flag)
 end)
 
 modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
+    if game.CurrentRun.Hero.ObjectId ~= 39999 then
+        mod.Player1Id = game.CurrentRun.Hero.ObjectId
+        mod.Hero = game.CurrentRun.Hero
+    else
+        mod.Hero2 = game.CurrentRun.Hero
+    end
     local grannyTexture = mod.GetDressGrannyTexture(config.dress)
     if game.CurrentRun.Hero.ObjectId == 39999 then
         grannyTexture = mod.GetDressGrannyTexture(config.dress2)

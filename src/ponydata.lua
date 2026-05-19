@@ -180,5 +180,5 @@ mod.DressCommandData = {
     Name = "Select Dress",
     Description = "Choose from all the dresses Arachne can give plus some more",
     Type = "Command",
-    Function = "ZerpMelskinOpenDressSelector"
+    Function = _PLUGIN.guid .. "." .. "OpenDressSelectorHorribleCoopHack"
 }

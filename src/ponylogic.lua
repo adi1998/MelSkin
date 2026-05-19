@@ -1,3 +1,14 @@
+function mod.OpenDressSelectorHorribleCoopHack()
+    game.OpenGameStatsScreen(nil, _PLUGIN.guid .. "." .. "OpenDressSelector")
+end
+
+modutil.mod.Path.Wrap("OpenGameStatsScreen", function (base, usee, modFunc)
+    if modFunc then
+        return game.CallFunctionName(modFunc)
+    end
+    return base(usee)
+end)
+
 function mod.OpenDressSelector()
     if game.IsScreenOpen("DressSelector") then
         return
@@ -399,25 +410,3 @@ function mod.SwitchPlayer(screen, button)
     mod.ApplyMenuZoom(screen, (newPlayer == 2 and 39999) or mod.Player1Id)
     mod.DressSelectorReloadPage(screen)
 end
-
--- mod.OpenDressSelector = modutil.mod.Wrap(mod.OpenDressSelector, function (base)
---     if ModRequire and game.CurrentRun.Hero2 then
---         print(rom.path.combine(rom.paths.Content(), "Mods/TN_CoopMod/logic/CoopPlayers.lua"))
---         local CoopPlayers = ModRequire("D:/SteamLibrary/steamapps/common/Hades II/Content/Mods/TN_CoopMod/logic/CoopPlayers.lua")
---         local HeroContext = ModRequire "@/TN_CoopMod/logic/HeroContext.lua"
---         local CoopControl = ModRequire(rom.path.combine(rom.paths.Content(), "Mods/TN_CoopMod/logic/CoopControl.lua"))
---         local HookUtils =   ModRequire(rom.path.combine(rom.paths.Content(), "Mods/TN_CoopMod/utils/HookUtils.lua"))
---         print(CoopControl, CoopPlayers, HeroContext, HookUtils, ModRequire)
---         local playerId = CoopPlayers.GetCurrentPlayerId()
---         CoopControl.SwitchControlForMenu(playerId)
-
---         HookUtils.onPreFunctionOnce("UnfreezePlayerUnit", function()
---             CoopControl.ExitMenuControl()
---         end)
---     end
---     return base()
--- end)
-
--- game.ZerpMelskinOpenDressSelector = function()
--- 	return _G["zerp-MelSkin.OpenDressSelector"]()
--- end

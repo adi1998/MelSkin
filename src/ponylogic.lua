@@ -51,6 +51,15 @@ function mod.OpenDressSelector()
     game.thread(mod.StartHeroRotation)
 
     mod.DressSelectorLoadPage(screen)
+
+    game.UseableOff({ Id = components.SwitchPlayerButton.Id, ForceHighlightOff = true })
+    if game.IsAlive({ Id = (game.CurrentRun.Hero2 or {}).ObjectId }) then
+        local currentPlayer = (screen.dress_config_suffix == "" and 1) or 2
+        game.SetAlpha({Id = components.SwitchPlayerButton.Id, Fraction = 1})
+        game.UseableOn({ Id = components.SwitchPlayerButton.Id })
+        game.ModifyTextBox({Id = components.Background.Id, Text = "Select Dress - Player " .. currentPlayer})
+    end
+
     game.SetColor({ Id = components.BackgroundTint.Id, Color = game.Color.Black })
     game.SetAlpha({ Id = components.BackgroundTint.Id, Fraction = 0.0, Duration = 0 })
     game.SetAlpha({ Id = components.BackgroundTint.Id, Fraction = 0.9, Duration = 0.3 })
@@ -60,11 +69,12 @@ function mod.OpenDressSelector()
     game.HandleScreenInput(screen)
 end
 
-function  mod.DressSelectorLoadPage(screen)
+function mod.DressSelectorLoadPage(screen)
     -- mod.BoonManagerPageButtons(screen, screen.Name)
     local pageDress = screen.DressList[screen.CurrentPage]
     if pageDress then
         for i, dressButtonData in pairs(pageDress) do
+            local teleportHere
             local dressKey = "DressKey" .. dressButtonData.index
             screen.Components[dressKey] = game.CreateScreenComponent({
                 Name = "ButtonDefault",
@@ -106,9 +116,11 @@ function  mod.DressSelectorLoadPage(screen)
             local text = dressButtonData.key
             local color = game.Color.White
             if config["dress" .. screen.dress_config_suffix] == text and config.random_each_run == false then
+                teleportHere = true
                 color = game.Color.Orange
             end
-            if config.random_each_run == true and game.CurrentRun.Hero.ModDressData == text then
+            if config.random_each_run == true and (game.CurrentRun["Hero" .. screen.dress_config_suffix] or {}).ModDressData == text then
+                teleportHere = true
                 color = game.Color.Orange
             end
             game.CreateTextBox({
@@ -132,6 +144,9 @@ function  mod.DressSelectorLoadPage(screen)
                     OffsetX = -125,
                     OffsetY = -30
                 })
+            end
+            if teleportHere then
+                game.TeleportCursor({ DestinationId = screen.Components[dressKey].Id, ForceUseCheck = true})
             end
         end
     end
@@ -185,6 +200,10 @@ function mod.DressSelectorReloadPage(screen)
         end
     end
     game.Destroy({ Ids = ids })
+    if game.IsAlive({ Id = (game.CurrentRun.Hero2 or {}).ObjectId }) then
+        local currentPlayer = (screen.dress_config_suffix == "" and 1) or 2
+        game.ModifyTextBox({Id = screen.Components.Background.Id, Text = "Select Dress - Player " .. currentPlayer})
+    end
     mod.DressSelectorLoadPage(screen)
 end
 
@@ -237,7 +256,7 @@ function mod.FavoriteAll(screen, button)
     mod.DressSelectorReloadPage(screen)
 end
 
-function mod.ApplyMenuZoom(screen)
+function mod.ApplyMenuZoom(screen, id)
 
     if game.CurrentRun.CurrentRoom ~= nil then
         if game.CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
@@ -261,10 +280,12 @@ function mod.ApplyMenuZoom(screen)
         offsetY = -110
     end
 
-    local lockId = game.CurrentRun.Hero.ObjectId
+    id = id or game.CurrentRun.Hero.ObjectId
+
+    local lockId = id
 
     if game.CurrentRun.Hero.ObjectId ~= 39999 then
-        local location = game.GetLocation({Id = game.CurrentRun.Hero.ObjectId})
+        local location = game.GetLocation({Id = id})
         lockId = game.SpawnObstacle({ Name = "InvisibleTarget", LocationX = location.X, LocationY = location.Y })
         screen.ZoomLockId = lockId
     end
@@ -352,15 +373,51 @@ function screen_to_world(screen_angle)
     return math.atan2(y2,x2) -- y first in lua's atan2
 end
 
-function mod.StartHeroRotation()
+function mod.StartHeroRotation(id)
     local angle = 270
     local updateRate = 120
     local denom = 60*updateRate/360
+    id = id or game.CurrentRun.Hero.ObjectId
     while true do
         local step = config.preview_rpm/denom
         local angle_used = math.deg(world_to_screen(math.rad(angle)))
-        game.SetGoalAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = angle_used})
+        game.SetGoalAngle({Id = id, Angle = angle_used})
         game.waitUnmodified(1/updateRate, _PLUGIN.guid .. "StartHeroRotation")
         angle = (angle + step)%360
     end
+end
+
+function mod.SwitchPlayer(screen, button)
+    local currentPlayer = (screen.dress_config_suffix == "" and 1) or 2
+    local newPlayer = (currentPlayer == 1 and 2) or 1
+    -- mod.ResetMenuZoom()
+    game.killTaggedThreads(_PLUGIN.guid .. "StartHeroRotation")
+    game.wait(0.3)
+    screen.dress_config_suffix = ((newPlayer == 2) and "2") or ""
+    game.thread(mod.StartHeroRotation, (newPlayer == 2 and 39999) or game.CurrentRun.Hero.ObjectId)
+    game.Destroy({Ids = {screen.ZoomLockId}})
+    mod.ApplyMenuZoom(screen, (newPlayer == 2 and 39999) or game.CurrentRun.Hero.ObjectId)
+    mod.DressSelectorReloadPage(screen)
+end
+
+-- mod.OpenDressSelector = modutil.mod.Wrap(mod.OpenDressSelector, function (base)
+--     if ModRequire and game.CurrentRun.Hero2 then
+--         print(rom.path.combine(rom.paths.Content(), "Mods/TN_CoopMod/logic/CoopPlayers.lua"))
+--         local CoopPlayers = ModRequire("D:/SteamLibrary/steamapps/common/Hades II/Content/Mods/TN_CoopMod/logic/CoopPlayers.lua")
+--         local HeroContext = ModRequire "@/TN_CoopMod/logic/HeroContext.lua"
+--         local CoopControl = ModRequire(rom.path.combine(rom.paths.Content(), "Mods/TN_CoopMod/logic/CoopControl.lua"))
+--         local HookUtils =   ModRequire(rom.path.combine(rom.paths.Content(), "Mods/TN_CoopMod/utils/HookUtils.lua"))
+--         print(CoopControl, CoopPlayers, HeroContext, HookUtils, ModRequire)
+--         local playerId = CoopPlayers.GetCurrentPlayerId()
+--         CoopControl.SwitchControlForMenu(playerId)
+
+--         HookUtils.onPreFunctionOnce("UnfreezePlayerUnit", function()
+--             CoopControl.ExitMenuControl()
+--         end)
+--     end
+--     return base()
+-- end)
+
+game.ZerpMelskinOpenDressSelector = function()
+	return _G["zerp-MelSkin.OpenDressSelector"]()
 end

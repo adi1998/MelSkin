@@ -80,8 +80,9 @@ function mod.OpenDressSelector()
     game.HandleScreenInput(screen)
 end
 
-function mod.DressSelectorLoadPage(screen)
+function mod.DressSelectorLoadPage(screen, args)
     -- mod.BoonManagerPageButtons(screen, screen.Name)
+    args = args or {}
     local pageDress = screen.DressList[screen.CurrentPage]
     if pageDress then
         for i, dressButtonData in pairs(pageDress) do
@@ -156,7 +157,7 @@ function mod.DressSelectorLoadPage(screen)
                     OffsetY = -30
                 })
             end
-            if teleportHere then
+            if teleportHere and not args.SkipCursorTeleport then
                 game.TeleportCursor({ DestinationId = screen.Components[dressKey].Id, ForceUseCheck = true})
             end
         end
@@ -196,7 +197,7 @@ function mod.SetDress(screen,button)
     mod.DressSelectorReloadPage(screen)
 end
 
-function mod.DressSelectorReloadPage(screen)
+function mod.DressSelectorReloadPage(screen, args)
     local ids = {}
     for i, component in pairs(screen.Components) do
         if component.RandomButtonId == "RandomButtonId" then
@@ -215,7 +216,7 @@ function mod.DressSelectorReloadPage(screen)
         local currentPlayer = (screen.dress_config_suffix == "" and 1) or 2
         game.ModifyTextBox({Id = screen.Components.Background.Id, Text = "Select Dress - Player " .. currentPlayer})
     end
-    mod.DressSelectorLoadPage(screen)
+    mod.DressSelectorLoadPage(screen, args)
 end
 
 function mod.ToggleRandomDressSelection(screen, button)
@@ -254,7 +255,7 @@ function mod.ToggleFavriteDressSelection(screen, button)
     else
         mod.AddFavoriteDress(dressName)
     end
-    mod.DressSelectorReloadPage(screen)
+    mod.DressSelectorReloadPage(screen, {SkipCursorTeleport = true})
 end
 
 function mod.ResetFavorites(screen, button)

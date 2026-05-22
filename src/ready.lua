@@ -8,6 +8,9 @@
 --     so you will most likely want to have it reference
 --    values and functions later defined in `reload.lua`.
 
+mod.Player1Id = 40000
+mod.Player2Id = 39999
+
 mod.skinPackageList = {}
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkin")
 table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinPortraits")
@@ -23,6 +26,9 @@ function mod.GetCurrentDress()
         end
     end
     local dress = config.dress
+    if game.CurrentRun.Hero.ObjectId == 39999 then
+        dress = config.dress2
+    end
     if config.random_each_run then
         dress = mod.GetCurrentRunDress()
     end
@@ -135,7 +141,16 @@ modutil.mod.Path.Wrap("SetPlayerDarkside", function (base, flag)
 end)
 
 modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
+    if game.CurrentRun.Hero.ObjectId ~= 39999 then
+        mod.Player1Id = game.CurrentRun.Hero.ObjectId
+        mod.Hero = game.CurrentRun.Hero
+    else
+        mod.Hero2 = game.CurrentRun.Hero
+    end
     local grannyTexture = mod.GetDressGrannyTexture(config.dress)
+    if game.CurrentRun.Hero.ObjectId == 39999 then
+        grannyTexture = mod.GetDressGrannyTexture(config.dress2)
+    end
     if config.random_each_run then
         grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
     end
@@ -158,6 +173,9 @@ end)
 
 modutil.mod.Path.Wrap("MelBackToBedroomPresentation", function(base,source,args)
     local grannyTexture = mod.GetDressGrannyTexture(config.dress)
+    if game.CurrentRun.Hero.ObjectId == 39999 then
+        grannyTexture = mod.GetDressGrannyTexture(config.dress2)
+    end
     if config.random_each_run then
         grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentRunDress())
         print("skin random", grannyTexture)
@@ -190,6 +208,9 @@ end
 
 function mod.GetPortraitNameFromConfig(filename,name)
     local dress = config.dress
+    if game.CurrentRun.Hero.ObjectId == 39999 then
+        dress = config.dress2
+    end
     if config.random_each_run then
         dress = mod.GetCurrentRunDress()
         print("portrait random", dress)
@@ -335,10 +356,13 @@ function mod.AddFavoriteDress(dressName)
     table.insert(game.GameState.ModFavoriteDressList, dressName)
 end
 
-modutil.mod.Path.Wrap("SetupHeroObject", function (base,...)
+modutil.mod.Path.Wrap("SetupHeroObject", function (base, ...)
     game.CurrentRun.Hero.LightBarColor[_PLUGIN.guid .. "SwapWithDressColor"] = true
     base(...)
     local dress = config.dress
+    if game.CurrentRun.Hero.ObjectId == 39999 then
+        dress = config.dress2
+    end
     if config.random_each_run then
         dress = mod.GetCurrentRunDress()
     end

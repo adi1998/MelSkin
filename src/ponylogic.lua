@@ -1,3 +1,14 @@
+function mod.OpenDressSelectorHorribleCoopHack()
+    game.OpenGameStatsScreen(nil, _PLUGIN.guid .. "." .. "OpenDressSelector")
+end
+
+modutil.mod.Path.Wrap("OpenGameStatsScreen", function (base, usee, modFunc)
+    if modFunc then
+        return game.CallFunctionName(modFunc)
+    end
+    return base(usee)
+end)
+
 function mod.OpenDressSelector()
     if game.IsScreenOpen("DressSelector") then
         return
@@ -7,6 +18,7 @@ function mod.OpenDressSelector()
     screen.FirstPage = 0
     screen.LastPage = 0
     screen.CurrentPage = screen.FirstPage
+    screen.dress_config_suffix = ((game.CurrentRun.Hero.ObjectId == 39999) and "2") or ""
     local components = screen.Components
 
     if config.random_each_run then
@@ -46,10 +58,19 @@ function mod.OpenDressSelector()
         })
     end
 
-    mod.ApplyMenuZoom()
+    mod.ApplyMenuZoom(screen)
     game.thread(mod.StartHeroRotation)
 
     mod.DressSelectorLoadPage(screen)
+
+    game.UseableOff({ Id = components.SwitchPlayerButton.Id, ForceHighlightOff = true })
+    if game.IsAlive({ Id = (game.CurrentRun.Hero2 or {}).ObjectId }) then
+        local currentPlayer = (screen.dress_config_suffix == "" and 1) or 2
+        game.SetAlpha({Id = components.SwitchPlayerButton.Id, Fraction = 1})
+        game.UseableOn({ Id = components.SwitchPlayerButton.Id })
+        game.ModifyTextBox({Id = components.Background.Id, Text = "Select Dress - Player " .. currentPlayer})
+    end
+
     game.SetColor({ Id = components.BackgroundTint.Id, Color = game.Color.Black })
     game.SetAlpha({ Id = components.BackgroundTint.Id, Fraction = 0.0, Duration = 0 })
     game.SetAlpha({ Id = components.BackgroundTint.Id, Fraction = 0.9, Duration = 0.3 })
@@ -59,11 +80,13 @@ function mod.OpenDressSelector()
     game.HandleScreenInput(screen)
 end
 
-function  mod.DressSelectorLoadPage(screen)
+function mod.DressSelectorLoadPage(screen, args)
     -- mod.BoonManagerPageButtons(screen, screen.Name)
+    args = args or {}
     local pageDress = screen.DressList[screen.CurrentPage]
     if pageDress then
         for i, dressButtonData in pairs(pageDress) do
+            local teleportHere
             local dressKey = "DressKey" .. dressButtonData.index
             screen.Components[dressKey] = game.CreateScreenComponent({
                 Name = "ButtonDefault",
@@ -104,10 +127,12 @@ function  mod.DressSelectorLoadPage(screen)
             })
             local text = dressButtonData.key
             local color = game.Color.White
-            if config.dress == text and config.random_each_run == false then
+            if config["dress" .. screen.dress_config_suffix] == text and config.random_each_run == false then
+                teleportHere = true
                 color = game.Color.Orange
             end
-            if config.random_each_run == true and game.CurrentRun.Hero.ModDressData == text then
+            if config.random_each_run == true and (mod["Hero" .. screen.dress_config_suffix] or {}).ModDressData == text then
+                teleportHere = true
                 color = game.Color.Orange
             end
             game.CreateTextBox({
@@ -132,6 +157,9 @@ function  mod.DressSelectorLoadPage(screen)
                     OffsetY = -30
                 })
             end
+            if teleportHere and not args.SkipCursorTeleport then
+                game.TeleportCursor({ DestinationId = screen.Components[dressKey].Id, ForceUseCheck = true})
+            end
         end
     end
 end
@@ -146,7 +174,11 @@ function mod.DressMouseOverButton(button)
 
 	-- update just for preview
     local dressGrannyTexture = mod.GetDressGrannyTexture(button.Dress)
-    game.SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = game.CurrentRun.Hero.ObjectId})
+    if screen.dress_config_suffix == "" then
+        game.SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = mod.Player1Id})
+    else
+        game.SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = mod.Player2Id})
+    end
 end
 
 function mod.DressMouseOffButton(button)
@@ -154,19 +186,18 @@ function mod.DressMouseOffButton(button)
     screen.SelectedItem = nil
 
     game.SetupCostume()
-
 end
 
 function mod.SetDress(screen,button)
     local dressGrannyTexture = mod.GetDressGrannyTexture(button.Dress)
-    config.dress = button.Dress
+    config["dress" .. screen.dress_config_suffix] = button.Dress
     config.random_each_run = false
     game.SetupCostume()
     game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
     mod.DressSelectorReloadPage(screen)
 end
 
-function mod.DressSelectorReloadPage(screen)
+function mod.DressSelectorReloadPage(screen, args)
     local ids = {}
     for i, component in pairs(screen.Components) do
         if component.RandomButtonId == "RandomButtonId" then
@@ -181,7 +212,11 @@ function mod.DressSelectorReloadPage(screen)
         end
     end
     game.Destroy({ Ids = ids })
-    mod.DressSelectorLoadPage(screen)
+    if game.IsAlive({ Id = (game.CurrentRun.Hero2 or {}).ObjectId }) then
+        local currentPlayer = (screen.dress_config_suffix == "" and 1) or 2
+        game.ModifyTextBox({Id = screen.Components.Background.Id, Text = "Select Dress - Player " .. currentPlayer})
+    end
+    mod.DressSelectorLoadPage(screen, args)
 end
 
 function mod.ToggleRandomDressSelection(screen, button)
@@ -197,6 +232,7 @@ function mod.ToggleRandomDressSelection(screen, button)
 end
 
 function mod.CloseDressSelector(screen)
+    game.Destroy({Ids = {screen.ZoomLockId}})
     game.ShowCombatUI(screen.Name)
     game.SetConfigOption({ Name = "ExclusiveInteractGroup", Value = nil })
     game.OnScreenCloseStarted(screen)
@@ -219,7 +255,7 @@ function mod.ToggleFavriteDressSelection(screen, button)
     else
         mod.AddFavoriteDress(dressName)
     end
-    mod.DressSelectorReloadPage(screen)
+    mod.DressSelectorReloadPage(screen, {SkipCursorTeleport = true})
 end
 
 function mod.ResetFavorites(screen, button)
@@ -232,7 +268,7 @@ function mod.FavoriteAll(screen, button)
     mod.DressSelectorReloadPage(screen)
 end
 
-function mod.ApplyMenuZoom()
+function mod.ApplyMenuZoom(screen, id)
 
     if game.CurrentRun.CurrentRoom ~= nil then
         if game.CurrentRun.CurrentRoom.CameraZoomWeights ~= nil then
@@ -256,12 +292,22 @@ function mod.ApplyMenuZoom()
         offsetY = -110
     end
 
+    id = id or game.CurrentRun.Hero.ObjectId
+
+    local lockId = id
+
+    if id ~= 39999 then
+        local location = game.GetLocation({Id = id})
+        lockId = game.SpawnObstacle({ Name = "InvisibleTarget", LocationX = location.X, LocationY = location.Y })
+        screen.ZoomLockId = lockId
+    end
+
     if game.CurrentHubRoom and game.CurrentHubRoom.Name == "Hub_Main" then
-        game.thread(game.LockCamera,{Id = game.CurrentRun.Hero.ObjectId, OffsetX = -530, OffsetY = offsetY, Duration = 0.35})
+        game.thread(game.LockCamera,{Id = lockId, OffsetX = -530, OffsetY = offsetY, Duration = 0.35})
         game.AdjustZoom({ Fraction = 1.4, Duration = 0.35 })
         game.SetScale({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 1.7 })
     else
-        game.thread(game.LockCamera,{Id = game.CurrentRun.Hero.ObjectId, OffsetX = -265, OffsetY = offsetY, Duration = 0.35})
+        game.thread(game.LockCamera,{Id = lockId, OffsetX = -265, OffsetY = offsetY, Duration = 0.35})
         game.AdjustZoom({ Fraction = 2.8, Duration = 0.35 })
     end
 end
@@ -339,15 +385,29 @@ function screen_to_world(screen_angle)
     return math.atan2(y2,x2) -- y first in lua's atan2
 end
 
-function mod.StartHeroRotation()
+function mod.StartHeroRotation(id)
     local angle = 270
     local updateRate = 120
     local denom = 60*updateRate/360
+    id = id or game.CurrentRun.Hero.ObjectId
     while true do
         local step = config.preview_rpm/denom
         local angle_used = math.deg(world_to_screen(math.rad(angle)))
-        game.SetGoalAngle({Id = game.CurrentRun.Hero.ObjectId, Angle = angle_used})
+        game.SetGoalAngle({Id = id, Angle = angle_used})
         game.waitUnmodified(1/updateRate, _PLUGIN.guid .. "StartHeroRotation")
         angle = (angle + step)%360
     end
+end
+
+function mod.SwitchPlayer(screen, button)
+    local currentPlayer = (screen.dress_config_suffix == "" and 1) or 2
+    local newPlayer = (currentPlayer == 1 and 2) or 1
+    -- mod.ResetMenuZoom()
+    game.killTaggedThreads(_PLUGIN.guid .. "StartHeroRotation")
+    game.wait(0.1)
+    screen.dress_config_suffix = ((newPlayer == 2) and "2") or ""
+    game.thread(mod.StartHeroRotation, (newPlayer == 2 and 39999) or mod.Player1Id)
+    game.Destroy({Ids = {screen.ZoomLockId}})
+    mod.ApplyMenuZoom(screen, (newPlayer == 2 and 39999) or mod.Player1Id)
+    mod.DressSelectorReloadPage(screen)
 end

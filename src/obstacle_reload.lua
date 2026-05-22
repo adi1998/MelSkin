@@ -64,7 +64,7 @@ function mod.OpenDressSelectorFromObstacle(obstacle, args, user)
         game.thread(mod.MelinoeDressPresentationIn)
     end
 
-    mod.OpenDressSelector()
+    mod.OpenDressSelectorHorribleCoopHack()
 
     if obstacle.ObjectId == 566827 then
         game.SetAlpha({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 0, Duration = 0 })

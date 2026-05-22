@@ -150,6 +150,23 @@ mod.DressScreenData = {
                         },
                         Text = "{MR} Favorite All",
                         TextArgs = game.UIData.ContextualButtonFormatLeft,
+                    },
+                    SwitchPlayerButton =
+                    {
+                        Graphic = "ContextualActionButton",
+                        GroupName = "Combat_Menu_TraitTray",
+                        Alpha = 0,
+                        OffsetY = -420,
+                        OffsetX = -820,
+                        Data =
+                        {
+                            OnMouseOverFunctionName = "MouseOverContextualAction",
+                            OnMouseOffFunctionName = "MouseOffContextualAction",
+                            OnPressedFunctionName = _PLUGIN.guid .. "." .. "SwitchPlayer",
+                            ControlHotkeys = { "Reroll" },
+                        },
+                        Text = "{RR} Switch character",
+                        TextArgs = game.UIData.ContextualButtonFormatLeft,
                     }
                 }
             }
@@ -163,5 +180,5 @@ mod.DressCommandData = {
     Name = "Select Dress",
     Description = "Choose from all the dresses Arachne can give plus some more",
     Type = "Command",
-    Function = _PLUGIN.guid .. '.' .. "OpenDressSelector"
+    Function = _PLUGIN.guid .. "." .. "OpenDressSelectorHorribleCoopHack"
 }

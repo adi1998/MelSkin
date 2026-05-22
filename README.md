@@ -28,13 +28,13 @@ Use the Imgui menu (default toggle keybind: INSERT) or PonyMenu(new submenu in i
 Favorites are only available through the ingame menu.
 
 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-  <img src="images/PonyDressList.png" alt="PonyDressList" width="48%">
-  <img src="images/ImguiSubmenu.png" alt="ImguiSubmenu" width="48%">
+  <img src="images/PonyDressList.png" alt="PonyDressList" width="49.7%">
+  <img src="images/ImguiSubmenu.png" alt="ImguiSubmenu" width="49.7%">
 </div>
 <br>
 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-  <img src="images/PonyInv.png" alt="PonyInv" width="48%">
-  <img src="images/PonyInv.png" alt="PonyInv" width="48%">
+  <img src="images/PonyInv.png" alt="PonyInv" width="49.7%">
+  <img src="images/PonyInv.png" alt="PonyInv" width="49.7%">
 </div>
 
 ## Skins
@@ -68,6 +68,21 @@ Includes support for selecting a random preset on run start. `Custom` should be 
   <img src="images/colorslider/3.png" alt="3" width="49.7%">
   <img src="images/colorslider/4.png" alt="4" width="49.7%">
 </div>
+
+## Co-op Support
+
+The mod also supports the [Co-op mod](https://www.nexusmods.com/hades2/mods/125) by TheNormalnij. It'll only work if the coop mod is loaded through the Hell2Modding ASI loader. Having both Hell2Modding and an addititonal ASI loader will break both mods.
+
+The active player can be switched by using the Gift/Reroll button.
+
+ImGui menu is not supprted for applying co-op skins, either use PonyMenu or Arachne's silk stand in the Crossroads.
+
+![Co-op](images/coop.jpg)
+
+### Some known issues
+
+- Random skin can sometimes apply the same skin over both players.
+- Color selector skin cannot be different for both players.
 
 ## Contributing skins to this mod
 

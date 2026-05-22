@@ -38,6 +38,7 @@ config = chalk.auto 'config.lua'
 -- ^ this updates our `.cfg` file in the config folder!
 public.config = config -- so other mods can access our config
 
+
 local function on_ready()
     -- what to do when we are ready, but not re-do on reload.
     if config.enabled == false then return end
@@ -58,6 +59,9 @@ local function on_ready()
     import 'ready.lua'
     if not mod.DressData[config.dress] then
         config.dress = "None"
+    end
+    if not mod.DressData[config.dress2] then
+        config.dress2 = "Azure"
     end
 end
 

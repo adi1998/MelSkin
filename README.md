@@ -71,7 +71,7 @@ Includes support for selecting a random preset on run start. `Custom` should be 
 
 ## Co-op Support
 
-The mod also supports the [Co-op mod](https://www.nexusmods.com/hades2/mods/125) by TheNormalnij. It'll only work if the coop mod is loaded through the Hell2Modding ASI loader. Having both Hell2Modding and an addititonal ASI loader will break both mods.
+The mod also supports the [Co-op mod](https://www.nexusmods.com/hades2/mods/125) by TheNormalnij. It'll only work if the co-op mod is loaded through the Hell2Modding ASI loader and the game is launched modded from r2modman/tsmm. Having both Hell2Modding and an addititonal ASI loader will break both mods.
 
 The active player can be switched by using the Gift/Reroll button.
 

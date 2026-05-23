@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.17.0] - 2026-05-23
+
 ## [1.16.2] - 2026-05-03
 
 - Provoking the Fates compat, the provocation screen will now show custom portrait if available
@@ -152,7 +154,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.16.2...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.17.0...HEAD
+[1.17.0]: https://github.com/adi1998/MelSkin/compare/1.16.2...1.17.0
 [1.16.2]: https://github.com/adi1998/MelSkin/compare/1.16.1...1.16.2
 [1.16.1]: https://github.com/adi1998/MelSkin/compare/1.16.0...1.16.1
 [1.16.0]: https://github.com/adi1998/MelSkin/compare/1.15.2...1.16.0

@@ -74,6 +74,39 @@ mod.DressData = {
     {
         GrannyTexture = "Models/Melinoe/MelinoeTransform_Color",
         ChildGrannyTexture = "Models/Melinoe/YoungMelTransform_Color",
+        Portraits = {
+            Portraits_Melinoe_01 = true,
+            Portraits_Melinoe_Hesitant_01 = true,
+            Portraits_Melinoe_Casual_01 = true,
+            Portraits_Melinoe_Proud_01 = true,
+        },
+        PortraitOverlayModifacations = {
+            Portrait_Mel_Blink = "nil",
+            Portrait_Mel_Hesitant_Blink = "nil",
+            Portrait_Mel_Intense_Blink = "nil",
+            Portrait_Mel_Pleased_Blink = "nil",
+            Portrait_Mel_Vulnerable_Blink = "nil",
+            Portrait_Mel_LaurelGlow = {
+                Hue = 0.408,
+                VisualFx = { Name = "LaurelBurnIris", Hue = 0.408 },
+            },
+            Portrait_Mel_Hesitant_LaurelGlow = {
+                Hue = 0.408,
+                VisualFx = { Name = "LaurelBurnIris", Hue = 0.408 },
+            },
+            Portrait_Mel_Intense_LaurelGlow = {
+                Hue = 0.408,
+                VisualFx = { Name = "LaurelBurnIris", Hue = 0.408 },
+            },
+            Portrait_Mel_Pleased_LaurelGlow = {
+                Hue = 0.408,
+                VisualFx = { Name = "LaurelBurnIris", Hue = 0.408 },
+            },
+            Portrait_Mel_Vulnerable_LaurelGlow = {
+                Hue = 0.408,
+                VisualFx = { Name = "LaurelBurnIris", Hue = 0.408 },
+            },
+        },
         Color = {70, 206, 125, 255},
         LaurelCinderHue = 0.408,
     },

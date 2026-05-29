@@ -74,6 +74,16 @@ mod.DressData = {
     {
         GrannyTexture = "Models/Melinoe/MelinoeTransform_Color",
         ChildGrannyTexture = "Models/Melinoe/YoungMelTransform_Color",
+        Outline =
+        {
+            R = game.Color.Turquoise[1],
+            G = game.Color.Turquoise[2],
+            B = game.Color.Turquoise[3],
+            Opacity = 0.7,
+            Thickness = 3,
+            Threshold = 0.6,
+            FadeInDuration = 0.6,
+        },
         Color = {70, 206, 125, 255},
         LaurelCinderHue = 0.408,
     },
@@ -211,6 +221,7 @@ mod.DressData = {
             Thickness = 10,
             Threshold = 0.6,
         },
+        LaurelCinderHue = 0.408,
         Color = {25, 70, 70, 255},
     },
     None =

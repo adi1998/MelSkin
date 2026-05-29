@@ -44,8 +44,8 @@ Favorites are only available through the ingame menu.
 | ![Lavender](images/skins/Lavender.png) | ![Azure](images/skins/Azure.png) | ![Emerald](images/skins/Emerald.png) | ![Onyx](images/skins/Onyx.png) | ![Fuchsia](images/skins/Fuchsia.png) | 
 | __Gilded__ | __Moonlight__ | __Crimson__ | __DarkSide__ | __Alternate Time by burn (Updated by Aunuch)__ |
 | ![Gilded](images/skins/Gilded.png) | ![Moonlight](images/skins/Moonlight.png) | ![Crimson](images/skins/Crimson.png) | ![DarkSide](images/skins/Darkside.png) | ![Alternate Time](images/skins/Alternate%20Time.png) | 
-| __Murderrrrr by burn__ | __Chaos by jarlulsfark__ | | | |
-| ![Murderrrrr](images/skins/Murderrrrr.png) | ![Chaos](images/skins/Chaos.png) | | | |
+| __Murderrrrr by burn__ | __Chaos by jarlulsfark__ | __Visage by zerp__ | | |
+| ![Murderrrrr](images/skins/Murderrrrr.png) | ![Chaos](images/skins/Chaos.png) | ![Visage](images/skins/Visage.png) | | |
 
 ## Color selector
 

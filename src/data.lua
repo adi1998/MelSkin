@@ -165,6 +165,19 @@ mod.DressData = {
         },
         LaurelCinderHue = -0.24,
     },
+    Visage = {
+        GrannyTexture = "zerp-MelSkin/Visage",
+        Outline =
+        {
+            R = 25,
+            G = 200,
+            B = 160,
+            Opacity = 1,
+            Thickness = 10,
+            Threshold = 0.6,
+        },
+        Color = {70, 206, 125, 255},
+    },
     None =
     {
         GrannyTexture = "",
@@ -189,6 +202,7 @@ mod.DressDisplayOrder = {
     "Alternate Time",
     "Murderrrrr",
     "Chaos",
+    "Visage",
     "None",
     "Custom"
 }

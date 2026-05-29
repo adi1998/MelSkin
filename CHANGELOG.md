@@ -2,7 +2,11 @@
 
 ## [Unreleased]
 
+- Add Visage skin
+
 ## [1.17.0] - 2026-05-23
+
+- Add Co-op mod support 
 
 ## [1.16.2] - 2026-05-03
 

@@ -163,6 +163,29 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
     -- arm glow and laurel spawner setup
     local dress = mod.GetCurrentDress()
     mod.SetupExtraAnimations(dress)
+
+    if mod.DressData[dress] and mod.DressData[dress].Outline then
+        local outlineData = mod.DressData[dress].Outline
+        outlineData.Id = game.CurrentRun.Hero.ObjectId
+        game.AddOutline( outlineData )
+    else
+        game.RemoveOutline( { Id = game.CurrentRun.Hero.ObjectId } )
+    end
+end)
+
+modutil.mod.Path.Wrap("SetPlayerDarkside", function (base, flag)
+    game.RemoveOutline( { Id = game.CurrentRun.Hero.ObjectId } )
+    return base(flag)
+end)
+
+modutil.mod.Path.Wrap("SetPlayerUnDarkside", function (base, flag)
+    base(flag)
+    local dress = mod.GetCurrentDress()
+    if mod.DressData[dress] and mod.DressData[dress].Outline then
+        local outlineData = mod.DressData[dress].Outline
+        outlineData.Id = game.CurrentRun.Hero.ObjectId
+        game.AddOutline( outlineData )
+    end
 end)
 
 -- TODO: this is untested

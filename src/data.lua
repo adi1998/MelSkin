@@ -167,6 +167,41 @@ mod.DressData = {
     },
     Visage = {
         GrannyTexture = "zerp-MelSkin/Visage",
+        Portraits = mod.Portraits,
+        PortraitOverlayModifacations = {
+            Portrait_Mel_Body2_Wiggle1_In = "nil",
+            Portrait_Mel_Body1_Wiggle2_In = "nil",
+            Portrait_Mel_Blink = "nil",
+            Portrait_Mel_Hesitant_Blink = "nil",
+            Portrait_Mel_Intense_Blink = "nil",
+            Portrait_Mel_Pleased_Blink = "nil",
+            Portrait_Mel_Vulnerable_Blink = "nil",
+            Portrait_Mel_Wiggle_In = "nil",
+            Portrait_Mel_Hesitant_Wiggle_In = "nil",
+            Portrait_Mel_Intense_Wiggle_In = "nil",
+            Portrait_Mel_Pleased_Wiggle_In = "nil",
+            Portrait_Mel_Vulnerable_Wiggle_In = "nil",
+            Portrait_Mel_LaurelGlow = {
+                Hue = 0.408,
+                VisualFx = { Name = "LaurelBurnIris", Hue = 0.408 },
+            },
+            Portrait_Mel_Hesitant_LaurelGlow = {
+                Hue = 0.408,
+                VisualFx = { Name = "LaurelBurnIris", Hue = 0.408 },
+            },
+            Portrait_Mel_Intense_LaurelGlow = {
+                Hue = 0.408,
+                VisualFx = { Name = "LaurelBurnIris", Hue = 0.408 },
+            },
+            Portrait_Mel_Pleased_LaurelGlow = {
+                Hue = 0.408,
+                VisualFx = { Name = "LaurelBurnIris", Hue = 0.408 },
+            },
+            Portrait_Mel_Vulnerable_LaurelGlow = {
+                Hue = 0.408,
+                VisualFx = { Name = "LaurelBurnIris", Hue = 0.408 },
+            },
+        },
         Outline =
         {
             R = 25,
@@ -176,7 +211,7 @@ mod.DressData = {
             Thickness = 10,
             Threshold = 0.6,
         },
-        Color = {70, 206, 125, 255},
+        Color = {25, 70, 70, 255},
     },
     None =
     {

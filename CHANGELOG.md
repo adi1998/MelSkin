@@ -4,7 +4,6 @@
 
 - Add Visage skin
 - Add outline to Dark Side
-- Dev: Skins can now have a outline
 
 ## [1.17.0] - 2026-05-23
 

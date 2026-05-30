@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.18.0] - 2026-05-30
+
 - Add Visage skin
 - Add outline to Dark Side
 
@@ -159,7 +161,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.17.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.18.0...HEAD
+[1.18.0]: https://github.com/adi1998/MelSkin/compare/1.17.0...1.18.0
 [1.17.0]: https://github.com/adi1998/MelSkin/compare/1.16.2...1.17.0
 [1.16.2]: https://github.com/adi1998/MelSkin/compare/1.16.1...1.16.2
 [1.16.1]: https://github.com/adi1998/MelSkin/compare/1.16.0...1.16.1

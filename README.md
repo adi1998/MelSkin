@@ -87,11 +87,12 @@ ImGui menu is not supprted for applying co-op skins, either use PonyMenu or Arac
 ## Contributing skins to this mod
 
 If your familiar with Github open a PR with this template https://github.com/adi1998/MelSkin/pull/10
-If not you can send the texture assets here [Hades Modding Discord]https://discord.com/channels/667753182608359424/1424992429366444042
+If not you can send the texture assets here [Hades Modding Discord](https://discord.com/channels/667753182608359424/1424992429366444042)
 
 ## Adding skins to your own mod
 
 ~~Sample mod for adding a skin https://github.com/adi1998/MelSkin_Example~~
+
 Outdated, may or may not work.
 
 ## Contributors

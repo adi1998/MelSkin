@@ -85,7 +85,7 @@ mod.DressData = {
             FadeInDuration = 0.6,
         },
         Color = {70, 206, 125, 255},
-        LaurelCinderHue = 0.408,
+        LaurelCinderHue = 0.35,
     },
     ["Alternate Time"] =
     {

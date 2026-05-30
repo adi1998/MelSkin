@@ -178,6 +178,7 @@ mod.DressData = {
     Visage = {
         GrannyTexture = "zerp-MelSkin/Visage",
         Portraits = mod.Portraits,
+        BoonPortrait = true,
         PortraitOverlayModifacations = {
             Portrait_Mel_Body2_Wiggle1_In = "nil",
             Portrait_Mel_Body1_Wiggle2_In = "nil",

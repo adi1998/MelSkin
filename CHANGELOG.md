@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Adjust Visage boon portrait
+- Fix Custom skins not working after 1.18.0
+
 ## [1.18.0] - 2026-05-30
 
 - Add Visage skin

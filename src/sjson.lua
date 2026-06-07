@@ -165,6 +165,7 @@ local function modifyNewEntryOverlays(entry, modifications, anim_data_table, pre
 end
 
 sjson.hook(guiPortraitsVFXFile, function(data)
+    print(guiPortraitsVFXFile, "before", #data.Animations)
     local newdata = {}
     local name_data_map = {}
     for _, entry in ipairs(data.Animations) do
@@ -223,9 +224,11 @@ sjson.hook(guiPortraitsVFXFile, function(data)
     for _, entry in ipairs(newdata) do
         table.insert(data.Animations,entry)
     end
+    print(guiPortraitsVFXFile, "after", #data.Animations)
 end)
 
 sjson.hook(guiScreensVFXFile, function (data)
+    print(guiScreensVFXFile, "before", #data.Animations)
     for _, entry in ipairs(mod.BoonSelectAnims) do
         local origname = entry.Name
         for dress,dressData in pairs(mod.DressData) do
@@ -244,9 +247,11 @@ sjson.hook(guiScreensVFXFile, function (data)
             end
         end
     end
+    print(guiScreensVFXFile, "after", #data.Animations)
 end)
 
-sjson.hook(guiFile,function (data)
+sjson.hook(guiFile, function (data)
+    print(guiFile, "before", #data.Obstacles)
     local origname = mod.BoonSelectObstacle.Name
     for dress,dressData in pairs(mod.DressData) do
         if dressData.BoonPortrait then
@@ -257,6 +262,7 @@ sjson.hook(guiFile,function (data)
             table.insert(data.Obstacles,newentry)
         end
     end
+    print(guiFile, "after", #data.Obstacles)
 end)
 
 local function AddPreviewSjson()
@@ -292,6 +298,7 @@ AddPreviewSjson()
 local melinoeGeneralVfxFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\Melinoe_General_VFX.sjson")
 
 sjson.hook(melinoeGeneralVfxFile, function (data)
+    print(melinoeGeneralVfxFile, "before", #data.Animations)
     local new_data = {}
     local name_data_map = {}
     for _, entry in ipairs(data.Animations) do
@@ -394,12 +401,14 @@ sjson.hook(melinoeGeneralVfxFile, function (data)
     for _, value in ipairs(new_data) do
         table.insert(data.Animations, value)
     end
+    print(melinoeGeneralVfxFile, "after", #data.Animations)
     return data
 end)
 
 local melinoe1BaseVfxFile = rom.path.combine(rom.paths.Content(), "Game\\Animations\\Melinoe_1Base_VFX.sjson")
 
 sjson.hook(melinoe1BaseVfxFile, function (data)
+    print(melinoe1BaseVfxFile, "before", #data.Animations)
     local newdata = {}
     for _, entry in ipairs(data.Animations) do
         if entry.Name == "MelArmGlow" then
@@ -422,4 +431,5 @@ sjson.hook(melinoe1BaseVfxFile, function (data)
     for _, value in ipairs(newdata) do
         table.insert(data.Animations, value)
     end
+    print(melinoe1BaseVfxFile, "after", #data.Animations)
 end)

@@ -98,13 +98,13 @@ Outdated, may or may not work.
 
 ## Contributors
 
-- @burn on [Discord](https://discord.gg/bKvJTAJj), custom skins
-- @punishedmat on [Discord](https://discord.gg/bKvJTAJj), portrait replacements
+- @burn on [Discord](https://discord.gg/KuMbyrN), custom skins
+- @punishedmat on [Discord](https://discord.gg/KuMbyrN), portrait replacements
 - [@PonyWarrior](https://github.com/PonyWarrior/), PonyMenu
-- @Aunuch on [Discord](https://discord.gg/bKvJTAJj), Updated Alternate Time skin
+- @Aunuch on [Discord](https://discord.gg/KuMbyrN), Updated Alternate Time skin
 - [@enderclem0](https://github.com/Enderclem0/) for [CG3H](https://github.com/Enderclem0/CG3H)'s texture packing script
-- @jarlulsfark on [Discord](https://discord.gg/bKvJTAJj), Chaos custom skin and portraits
+- @jarlulsfark on [Discord](https://discord.gg/KuMbyrN), Chaos custom skin and portraits
 
 ## Issues
 
-Report any issues [here](https://github.com/adi1998/MelSkin/issues) or on [Discord](https://discord.gg/bKvJTAJj)
+Report any issues [here](https://github.com/adi1998/MelSkin/issues) or on [Discord](https://discord.gg/KuMbyrN)

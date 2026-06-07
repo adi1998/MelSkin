@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.18.1] - 2026-06-07
+
 - Adjust Visage boon portrait
 - Fix Custom skins not working after 1.18.0
 
@@ -164,7 +166,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.18.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.18.1...HEAD
+[1.18.1]: https://github.com/adi1998/MelSkin/compare/1.18.0...1.18.1
 [1.18.0]: https://github.com/adi1998/MelSkin/compare/1.17.0...1.18.0
 [1.17.0]: https://github.com/adi1998/MelSkin/compare/1.16.2...1.17.0
 [1.16.2]: https://github.com/adi1998/MelSkin/compare/1.16.1...1.16.2

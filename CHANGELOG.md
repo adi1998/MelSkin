@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.18.2] - 2026-07-09
+
 - Fix ghost Melinoe in ZJ portraits not fading away properly
 
 ## [1.18.1] - 2026-06-07
@@ -168,7 +170,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.18.1...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.18.2...HEAD
+[1.18.2]: https://github.com/adi1998/MelSkin/compare/1.18.1...1.18.2
 [1.18.1]: https://github.com/adi1998/MelSkin/compare/1.18.0...1.18.1
 [1.18.0]: https://github.com/adi1998/MelSkin/compare/1.17.0...1.18.0
 [1.17.0]: https://github.com/adi1998/MelSkin/compare/1.16.2...1.17.0

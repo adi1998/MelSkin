@@ -73,16 +73,6 @@ mod.BoonSelectObstacle =
     }
 }
 
-mod.ZagMelSubTemplate =
-{
-    Name = "",
-    InheritFrom = "Portrait_Base_01",
-    FilePath = "",
-    OffsetY = 32,
-    OffsetX = 0,
-    SortMode = "Id"
-}
-
 mod.ZagMelCombinedTemplate =
 {
     Name = _PLUGIN.guid .. "Mel",
@@ -92,11 +82,57 @@ mod.ZagMelCombinedTemplate =
     OffsetX = -185,
     Scale = 0.64,
     Alpha = 0.7,
-    SortMode = "Id",
     CreateAnimations = {
         { Name = "" }
     }
 }
+
+local zagIn = {
+    Name = "Portrait_Chronos_Wing1R",
+    DieWithOwner = true,
+    TransferSortScore = true,
+    SortMode = "Id",
+    LocationFromOwner = "Maintain",
+    FilePath = "Portraits\\Chronos\\Chronos\\WingPng1",
+    StartOffsetX = -20,
+    EndOffsetX = 0,
+    Duration = 0.15,
+    StartAlpha = 0,
+    EndAlpha = 1,
+    HoldLastFrame = false,
+    Scale = 1,
+    OffsetX = 0,
+    OffsetY = 32,
+    ChainTo = "Portrait_Chronos_Wing1RLoop",
+}
+
+local zagLoop = {
+    Name = "Portrait_Chronos_Wing1RLoop",
+    InheritFrom = "Portrait_Chronos_Wing1R",
+    Duration = 1,
+    Loop = true,
+    EaseIn = 0,
+    EaseOut = 1,
+    StartAlpha = 0.999,
+    StartOffsetX = 0.00001,
+    TransferFrameFromThis = true,
+}
+
+local zagExit = {
+    Name = "Portrait_Chronos_Wing1R_Out",
+    InheritFrom = "Portrait_Chronos_Wing1RLoop",
+    Loop = false,
+    PingPongShiftOverDuration = false,
+    TransferFrameToThis = true,
+    StartOffsetX = 0,
+    EndOffsetX = 20,
+    Duration = 0.15,
+    StartAlpha = 1,
+    EndAlpha = 0,
+    ChainTo = "null",
+}
+
+local portraitOrder = {"Name", "InheritFrom", "FilePath"}
 
 local uniqueMap = {}
 
@@ -196,35 +232,48 @@ sjson.hook(guiPortraitsVFXFile, function(data)
     for zagPortraitName, fileNames in pairs(mod.ZagMelMap) do
         for dress, dressData in pairs(mod.DressData) do
             if dressData.Portraits ~= nil and dressData.Portraits[fileNames[1]] ~= nil then
-                local newSubPortrait = game.DeepCopyTable(mod.ZagMelSubTemplate)
+                local newSubPortrait = game.DeepCopyTable(zagIn)
 
                 local newPortrait = game.DeepCopyTable(mod.ZagMelCombinedTemplate)
                 newPortrait.Name = dress .. zagPortraitName
                 newPortrait.FilePath = modPortraitPrefix .. dress .. "\\" .. fileNames[1]
-                newPortrait.CreateAnimations[1].Name = newPortrait.Name .. "SubPortrait"
+                newPortrait.CreateAnimations[1].Name = newPortrait.Name .. "SubPortraitIn"
 
                 newSubPortrait.Name = newPortrait.CreateAnimations[1].Name
                 newSubPortrait.FilePath = modPortraitPrefix .. fileNames[2]
+                newSubPortrait.ChainTo = newPortrait.Name .. "SubPortraitLoop"
+
+                local newSubPortraitLoop = game.DeepCopyTable(zagLoop)
+                newSubPortraitLoop.Name = newPortrait.Name .. "SubPortraitLoop"
+                newSubPortraitLoop.InheritFrom = newPortrait.Name .. "SubPortraitIn"
 
                 table.insert(newdata, newSubPortrait)
+                table.insert(newdata, newSubPortraitLoop)
                 table.insert(newdata, newPortrait)
-                local newSubPortraitExit = game.DeepCopyTable(newSubPortrait)
-                newSubPortraitExit.InheritFrom = newSubPortraitExit.InheritFrom .. "_Exit"
-                newSubPortraitExit.Name = newSubPortraitExit.Name .. "_Exit"
+
+                local newSubPortraitExit = game.DeepCopyTable(zagExit)
+                newSubPortraitExit.InheritFrom = newSubPortraitLoop.Name
+                newSubPortraitExit.Name = newPortrait.Name .. "SubPortraitOut"
 
                 local newPortraitExit = game.DeepCopyTable(newPortrait)
                 newPortraitExit.InheritFrom = newPortraitExit.InheritFrom .. "_Exit"
                 newPortraitExit.Name = newPortraitExit.Name .. "_Exit"
-                newPortraitExit.CreateAnimations[1].Name = newSubPortraitExit.Name
+                newPortraitExit.CreateAnimations[1] = {Name = newSubPortraitExit.Name}
+                newPortraitExit.Alpha = nil
+                newPortraitExit.StartAlpha = 0.7
+
+                newPortraitExit.CreateAnimations = sjson.to_array(newPortraitExit.CreateAnimations)
+
                 table.insert(newdata, newSubPortraitExit)
                 table.insert(newdata, newPortraitExit)
             end
         end
     end
     for _, entry in ipairs(newdata) do
-        table.insert(data.Animations,entry)
+        table.insert(data.Animations, sjson.to_object(entry, portraitOrder))
     end
     print(guiPortraitsVFXFile, "after", #data.Animations)
+    return data
 end)
 
 sjson.hook(guiScreensVFXFile, function (data)
@@ -248,6 +297,7 @@ sjson.hook(guiScreensVFXFile, function (data)
         end
     end
     print(guiScreensVFXFile, "after", #data.Animations)
+    return data
 end)
 
 sjson.hook(guiFile, function (data)
@@ -263,6 +313,7 @@ sjson.hook(guiFile, function (data)
         end
     end
     print(guiFile, "after", #data.Obstacles)
+    return data
 end)
 
 local function AddPreviewSjson()
@@ -309,18 +360,6 @@ sjson.hook(melinoeGeneralVfxFile, function (data)
 
     for dress, dressData in pairs(mod.DressData) do
         local laurelCinderSpawner = game.DeepCopyTable(name_data_map["LaurelCindersSpawner"])
-        local laurelCinders = game.DeepCopyTable(name_data_map["LaurelCinders"])
-        local laurelBurnA = game.DeepCopyTable(name_data_map["LaurelBurnA"])
-        local laurelBurnB = game.DeepCopyTable(name_data_map["LaurelBurnB"])
-        local laurelBurnC = game.DeepCopyTable(name_data_map["LaurelBurnC"])
-        local laurelBurnD = game.DeepCopyTable(name_data_map["LaurelBurnD"])
-
-        local laurelCinderSpawnerAmbient = game.DeepCopyTable(name_data_map["LaurelCindersSpawnerAmbient"])
-        local laurelCindersAmbient = game.DeepCopyTable(name_data_map["LaurelCindersAmbient"])
-        local laurelBurnAAmbient = game.DeepCopyTable(name_data_map["LaurelBurnA_Ambient"])
-        local laurelBurnBAmbient = game.DeepCopyTable(name_data_map["LaurelBurnB_Ambient"])
-        local laurelBurnCAmbient = game.DeepCopyTable(name_data_map["LaurelBurnC_Ambient"])
-        local laurelBurnDAmbient = game.DeepCopyTable(name_data_map["LaurelBurnD_Ambient"])
 
         -- local melArmGlow = game.DeepCopyTable(name_data_map["MelArmGlow"])
 
@@ -330,6 +369,19 @@ sjson.hook(melinoeGeneralVfxFile, function (data)
             }
         end
         if dressData.LaurelCinderHue then
+
+            local laurelCinders = game.DeepCopyTable(name_data_map["LaurelCinders"])
+            local laurelBurnA = game.DeepCopyTable(name_data_map["LaurelBurnA"])
+            local laurelBurnB = game.DeepCopyTable(name_data_map["LaurelBurnB"])
+            local laurelBurnC = game.DeepCopyTable(name_data_map["LaurelBurnC"])
+            local laurelBurnD = game.DeepCopyTable(name_data_map["LaurelBurnD"])
+
+            local laurelCinderSpawnerAmbient = game.DeepCopyTable(name_data_map["LaurelCindersSpawnerAmbient"])
+            local laurelCindersAmbient = game.DeepCopyTable(name_data_map["LaurelCindersAmbient"])
+            local laurelBurnAAmbient = game.DeepCopyTable(name_data_map["LaurelBurnA_Ambient"])
+            local laurelBurnBAmbient = game.DeepCopyTable(name_data_map["LaurelBurnB_Ambient"])
+            local laurelBurnCAmbient = game.DeepCopyTable(name_data_map["LaurelBurnC_Ambient"])
+            local laurelBurnDAmbient = game.DeepCopyTable(name_data_map["LaurelBurnD_Ambient"])
 
             laurelBurnA.Hue = dressData.LaurelCinderHue
             laurelBurnA.Name = dress .. laurelBurnA.Name
@@ -432,4 +484,5 @@ sjson.hook(melinoe1BaseVfxFile, function (data)
         table.insert(data.Animations, value)
     end
     print(melinoe1BaseVfxFile, "after", #data.Animations)
+    return data
 end)

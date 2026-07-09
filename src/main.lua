@@ -85,7 +85,7 @@ end
 
 local function on_ready_late()
     if config.enabled == false then return end
-
+    import "ready_late.lua"
     import "ponylogic_late.lua"
     mod.PopulatePonyMenuData()
 end

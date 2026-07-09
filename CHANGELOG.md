@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Fix ghost Melinoe in ZJ portraits not fading away properly
+
 ## [1.18.1] - 2026-06-07
 
 - Adjust Visage boon portrait

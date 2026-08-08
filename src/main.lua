@@ -74,22 +74,17 @@ local function on_reload()
     import 'presets_reload.lua'
     import 'obstacle_reload.lua'
 
-    import 'imgui.lua'
-
     if config.debug_reload == false then return end
 
     import 'ponydata.lua'
     import 'data.lua'
     import 'setupdata.lua'
-
-    ModUtil.Table.Merge(game.ScreenData,mod.DressScreenData)
+    import "ponylogic_late.lua"
 end
 
 local function on_ready_late()
     if config.enabled == false then return end
     import "ready_late.lua"
-    import "ponylogic_late.lua"
-    mod.PopulatePonyMenuData()
 end
 
 local function on_reload_late()

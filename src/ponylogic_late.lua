@@ -5,3 +5,5 @@ function mod.PopulatePonyMenuData()
     end
     ModUtil.Table.Merge(game.ScreenData, mod.DressScreenData)
 end
+
+mod.PopulatePonyMenuData()

@@ -11,13 +11,16 @@ websiteUrl = "https://github.com/adi1998/MelSkin"
 containsNsfwContent = false
 
 [package.dependencies]
-Hell2Modding-Hell2Modding = "1.0.98"
+Hell2Modding-Hell2Modding = "1.0.108"
 LuaENVY-ENVY = "1.2.0"
 SGG_Modding-Chalk = "2.1.1"
 SGG_Modding-ReLoad = "1.0.2"
 SGG_Modding-SJSON = "1.0.0"
 SGG_Modding-ModUtil = "4.0.1"
 zerp-MelSkinHelper = "0.2.0"
+
+[package.rom_soft_deps]
+PonyWarrior-PonyMenu = "0.12.2"
 
 [build]
 icon = "./icon.png"

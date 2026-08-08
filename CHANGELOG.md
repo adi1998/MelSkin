@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 - Performance improvements for custom dress menu
+- Add soft dependency for PonyMenu
 
 ## [1.18.2] - 2026-07-09
 

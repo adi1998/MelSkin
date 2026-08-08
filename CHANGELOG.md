@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Performance improvements for custom dress menu
+
 ## [1.18.2] - 2026-07-09
 
 - Fix ghost Melinoe in ZJ portraits not fading away properly

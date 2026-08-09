@@ -57,6 +57,7 @@ local function on_ready()
     import 'sjson.lua'
     import 'obstacle.lua'
     import 'ready.lua'
+    import "ponylogic_late.lua"
     if not mod.DressData[config.dress] then
         config.dress = "None"
     end
@@ -79,7 +80,6 @@ local function on_reload()
     import 'ponydata.lua'
     import 'data.lua'
     import 'setupdata.lua'
-    import "ponylogic_late.lua"
 end
 
 local function on_ready_late()

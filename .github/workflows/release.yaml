@@ -41,10 +41,9 @@ jobs:
           lfs: true
 
       - name: Rotate unreleased section in changelog
-        uses: baynezy/ChangeLogger.Action@6e3ad430f08e13698bb01027a13ba4349b0143cc
+        uses: thomaseizinger/keep-a-changelog-new-release@77ac767b2f7f6edf2ee72ab3364ed26667086f96
         with:
           tag: ${{ inputs.tag }}
-          log-path: ${{ env.changelog }}
 
       - name: Rotate version in Thunderstore CLI config
         shell: pwsh

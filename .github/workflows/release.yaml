@@ -20,6 +20,7 @@ env:
   thunderstoreconfig: thunderstore.toml
   build-dir: build
   artifact-content-type: application/zip
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
   release:
@@ -35,14 +36,15 @@ jobs:
           }
 
       - name: Checkout files
-        uses: actions/checkout@1d96c772d19495a3b5c517cd2bc0cb401ea0529f
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           lfs: true
 
       - name: Rotate unreleased section in changelog
-        uses: thomaseizinger/keep-a-changelog-new-release@77ac767b2f7f6edf2ee72ab3364ed26667086f96
+        uses: baynezy/ChangeLogger.Action@6e3ad430f08e13698bb01027a13ba4349b0143cc
         with:
           tag: ${{ inputs.tag }}
+          log-path: ${{ env.changelog }}
 
       - name: Rotate version in Thunderstore CLI config
         shell: pwsh
@@ -58,8 +60,6 @@ jobs:
         run: |
           gh release download 0.3.3-hades2 --repo adi1998/thunderstore-cli --pattern "*win-x64.zip"
           Expand-Archive tcli-0.3.3-hades2-win-x64.zip -DestinationPath ./
-          cat "$env:GITHUB_PATH"
-          echo "$env:GITHUB_PATH"
           echo "$PWD/tcli-0.3.3-hades2-win-x64" >> "$env:GITHUB_PATH"
 
       - name: Install pip packages
@@ -79,7 +79,7 @@ jobs:
           echo "artifact-path=${{ env.build-dir }}/$artifact" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Upload artifact to workflow
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
         with:
           name: ${{ env.artifact-name }}
           path: ${{ env.artifact-path }}
@@ -104,24 +104,15 @@ jobs:
           git tag ${{ inputs.tag }} -a -m "Release ${{ inputs.tag }}"
           git push origin HEAD:${{ github.ref_name }} --tags
 
-      - name: Create release
-        id: release
+      - name: Create release and upload artifact
         if: ${{ !inputs.is-dry-run }}
-        uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e
-        with:
-          release_name: ${{ inputs.tag }}
-          tag_name: ${{ inputs.tag }}
-          commitish: ${{ github.ref_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload artifact to release
-        if: ${{ !inputs.is-dry-run }}
-        uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5
-        with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_name: ${{ env.artifact-name }}
-          asset_path: ${{ env.artifact-path }}
-          asset_content_type: ${{ env.artifact-content-type }}
+        run: |
+          gh release create \
+            '${{ inputs.tag }}' \
+            '${{ env.artifact-path }}' \
+            --title '${{ inputs.tag }}' \
+            --repo '${{ github.repository }}' \
+            --target '${{ github.ref_name }}' \
+            --verify-tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

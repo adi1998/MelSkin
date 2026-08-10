@@ -41,7 +41,7 @@ jobs:
           lfs: true
 
       - name: Rotate unreleased section in changelog
-        uses: thomaseizinger/keep-a-changelog-new-release@77ac767b2f7f6edf2ee72ab3364ed26667086f96
+        uses: thomaseizinger/keep-a-changelog-new-release@5dc66a95ffb439b2eb040c08002bc3a7a46d88e3
         with:
           tag: ${{ inputs.tag }}
 

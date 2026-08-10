@@ -54,12 +54,13 @@ jobs:
       - name: Install Thunderstore CLI
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: pwsh
         run: |
-          gh release download 0.3.3-hades2 \
-            --repo adi1998/thunderstore-cli \
-            --pattern "*linux-x64.tar.gz"
-          tar xvf tcli-0.3.3-hades2-linux-x64.tar.gz
-          echo "$PWD/tcli-0.3.3-hades2-linux-x64" >> "$GITHUB_PATH"
+          gh release download 0.3.3-hades2 --repo adi1998/thunderstore-cli --pattern "*win-x64.zip"
+          Expand-Archive tcli-0.3.3-hades2-win-x64.zip -DestinationPath ./
+          cat "$GITHUB_PATH"
+          echo "$GITHUB_PATH"
+          echo "$PWD/tcli-0.3.3-hades2-win-x64" >> "$GITHUB_PATH"
 
       - name: Install pip packages
         shell: pwsh

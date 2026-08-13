@@ -1,7 +1,21 @@
 ---@meta _
 ---@diagnostic disable
 
-local previousConfig = game.DeepCopyTable(config)
+local previousConfig = {
+    dress = nil,
+    random_each_run = nil,
+    hue_shift = 0,
+    dresscolor = {
+        r = 0,
+        g = 0,
+        b = 0,
+    },
+    haircolor = {
+        r = 0,
+        g = 0,
+        b = 0,
+    }
+}
 
 local r, g, b = 202/255, 105/255, 28/255
 local h, s, v = rom.ImGui.ColorConvertRGBtoHSV(r, g, b)
@@ -46,83 +60,88 @@ function drawMenu()
     end
 
     rom.ImGui.Text("Select Dress")
-    if rom.ImGui.BeginCombo("###dress", previousConfig.dress) then
+    if rom.ImGui.BeginCombo("###dress", config.dress) then
         for _, dressName in ipairs(mod.DressDisplayOrder) do
-            if rom.ImGui.Selectable(dressName, (dressName == previousConfig.dress)) then
+            if rom.ImGui.Selectable(dressName, (dressName == config.dress)) then
                 if dressName ~= previousConfig.dress then
                     local  dressGrannyTexture = mod.GetDressGrannyTexture(dressName)
                     config.dress = dressName
                     previousConfig.dress = dressName
                     config.random_each_run = false
-                    previousConfig.random_each_run = false
                     game.SetupCostume()
                     game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
-                    rom.ImGui.SetItemDefaultFocus()
                 end
+                rom.ImGui.SetItemDefaultFocus()
             end
         end
         rom.ImGui.EndCombo()
     end
     
-    if previousConfig.dress == "Custom" then
+    if config.dress == "Custom" then
 
-        local value, checked = rom.ImGui.Checkbox("Dress", previousConfig.custom_dress)
+        local value, checked = rom.ImGui.Checkbox("Dress", config.custom_dress)
         if checked and value ~= previousConfig.custom_dress then
             config.custom_dress = value
             previousConfig.custom_dress = value
         end
 
-        if previousConfig.custom_dress then
+        
+
+        if config.custom_dress then
             rom.ImGui.SameLine()
-            local value, checked = rom.ImGui.Checkbox("Color", previousConfig.custom_dress_color)
-            if checked then
+            local value, checked = rom.ImGui.Checkbox("Color", config.custom_dress_color)
+            if checked and value ~= previousConfig.custom_dress_color then
                 config.custom_dress_color = value
                 previousConfig.custom_dress_color = value
             end
         end
 
         -- rom.ImGui.Separator()
-        if previousConfig.custom_dress_color and previousConfig.custom_dress then
-            rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBg , previousConfig.dresscolor.r/255, previousConfig.dresscolor.g/255, previousConfig.dresscolor.b/255, 1)
+        if config.custom_dress_color and config.custom_dress then
+            rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBg , config.dresscolor.r/255, config.dresscolor.g/255, config.dresscolor.b/255, 1)
             rom.ImGui.InputText("###dresspreview", "", 1)
             rom.ImGui.PopStyleColor(1)
 
             rom.ImGui.SameLine()
 
-            local value, checked = rom.ImGui.Checkbox("Bright", previousConfig.bright_dress)
+            local value, checked = rom.ImGui.Checkbox("Bright", config.bright_dress)
             if checked and value ~= previousConfig.bright_dress then
                 config.bright_dress = value
                 previousConfig.bright_dress = value
             end
 
-            value, selected = rom.ImGui.SliderInt("###R1", previousConfig.dresscolor.r, 0, 255, '%d%')
+            value, selected = rom.ImGui.SliderInt("###R1", config.dresscolor.r, 0, 255, '%d%')
             if selected and value ~= previousConfig.dresscolor.r then
-                -- config.dresscolor.r = value
+                config.dresscolor.r = value
                 previousConfig.dresscolor.r = value
             end
             rom.ImGui.SameLine(); rom.ImGui.Text("R")
 
-            value, selected = rom.ImGui.SliderInt("###G1", previousConfig.dresscolor.g, 0, 255, '%d%')
+            value, selected = rom.ImGui.SliderInt("###G1", config.dresscolor.g, 0, 255, '%d%')
             if selected and value ~= previousConfig.dresscolor.g then
-                -- config.dresscolor.g = value
+                config.dresscolor.g = value
                 previousConfig.dresscolor.g = value
             end
             rom.ImGui.SameLine(); rom.ImGui.Text("G")
 
-            value, selected = rom.ImGui.SliderInt("###B1", previousConfig.dresscolor.b, 0, 255, '%d%')
+            value, selected = rom.ImGui.SliderInt("###B1", config.dresscolor.b, 0, 255, '%d%')
             if selected and value ~= previousConfig.dresscolor.b then
-                -- config.dresscolor.b = value
+                config.dresscolor.b = value
                 previousConfig.dresscolor.b = value
             end
             rom.ImGui.SameLine(); rom.ImGui.Text("B")
         end
     
-        if not previousConfig.custom_dress_color and previousConfig.custom_dress then
-            if rom.ImGui.BeginCombo("###cdress", previousConfig.custom_dress_base) then
+        if not config.custom_dress_color and config.custom_dress then
+            if rom.ImGui.BeginCombo("###cdress", config.custom_dress_base) then
                 for _, dressName in ipairs(mod.CustomDressDisplayOrder) do
-                    if rom.ImGui.Selectable(dressName, (dressName == previousConfig.custom_dress_base)) then
-                        config.custom_dress_base = dressName
-                        previousConfig.custom_dress_base = dressName
+                    if rom.ImGui.Selectable(dressName, (dressName == config.custom_dress_base)) then
+                        if dressName ~= previousConfig.custom_dress_base then
+                            -- mod.ReloadCustomTexture()
+                            -- game.SetupCostume()
+                            config.custom_dress_base = dressName
+                            previousConfig.custom_dress_base = dressName
+                        end
                         rom.ImGui.SetItemDefaultFocus()
                     end
                 end
@@ -130,76 +149,67 @@ function drawMenu()
             end
         end
 
-        local value, checked = rom.ImGui.Checkbox("Hair", previousConfig.custom_hair_color)
-        if checked then
+        local value, checked = rom.ImGui.Checkbox("Hair", config.custom_hair_color)
+        if checked and value ~= previousConfig.custom_hair_color then
             config.custom_hair_color = value
             previousConfig.custom_hair_color = value
         end
-        if previousConfig.custom_hair_color then
-            rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBg , previousConfig.haircolor.r/255, previousConfig.haircolor.g/255, previousConfig.haircolor.b/255, 1)
+        if config.custom_hair_color then
+            rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBg , config.haircolor.r/255, config.haircolor.g/255, config.haircolor.b/255, 1)
             rom.ImGui.InputText("###hairpreview", "", 1)
             rom.ImGui.PopStyleColor(1)
 
-            value, selected = rom.ImGui.SliderInt("###R2", previousConfig.haircolor.r, 0, 255, '%d%')
+            value, selected = rom.ImGui.SliderInt("###R2", config.haircolor.r, 0, 255, '%d%')
             if selected and value ~= previousConfig.haircolor.r then
-                -- config.haircolor.r = value
+                config.haircolor.r = value
                 previousConfig.haircolor.r = value
             end
             rom.ImGui.SameLine(); rom.ImGui.Text("R")
 
-            value, selected = rom.ImGui.SliderInt("###G2", previousConfig.haircolor.g, 0, 255, '%d%')
+            value, selected = rom.ImGui.SliderInt("###G2", config.haircolor.g, 0, 255, '%d%')
             if selected and value ~= previousConfig.haircolor.g then
-                -- config.haircolor.g = value
+                config.haircolor.g = value
                 previousConfig.haircolor.g = value
             end
             rom.ImGui.SameLine(); rom.ImGui.Text("G")
 
-            value, selected = rom.ImGui.SliderInt("###B2", previousConfig.haircolor.b, 0, 255, '%d%')
+            value, selected = rom.ImGui.SliderInt("###B2", config.haircolor.b, 0, 255, '%d%')
             if selected and value ~= previousConfig.haircolor.b then
-                -- config.haircolor.b = value
+                config.haircolor.b = value
                 previousConfig.haircolor.b = value
             end
             rom.ImGui.SameLine(); rom.ImGui.Text("B")
         end
         
-        local value, checked = rom.ImGui.Checkbox("Ghost Arm", previousConfig.custom_arm_color)
-        if checked then
+        local value, checked = rom.ImGui.Checkbox("Ghost Arm", config.custom_arm_color)
+        if checked and value ~= previousConfig.custom_arm_color then
             config.custom_arm_color = value
             previousConfig.custom_arm_color = value
         end
         
-        if previousConfig.custom_arm_color then
-            local text_shifted = (text_hsv[1] + previousConfig.arm_hue/360) % 1
+        if config.custom_arm_color then
+            local text_shifted = (text_hsv[1] + config.arm_hue/360) % 1
             local r,g,b = rom.ImGui.ColorConvertHSVtoRGB(text_shifted,text_hsv[2],text_hsv[3])
             rom.ImGui.PushStyleColor(rom.ImGuiCol.Text, r, g, b, 1 )
 
-            local back_shifted = (back_hsv[1] + previousConfig.arm_hue/360) % 1
+            local back_shifted = (back_hsv[1] + config.arm_hue/360) % 1
             r,g,b = rom.ImGui.ColorConvertHSVtoRGB(back_shifted,back_hsv[2],back_hsv[3])
             rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBg , r, g, b, 1)
             rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBgActive , r, g, b, 1)
             rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBgHovered , r, g, b, 1)
 
-            value, selected = rom.ImGui.SliderInt("###armhue", previousConfig.arm_hue, 0, 360, '%d%')
+            value, selected = rom.ImGui.SliderInt("###armhue", config.arm_hue, 0, 360, '%d%')
             if selected and value ~= previousConfig.arm_hue then
-                -- config.arm_hue = value
+                config.arm_hue = value
                 previousConfig.arm_hue = value
             end
             rom.ImGui.PopStyleColor(4)
             rom.ImGui.SameLine(); rom.ImGui.Text("Hue")
         end
 
-        if previousConfig.custom_arm_color or previousConfig.custom_dress or previousConfig.custom_hair_color then
+        if config.custom_arm_color or config.custom_dress or config.custom_hair_color then
             local clicked = rom.ImGui.Button("Apply")
             if clicked then
-                config.haircolor.r = previousConfig.haircolor.r
-                config.haircolor.g = previousConfig.haircolor.g
-                config.haircolor.b = previousConfig.haircolor.b
-
-                config.dresscolor.r = previousConfig.dresscolor.r
-                config.dresscolor.g = previousConfig.dresscolor.g
-                config.dresscolor.b = previousConfig.dresscolor.b
-
-                config.arm_hue = previousConfig.arm_hue
                 game.thread(mod.ReloadCustomTexture, cdress)
                 SavePreset(true)
                 game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
@@ -223,11 +233,13 @@ function drawMenu()
                 end
             end
 
-            if rom.ImGui.BeginCombo("###preset list", previousConfig.current_preset) then
+            if rom.ImGui.BeginCombo("###preset list", config.current_preset) then
                 for presetName, preset in pairs(mod.PresetTable) do
-                    if presetName ~= "LastApplied" and rom.ImGui.Selectable(presetName, (presetName == previousConfig.current_preset)) then
-                        config.current_preset = presetName
-                        previousConfig.current_preset = presetName
+                    if presetName ~= "LastApplied" and rom.ImGui.Selectable(presetName, (presetName == config.current_preset)) then
+                        if preset.Name ~= previousConfig.current_preset then
+                            config.current_preset = presetName
+                            previousConfig.current_preset = presetName
+                        end
                         rom.ImGui.SetItemDefaultFocus()
                     end
                 end
@@ -239,16 +251,9 @@ function drawMenu()
             local clicked = rom.ImGui.Button("Load")
             if clicked then
                 LoadPreset()
-                previousConfig.haircolor.r = config.haircolor.r
-                previousConfig.haircolor.g = config.haircolor.g
-                previousConfig.haircolor.b = config.haircolor.b
-                previousConfig.dresscolor.r = config.dresscolor.r
-                previousConfig.dresscolor.g = config.dresscolor.g
-                previousConfig.dresscolor.b = config.dresscolor.b
-                previousConfig.arm_hue = config.arm_hue
             end
 
-            if previousConfig.current_preset ~= "Default" then
+            if config.current_preset ~= "Default" then
                 rom.ImGui.SameLine()
                 local clicked = rom.ImGui.Button("Delete")
                 if clicked then
@@ -262,7 +267,7 @@ function drawMenu()
 
     rom.ImGui.Separator()
 
-    local value, checked = rom.ImGui.Checkbox("Random Dress Each Run", previousConfig.random_each_run)
+    local value, checked = rom.ImGui.Checkbox("Random Dress Each Run", config.random_each_run)
     if checked then
         config.random_each_run = value
         previousConfig.random_each_run = value
@@ -271,8 +276,8 @@ function drawMenu()
     end
 
     local selected
-    value, selected = rom.ImGui.SliderInt("###rpm", previousConfig.preview_rpm, 0, 200, '%d%')
-    if selected then
+    value, selected = rom.ImGui.SliderInt("###rpm", config.preview_rpm, 0, 200, '%d%')
+    if selected and value ~= previousConfig.preview_rpm then
         config.preview_rpm = value
         previousConfig.preview_rpm = value
     end

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.18.3] - 2026-08-13
+
 - Performance improvements for custom dress menu
 - Add soft dependency for PonyMenu
 
@@ -21,7 +23,7 @@
 
 ## [1.17.0] - 2026-05-23
 
-- Add Co-op mod support 
+- Add Co-op mod support
 
 ## [1.16.2] - 2026-05-03
 
@@ -173,7 +175,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.18.2...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.18.3...HEAD
+[1.18.3]: https://github.com/adi1998/MelSkin/compare/1.18.2...1.18.3
 [1.18.2]: https://github.com/adi1998/MelSkin/compare/1.18.1...1.18.2
 [1.18.1]: https://github.com/adi1998/MelSkin/compare/1.18.0...1.18.1
 [1.18.0]: https://github.com/adi1998/MelSkin/compare/1.17.0...1.18.0

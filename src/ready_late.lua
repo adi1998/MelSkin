@@ -1,12 +1,9 @@
 function mod.SetAnimationWrap(base,args)
     local origname = args.Name
-    print("orig", origname)
     local origfilename = mod.PortraitNameFileMap[origname]
     if origfilename ~= nil then
         local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
-        -- print("SetAnimation", origname, newname)
         args.Name = newname
-        print("new", args.Name)
         return base(args)
     end
 
@@ -20,7 +17,6 @@ function mod.SetAnimationWrap(base,args)
         end
         local newname = prefix .. origname
         args.Name = newname
-        print("new", args.Name)
         return base(args)
     end
 
@@ -32,15 +28,9 @@ function mod.SetAnimationWrap(base,args)
         end
         local newname = dressdata.TyphonRivalsPortraitMap[origname]
         args.Name = newname or args.Name
-        print("new", args.Name)
         return base(args)
     end
-    print("new", args.Name)
     return base(args)
-end
-
-function mod.SetAnimationWrap2(base,args)
-    return mod.SetAnimationWrap(base,args)
 end
 
 modutil.mod.Path.Context.Wrap.Static("PlayTextLines", function (source, textLines, args)

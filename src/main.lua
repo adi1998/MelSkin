@@ -88,6 +88,22 @@ local function on_ready()
     if config.enabled == false then return end
     mod = modutil.mod.Mod.Register(_PLUGIN.guid)
 
+    function mod.dump(o, depth)
+        depth = depth or 0
+        if type(o) == 'table' then
+            local s = "\n" .. string.rep("\t", depth) .. '{\n'
+            for k,v in pairs(o) do
+                if type(k) ~= 'number' then k = '"'..k..'"' end
+                s = s .. string.rep("\t",(depth+1)) .. '['..k..'] = ' .. mod.dump(v, depth + 1) .. ',\n'
+            end
+            return s .. string.rep("\t", depth) .. '}'
+        elseif type(o) == "string" then
+            return "\"" .. o .. "\""
+        else
+            return tostring(o)
+        end
+    end
+
     import 'presets.lua'
     import 'presets_reload.lua'
     import 'imgui.lua'

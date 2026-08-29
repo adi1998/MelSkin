@@ -4,6 +4,8 @@
 
 - Stretch background for non 16:9 aspect ratio displays
 
+## [1.18.4] - 2026-08-13
+
 ## [1.18.3] - 2026-08-13
 
 - Performance improvements for custom dress menu
@@ -177,7 +179,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.18.3...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.18.4...HEAD
+[1.18.4]: https://github.com/adi1998/MelSkin/compare/1.18.3...1.18.4
 [1.18.3]: https://github.com/adi1998/MelSkin/compare/1.18.2...1.18.3
 [1.18.2]: https://github.com/adi1998/MelSkin/compare/1.18.1...1.18.2
 [1.18.1]: https://github.com/adi1998/MelSkin/compare/1.18.0...1.18.1

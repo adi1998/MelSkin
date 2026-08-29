@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Stretch background for non 16:9 aspect ratio displays
+
 ## [1.18.3] - 2026-08-13
 
 - Performance improvements for custom dress menu

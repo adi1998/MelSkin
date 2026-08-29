@@ -10,15 +10,6 @@ mod.DressScreenData = {
             DefaultGroup = "Combat_Menu_TraitTray_Backing",
             UseNativeScreenCenter = true,
 
-            BackgroundTint =
-            {
-                Graphic = "",
-                GroupName = "Combat_Menu_TraitTray_Backing",
-                Scale = 10,
-                X = game.ScreenCenterX,
-                Y = game.ScreenCenterY,
-            },
-
             Background =
             {
                 Graphic = "MelSkin_Box_Preview",

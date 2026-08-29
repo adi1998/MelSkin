@@ -14,6 +14,8 @@ function mod.OpenDressSelector()
         return
     end
     local screen = game.DeepCopyTable(game.ScreenData.DressSelector)
+    screen.ComponentData.Background.ScaleX = game.ScreenScaleX
+    screen.ComponentData.Background.ScaleY = game.ScreenScaleY
     screen.Amount = 0
     screen.FirstPage = 0
     screen.LastPage = 0
@@ -70,11 +72,7 @@ function mod.OpenDressSelector()
         game.UseableOn({ Id = components.SwitchPlayerButton.Id })
         game.ModifyTextBox({Id = components.Background.Id, Text = "Select Dress - Player " .. currentPlayer})
     end
-
-    game.SetColor({ Id = components.BackgroundTint.Id, Color = game.Color.Black })
-    game.SetAlpha({ Id = components.BackgroundTint.Id, Fraction = 0.0, Duration = 0 })
-    game.SetAlpha({ Id = components.BackgroundTint.Id, Fraction = 0.9, Duration = 0.3 })
-    game.wait(0.3)
+    game.wait(0.1)
     game.SetConfigOption({ Name = "ExclusiveInteractGroup", Value = "Combat_Menu_TraitTray" })
     screen.KeepOpen = true
     game.HandleScreenInput(screen)
@@ -302,12 +300,14 @@ function mod.ApplyMenuZoom(screen, id)
         screen.ZoomLockId = lockId
     end
 
+    local screenScaleOffestXMultiplier = ( 0.5 + game.ScreenScaleX / 2 )
+
     if game.CurrentHubRoom and game.CurrentHubRoom.Name == "Hub_Main" then
-        game.thread(game.LockCamera,{Id = lockId, OffsetX = -530, OffsetY = offsetY, Duration = 0.35})
+        game.thread(game.LockCamera,{Id = lockId, OffsetX = - 530 * screenScaleOffestXMultiplier, OffsetY = offsetY, Duration = 0.35})
         game.AdjustZoom({ Fraction = 1.4, Duration = 0.35 })
         game.SetScale({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 1.7 })
     else
-        game.thread(game.LockCamera,{Id = lockId, OffsetX = -265, OffsetY = offsetY, Duration = 0.35})
+        game.thread(game.LockCamera,{Id = lockId, OffsetX = - 265 * screenScaleOffestXMultiplier, OffsetY = offsetY, Duration = 0.35})
         game.AdjustZoom({ Fraction = 2.8, Duration = 0.35 })
     end
 end

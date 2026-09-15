@@ -13,11 +13,12 @@ mod.Portraits =
     Portraits_Melinoe_PleasedFlushed_01 = true,
 }
 
-mod.DressData = {
+DressData = {
     Lavender =
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorC",
+        ChronosGrannyTexture = "GR2/ChronosReformed_Lavender",
         Portraits = mod.Portraits,
         Color = {206, 168, 238, 255}
     },
@@ -25,6 +26,7 @@ mod.DressData = {
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorB",
+        ChronosGrannyTexture = "GR2/ChronosReformed_Azure",
         Portraits = mod.Portraits,
         Color = {0, 89, 220, 255},
     },
@@ -32,6 +34,7 @@ mod.DressData = {
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorA",
+        ChronosGrannyTexture = "GR2/ChronosReformed_Emerald",
         Portraits = mod.Portraits,
         Color = {20, 200, 40, 255}
     },
@@ -39,6 +42,7 @@ mod.DressData = {
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorF",
+        ChronosGrannyTexture = "GR2/ChronosReformed_Onyx",
         Portraits = mod.Portraits,
         Color = {49, 41, 41, 255}
     },
@@ -46,6 +50,7 @@ mod.DressData = {
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorD",
+        ChronosGrannyTexture = "GR2/ChronosReformed_Fuchsia",
         Portraits = mod.Portraits,
         Color = {200, 69, 134, 255}
     },
@@ -53,6 +58,7 @@ mod.DressData = {
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorE",
+        ChronosGrannyTexture = "GR2/ChronosReformed_Gilded",
         Portraits = mod.Portraits,
         Color = {216, 171, 0, 255}
     },
@@ -60,6 +66,7 @@ mod.DressData = {
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorG",
+        ChronosGrannyTexture = "GR2/ChronosReformed_Color",
         Portraits = mod.Portraits,
         Color = {204, 215, 243, 255}
     },
@@ -67,6 +74,7 @@ mod.DressData = {
     {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorH",
+        ChronosGrannyTexture = "GR2/ChronosReformed_Crimson",
         Portraits = mod.Portraits,
         Color = {220, 0, 0, 255},
     },
@@ -74,6 +82,7 @@ mod.DressData = {
     {
         GrannyTexture = "Models/Melinoe/MelinoeTransform_Color",
         ChildGrannyTexture = "Models/Melinoe/YoungMelTransform_Color",
+        ChronosGrannyTexture = "GR2/ChronosReformed_Color",
         Outline =
         {
             R = game.Color.Turquoise[1],
@@ -91,6 +100,7 @@ mod.DressData = {
     {
         GrannyTexture = "zerp-MelSkin/Alternate Time",
         ChildGrannyTexture = "zerp-MelSkin/YoungMelRed_Color",
+        ChronosGrannyTexture = "GR2/Chronos_Color",
         TyphonRivalsPortraitMap = {
             Portrait_Mel_Child_Defiant_01 = "Portrait_Melinoe_Child_Ending_Defiant_01",
             Portrait_Mel_Child_Defiant_01_Exit = "Portrait_Melinoe_Child_Ending_Defiant_01_Exit",
@@ -101,6 +111,7 @@ mod.DressData = {
     Murderrrrr =
     {
         GrannyTexture = "zerp-MelSkin/Halloween 2025",
+        ChronosGrannyTexture = "GR2/ChronosReformed_Color",
         Color = {176, 208, 66, 255},
         ArmGlow = {
             StartRed = 0.6,
@@ -114,6 +125,7 @@ mod.DressData = {
     Chaos =
     {
         GrannyTexture = "zerp-MelSkin/Chaos",
+        ChronosGrannyTexture = "GR2/ChronosReformed_Color",
         BoonPortrait = true,
         Portraits = mod.Portraits,
         PortraitOverlayModifacations = {
@@ -177,6 +189,7 @@ mod.DressData = {
     },
     Visage = {
         GrannyTexture = "zerp-MelSkin/Visage",
+        ChronosGrannyTexture = "GR2/ChronosDream_Color",
         Portraits = mod.Portraits,
         BoonPortrait = true,
         PortraitOverlayModifacations = {

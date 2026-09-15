@@ -61,6 +61,8 @@ function mod.GetDressGrannyTexture(inputDress)
     if mod.DressData[inputDress] ~= nil then
         if game.MapState.BabyPolymorph then
             return mod.DressData[inputDress].ChildGrannyTexture or ""
+        elseif mod.DressData[inputDress].ChronosGrannyTexture and HeroHasTrait("ChronosAspect") then
+            return mod.DressData[inputDress].ChronosGrannyTexture or ""
         else
             return mod.DressData[inputDress].GrannyTexture or ""
         end

@@ -1,14 +1,14 @@
 function mod.SetAnimationWrap(base,args)
     local origname = args.Name
     local origfilename = mod.PortraitNameFileMap[origname]
-    if origfilename ~= nil then
+    if origfilename then
         local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
         args.Name = newname
         return base(args)
     end
 
-    local zagOrigFileNames = mod.ZagMelMap[origname] or mod.ZagMelMap[origname:sub(1,-6)]
-    if zagOrigFileNames ~= nil then
+    local zagOrigFileNames = origname and ( mod.ZagMelMap[origname] or mod.ZagMelMap[origname:sub(1,-6)] )
+    if zagOrigFileNames then
         local dress = mod.GetCurrentDress()
         local dressData = mod.DressData[dress or "None"]
         local prefix = ""

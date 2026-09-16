@@ -187,7 +187,6 @@ function mod.DressMouseOffButton(button)
 end
 
 function mod.SetDress(screen,button)
-    local dressGrannyTexture = mod.GetDressGrannyTexture(button.Dress)
     config["dress" .. screen.dress_config_suffix] = button.Dress
     config.random_each_run = false
     game.SetupCostume()

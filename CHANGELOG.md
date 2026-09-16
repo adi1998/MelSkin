@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 - Stretch background for non 16:9 aspect ratio displays
+- Fix rare crash.
 
 ## [1.18.4] - 2026-08-13
 

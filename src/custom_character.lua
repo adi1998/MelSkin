@@ -4,7 +4,8 @@ CharacterData = {}
 ---@param dressData table Dress data for the custom character, check mod.DressData in data.lua for format
 ---@param dressOrder table Array defining the order in which the dresses are displayed
 ---@param isActiveFunction function Returns true whenever the custom character is active
-public.RegisterCustomCharacter = function (characterName, dressData, dressOrder, isActiveFunction)
+---@param menuCameraParams table Defines offsets and zoom level for the in-game menu
+public.RegisterCustomCharacter = function (characterName, dressData, dressOrder, isActiveFunction, menuCameraParams)
     -- add a default skin
     dressOrder = dressOrder or {}
     dressData = game.DeepCopyTable(dressData)
@@ -38,12 +39,13 @@ public.RegisterCustomCharacter = function (characterName, dressData, dressOrder,
         Name = characterName,
         DressData = dressData,
         DressOrder = dressOrder,
-        IsActiveFunction = isActiveFunction
+        IsActiveFunction = isActiveFunction,
+        MenuCameraParams = menuCameraParams
     }
 end
 
 function mod.GetCustomCharacterData()
-    for characterName, characterData in pairs(CharacterData) do
+    for _, characterData in pairs(CharacterData) do
         if characterData.IsActiveFunction and characterData.IsActiveFunction() then
             return characterData
         end
@@ -61,4 +63,8 @@ end
 
 function mod.GetCurrentCharacter()
     return mod.GetCustomCharacterData().Name or "Default"
+end
+
+function mod.GetCharacterMenuZoomData()
+    return mod.GetCustomCharacterData().MenuCameraParams or {}
 end

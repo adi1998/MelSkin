@@ -329,13 +329,17 @@ function mod.ApplyMenuZoom(screen, id)
 
     local screenScaleOffestXMultiplier = ( 0.5 + game.ScreenScaleX / 2 )
 
+    local characterMenuData = mod.GetCharacterMenuZoomData()
+    local charOffsetY = characterMenuData.OffsetY or 0
+    local charZoom = characterMenuData.ZoomFraction or 1
+
     if game.CurrentHubRoom and game.CurrentHubRoom.Name == "Hub_Main" then
-        game.thread(game.LockCamera,{Id = lockId, OffsetX = - 530 * screenScaleOffestXMultiplier, OffsetY = offsetY, Duration = 0.35})
-        game.AdjustZoom({ Fraction = 1.4, Duration = 0.35 })
+        game.thread(game.LockCamera,{Id = lockId, OffsetX = - 530 * screenScaleOffestXMultiplier / charZoom, OffsetY = offsetY + charOffsetY, Duration = 0.35})
+        game.AdjustZoom({ Fraction = 1.4 * charZoom, Duration = 0.35 })
         game.SetScale({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 1.7 })
     else
-        game.thread(game.LockCamera,{Id = lockId, OffsetX = - 265 * screenScaleOffestXMultiplier, OffsetY = offsetY, Duration = 0.35})
-        game.AdjustZoom({ Fraction = 2.8, Duration = 0.35 })
+        game.thread(game.LockCamera,{Id = lockId, OffsetX = - 265 * screenScaleOffestXMultiplier / charZoom, OffsetY = offsetY + charOffsetY, Duration = 0.35})
+        game.AdjustZoom({ Fraction = 2.8 * charZoom, Duration = 0.35 })
     end
 end
 

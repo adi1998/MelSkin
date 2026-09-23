@@ -275,16 +275,19 @@ function mod.SetRandomDress()
         randomDress = fixedDressList[random]
     end
     print("Random dress", randomDress)
-    game.CurrentRun.Hero.ModDressData = randomDress
+    game.CurrentRun.Hero[_PLUGIN.guid .. "RandomDressData"] = game.CurrentRun.Hero[_PLUGIN.guid .. "RandomDressData"] or {}
+    game.CurrentRun.Hero[_PLUGIN.guid .. "RandomDressData"][currentCharacter] = randomDress
     game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
 end
 
 function mod.GetCurrentRunDress()
     -- if this is called, it means random is enabled
-    if game.CurrentRun.Hero.ModDressData == nil or game.CurrentRun.Hero.ModDressData == "" then
+    local currentCharacter = mod.GetCurrentCharacter()
+    game.CurrentRun.Hero[_PLUGIN.guid .. "RandomDressData"] = game.CurrentRun.Hero[_PLUGIN.guid .. "RandomDressData"] or {}
+    if game.CurrentRun.Hero[_PLUGIN.guid .. "RandomDressData"][currentCharacter] == nil or game.CurrentRun.Hero[_PLUGIN.guid .. "RandomDressData"][currentCharacter] == "" then
         mod.SetRandomDress()
     end
-    return game.CurrentRun.Hero.ModDressData
+    return game.CurrentRun.Hero[_PLUGIN.guid .. "RandomDressData"][currentCharacter]
 end
 
 modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
@@ -301,7 +304,9 @@ modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
     if config.random_each_run then
         mod.SetRandomDress()
     else
-        game.CurrentRun.Hero.ModDressData = nil
+        local currentCharacter = mod.GetCurrentCharacter()
+        game.CurrentRun.Hero[_PLUGIN.guid .. "RandomDressData"] = game.CurrentRun.Hero[_PLUGIN.guid .. "RandomDressData"] or {}
+        game.CurrentRun.Hero[_PLUGIN.guid .. "RandomDressData"][currentCharacter] = nil
     end
     return retValue
 end)

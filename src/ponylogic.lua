@@ -89,6 +89,9 @@ function mod.DressSelectorLoadPage(screen, args)
     -- mod.BoonManagerPageButtons(screen, screen.Name)
     args = args or {}
     local pageDress = screen.DressList[screen.CurrentPage]
+    local currentCharacter = mod.GetCurrentCharacter()
+    local hero = mod["Hero" .. screen.dress_config_suffix] or {}
+    hero[_PLUGIN.guid .. "RandomDressData"] = hero[_PLUGIN.guid .. "RandomDressData"] or {}
     if pageDress then
         for i, dressButtonData in pairs(pageDress) do
             local teleportHere
@@ -143,7 +146,8 @@ function mod.DressSelectorLoadPage(screen, args)
                     color = game.Color.Orange
                 end
             end
-            if config.random_each_run == true and (mod["Hero" .. screen.dress_config_suffix] or {}).ModDressData == text then
+
+            if config.random_each_run == true and hero[_PLUGIN.guid .. "RandomDressData"][currentCharacter] == text then
                 teleportHere = true
                 color = game.Color.Orange
             end

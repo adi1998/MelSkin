@@ -32,9 +32,9 @@ function mod.OpenDressSelector()
     end
     if game.GameState and not game.GameState.CustomCharacterFavoriteDressList then
         game.GameState.CustomCharacterFavoriteDressList = {}
-        for characterName, _ in pairs(CharacterData) do
-            game.GameState.CustomCharacterFavoriteDressList[characterName] = {}
-        end
+    end
+    for characterName, _ in pairs(CharacterData) do
+        game.GameState.CustomCharacterFavoriteDressList[characterName] = game.GameState.CustomCharacterFavoriteDressList[characterName] or {}
     end
 
     game.OnScreenOpened(screen)

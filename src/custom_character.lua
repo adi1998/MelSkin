@@ -6,13 +6,27 @@ CharacterData = {}
 ---@param isActiveFunction function Returns true whenever the custom character is active
 public.RegisterCustomCharacter = function (characterName, dressData, dressOrder, isActiveFunction)
     -- add a default skin
+    dressOrder = dressOrder or {}
+    dressData = game.DeepCopyTable(dressData)
+    dressData.Portraits = nil
+    dressData.TyphonRivalsPortraitMap = nil
+    dressData.PortraitOverlayModifacations = nil
+    dressData.BoonPortrait = nil
+    dressData.ArmGlow = nil
+    dressData.LaurelCinderHue = nil
     if not dressData.None then
         dressData.None =
         {
             GrannyTexture = "",
         }
-        if not game.Contains(dressOrder, "None") then
-            table.insert(dressOrder)
+    end
+
+    for dressName, data in pairs(dressData) do
+        if not game.Contains(dressOrder, dressName) then
+            table.insert(dressOrder, dressName)
+        end
+        if data.IsArachne then
+            mod.CostumeDressMap[data.GrannyTexture] = dressName
         end
     end
 

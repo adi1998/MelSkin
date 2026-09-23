@@ -82,7 +82,7 @@ DressData = {
     {
         GrannyTexture = "Models/Melinoe/MelinoeTransform_Color",
         ChildGrannyTexture = "Models/Melinoe/YoungMelTransform_Color",
-        ChronosGrannyTexture = "GR2/ChronosReformed_Color",
+        ChronosGrannyTexture = "Models/Chronos/ChronosShadow_Color",
         Outline =
         {
             R = game.Color.Turquoise[1],

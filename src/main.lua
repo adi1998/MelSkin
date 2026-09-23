@@ -118,9 +118,10 @@ local function on_ready()
     import 'obstacle.lua'
     import 'ready.lua'
     import "ponylogic_late.lua"
-    if not mod.DressData[config.dress] then
-        config.dress = "None"
-    end
+    -- if not mod.DressData[config.dress] then
+    --     config.dress = "None"
+    -- end
+    import 'custom_character.lua'
     if not mod.DressData[config.dress2] then
         config.dress2 = "Azure"
     end

@@ -30,6 +30,12 @@ function mod.OpenDressSelector()
     if game.GameState ~= nil and game.GameState.ModFavoriteDressList == nil then
         game.GameState.ModFavoriteDressList = {}
     end
+    if game.GameState and not game.GameState.CustomCharacterFavoriteDressList then
+        game.GameState.CustomCharacterFavoriteDressList = {}
+        for characterName, _ in pairs(CharacterData) do
+            game.GameState.CustomCharacterFavoriteDressList[characterName] = {}
+        end
+    end
 
     game.OnScreenOpened(screen)
     game.HideCombatUI(screen.Name)
@@ -37,7 +43,8 @@ function mod.OpenDressSelector()
 
     local index = 0
     screen.DressList = {}
-    for _, dressName in ipairs(mod.DressDisplayOrder) do
+    local modDressDisplayOrder = mod.GetModDressDataOrder()
+    for _, dressName in ipairs(modDressDisplayOrder) do
         local rowOffset = 100
         local columnOffset = 285
         local boonsPerRow = 5
@@ -125,9 +132,16 @@ function mod.DressSelectorLoadPage(screen, args)
             })
             local text = dressButtonData.key
             local color = game.Color.White
-            if config["dress" .. screen.dress_config_suffix] == text and config.random_each_run == false then
-                teleportHere = true
-                color = game.Color.Orange
+            if screen.dress_config_suffix == "" then
+                if mod.GetCurrentDressConfig() == text and config.random_each_run == false then
+                    teleportHere = true
+                    color = game.Color.Orange
+                end
+            else
+                if config.dress2 == text and config.random_each_run == false then
+                    teleportHere = true
+                    color = game.Color.Orange
+                end
             end
             if config.random_each_run == true and (mod["Hero" .. screen.dress_config_suffix] or {}).ModDressData == text then
                 teleportHere = true
@@ -187,7 +201,11 @@ function mod.DressMouseOffButton(button)
 end
 
 function mod.SetDress(screen,button)
-    config["dress" .. screen.dress_config_suffix] = button.Dress
+    if screen.dress_config_suffix == "" then
+        mod.SetCurrentDressConfig(button.Dress)
+    elseif screen.dress_config_suffix == "1" then
+        config["dress" .. screen.dress_config_suffix] = button.Dress
+    end
     config.random_each_run = false
     game.SetupCostume()
     game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
@@ -256,7 +274,13 @@ function mod.ToggleFavriteDressSelection(screen, button)
 end
 
 function mod.ResetFavorites(screen, button)
-    game.GameState.ModFavoriteDressList = {}
+    local currentCharacter = mod.GetCurrentCharacter()
+    if currentCharacter == "Default" then
+        game.GameState.ModFavoriteDressList = {}
+    else
+        game.GameState.CustomCharacterFavoriteDressList = game.GameState.CustomCharacterFavoriteDressList or {}
+        game.GameState.CustomCharacterFavoriteDressList[currentCharacter] = {}
+    end
     mod.DressSelectorReloadPage(screen)
 end
 

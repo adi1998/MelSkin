@@ -25,7 +25,7 @@ function mod.GetCurrentDress()
             return dress
         end
     end
-    local dress = config.dress
+    local dress = mod.GetCurrentDressConfig()
     if game.CurrentRun.Hero.ObjectId == 39999 then
         dress = config.dress2
     end
@@ -58,11 +58,12 @@ modutil.mod.Path.Wrap("CreateScreenFromData", function (base, screen, componentD
 end)
 
 function mod.GetDressGrannyTexture(inputDress)
-    if mod.DressData[inputDress] ~= nil then
+    local modDressData = mod.GetModDressData()
+    if modDressData[inputDress] ~= nil then
         if game.MapState.BabyPolymorph then
-            return mod.DressData[inputDress].ChildGrannyTexture or ""
+            return modDressData[inputDress].ChildGrannyTexture or ""
         else
-            return mod.DressData[inputDress].GrannyTexture or ""
+            return modDressData[inputDress].GrannyTexture or ""
         end
     end
     return ""
@@ -111,7 +112,7 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
     else
         mod.Hero2 = game.CurrentRun.Hero
     end
-    local grannyTexture = mod.GetDressGrannyTexture(config.dress)
+    local grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentDressConfig())
     if game.CurrentRun.Hero.ObjectId == 39999 then
         grannyTexture = mod.GetDressGrannyTexture(config.dress2)
     end
@@ -128,8 +129,9 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
     local dress = mod.GetCurrentDress()
     mod.SetupExtraAnimations(dress)
 
-    if mod.DressData[dress] and mod.DressData[dress].Outline then
-        local outlineData = mod.DressData[dress].Outline
+    local modDressData = mod.GetModDressData()
+    if modDressData[dress] and modDressData[dress].Outline then
+        local outlineData = modDressData[dress].Outline
         outlineData.Id = game.CurrentRun.Hero.ObjectId
         game.AddOutline( outlineData )
     else
@@ -145,8 +147,9 @@ end)
 modutil.mod.Path.Wrap("SetPlayerUnDarkside", function (base, flag)
     base(flag)
     local dress = mod.GetCurrentDress()
-    if mod.DressData[dress] and mod.DressData[dress].Outline then
-        local outlineData = mod.DressData[dress].Outline
+    local modDressData = mod.GetModDressData()
+    if modDressData[dress] and modDressData[dress].Outline then
+        local outlineData = modDressData[dress].Outline
         outlineData.Id = game.CurrentRun.Hero.ObjectId
         game.AddOutline( outlineData )
     end
@@ -159,7 +162,7 @@ modutil.mod.Path.Wrap("SetupFlashbackPlayerUnitChronos", function(base,source,ar
 end)
 
 modutil.mod.Path.Wrap("MelBackToBedroomPresentation", function(base,source,args)
-    local grannyTexture = mod.GetDressGrannyTexture(config.dress)
+    local grannyTexture = mod.GetDressGrannyTexture(mod.GetCurrentDressConfig())
     if game.CurrentRun.Hero.ObjectId == 39999 then
         grannyTexture = mod.GetDressGrannyTexture(config.dress2)
     end
@@ -175,6 +178,12 @@ modutil.mod.Path.Wrap("SetupMap", function(base)
     mod.LoadSkinPackages()
     if game.GameState ~= nil and game.GameState.ModFavoriteDressList == nil then
         game.GameState.ModFavoriteDressList = {}
+    end
+    if game.GameState and not game.GameState.CustomCharacterFavoriteDressList then
+        game.GameState.CustomCharacterFavoriteDressList = {}
+        for characterName, _ in pairs(CharacterData) do
+            game.GameState.CustomCharacterFavoriteDressList[characterName] = {}
+        end
     end
     base()
 end)
@@ -193,8 +202,21 @@ function mod.GetPortraitNameFromCostume(filename, name)
     return nil
 end
 
+function mod.GetCurrentDressConfig()
+    local characterName = mod.GetCurrentCharacter()
+    game.GameState[_PLUGIN.guid .. "CurrentDressConfig"] = game.GameState[_PLUGIN.guid .. "CurrentDressConfig"] or {}
+    game.GameState[_PLUGIN.guid .. "CurrentDressConfig"][characterName] = game.GameState[_PLUGIN.guid .. "CurrentDressConfig"][characterName] or "None"
+    return game.GameState[_PLUGIN.guid .. "CurrentDressConfig"][characterName]
+end
+
+function  mod.SetCurrentDressConfig(dressName)
+    local characterName = mod.GetCurrentCharacter()
+    game.GameState[_PLUGIN.guid .. "CurrentDressConfig"] = game.GameState[_PLUGIN.guid .. "CurrentDressConfig"] or {}
+    game.GameState[_PLUGIN.guid .. "CurrentDressConfig"][characterName] = dressName
+end
+
 function mod.GetPortraitNameFromConfig(filename,name)
-    local dress = config.dress
+    local dress = mod.GetCurrentDressConfig()
     if game.CurrentRun.Hero.ObjectId == 39999 then
         dress = config.dress2
     end
@@ -212,29 +234,30 @@ function mod.GetPortraitNameFromConfig(filename,name)
 end
 
 function mod.SetRandomDress()
-    local function RemoveCustomFromArray(array)
-        local retValue = {}
-        for key, value in pairs(array) do
-            if key ~= "Custom" then
-                retValue[key] = value
-            end
-        end
-        return retValue
-    end
     local randomDress = ""
     local numOfFixedDress = 0
     local numOfPresets = 0
-    local fixedDressList = RemoveCustomFromArray(mod.DressDisplayOrder)
-    if game.GameState.ModFavoriteDressList ~= nil and #game.GameState.ModFavoriteDressList > 0 then
-        numOfFixedDress = #game.GameState.ModFavoriteDressList
-        fixedDressList = RemoveCustomFromArray(game.GameState.ModFavoriteDressList)
-        if game.Contains(game.GameState.ModFavoriteDressList, "Custom") then
+    local dressDisplayOrder = mod.GetModDressDataOrder()
+    local fixedDressList = game.DeepCopyTable(dressDisplayOrder)
+    game.RemoveValueAndCollapse(fixedDressList, "Custom")
+    local currentCharacter = mod.GetCurrentCharacter()
+    local modFavoriteList = game.GameState.ModFavoriteDressList
+    if currentCharacter ~= "Default" then
+        modFavoriteList = game.GameState.CustomCharacterFavoriteDressList[currentCharacter]
+    end
+    if modFavoriteList and #modFavoriteList > 0 then
+        numOfFixedDress = #modFavoriteList
+        fixedDressList = game.DeepCopyTable(modFavoriteList)
+        game.RemoveValueAndCollapse(fixedDressList, "Custom")
+        if game.Contains(modFavoriteList, "Custom") and currentCharacter == "Default" then
             numOfPresets = game.TableLength(mod.PresetTable) - 1 - ((mod.PresetTable["LastApplied"] and 1) or 0)
             numOfFixedDress = numOfFixedDress - 1
         end
     else
-        numOfFixedDress = #mod.DressDisplayOrder - 1
-        numOfPresets = game.TableLength(mod.PresetTable) - 1 - ((mod.PresetTable["LastApplied"] and 1) or 0)
+        numOfFixedDress = #fixedDressList
+        if currentCharacter == "Default" then
+            numOfPresets = game.TableLength(mod.PresetTable) - 1 - ((mod.PresetTable["LastApplied"] and 1) or 0)
+        end
     end
 
     local totalOptions = numOfFixedDress + numOfPresets
@@ -266,8 +289,14 @@ end
 
 modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
     local retValue = base(prevRun,args)
-    if game.GameState ~= nil and game.GameState.ModFavoriteDressList == nil then
+    if game.GameState and not game.GameState.ModFavoriteDressList then
         game.GameState.ModFavoriteDressList = {}
+    end
+    if game.GameState and not game.GameState.CustomCharacterFavoriteDressList then
+        game.GameState.CustomCharacterFavoriteDressList = {}
+        for characterName, _ in pairs(CharacterData) do
+            game.GameState.CustomCharacterFavoriteDressList[characterName] = {}
+        end
     end
     if config.random_each_run then
         mod.SetRandomDress()
@@ -278,26 +307,41 @@ modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
 end)
 
 function mod.CheckDressInFavorite(dressName)
-    return game.Contains(game.GameState.ModFavoriteDressList,dressName)
+    local modFavoriteList = game.GameState.ModFavoriteDressList
+    local currentCharacter = mod.GetCurrentCharacter()
+    if currentCharacter ~= "Default" then
+        modFavoriteList = game.GameState.CustomCharacterFavoriteDressList[currentCharacter]
+    end
+    return game.Contains(modFavoriteList, dressName)
 end
 
 function mod.RemoveFavoriteDress(dressName)
-    local index = game.GetIndex(game.GameState.ModFavoriteDressList, dressName)
+    local modFavoriteList = game.GameState.ModFavoriteDressList
+    local currentCharacter = mod.GetCurrentCharacter()
+    if currentCharacter ~= "Default" then
+        modFavoriteList = game.GameState.CustomCharacterFavoriteDressList[currentCharacter]
+    end
+    local index = game.GetIndex(modFavoriteList, dressName)
     if index == 0 then
         print("trying to remove unknown dress")
         return
     end
-    game.RemoveIndexAndCollapse(game.GameState.ModFavoriteDressList, index)
+    game.RemoveIndexAndCollapse(modFavoriteList, index)
 end
 
 function mod.AddFavoriteDress(dressName)
-    table.insert(game.GameState.ModFavoriteDressList, dressName)
+    local currentCharacter = mod.GetCurrentCharacter()
+    if currentCharacter == "Default" then
+        table.insert(game.GameState.ModFavoriteDressList, dressName)
+    else
+        table.insert(game.GameState.CustomCharacterFavoriteDressList[currentCharacter], dressName)
+    end
 end
 
 modutil.mod.Path.Wrap("SetupHeroObject", function (base, ...)
     game.CurrentRun.Hero.LightBarColor[_PLUGIN.guid .. "SwapWithDressColor"] = true
     base(...)
-    local dress = config.dress
+    local dress = mod.GetCurrentDressConfig()
     if game.CurrentRun.Hero.ObjectId == 39999 then
         dress = config.dress2
     end
@@ -343,7 +387,8 @@ modutil.mod.Path.Wrap("SetLightBarColor", function (base, args)
     if args.Color and args.Color[_PLUGIN.guid .. "SwapWithDressColor"] then
         print("Swapping default LightBarColor", mod.dump(args.Color))
         local dress = mod.GetCurrentDress()
-        local dressData = mod.DressData[dress]
+        local modDressData = mod.GetModDressData()
+        local dressData = modDressData[dress]
         local dressColor = dressData.Color
         if dress == "Custom" then
             local preset = mod.PresetTable["LastApplied"] or mod.PresetTable["Default"]

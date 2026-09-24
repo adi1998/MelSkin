@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.19.1] - 2026-09-24
+
 - Fix ImGui menu
 
 ## [1.19.0] - 2026-09-24
@@ -185,7 +187,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.19.0...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.19.1...HEAD
+[1.19.1]: https://github.com/adi1998/MelSkin/compare/1.19.0...1.19.1
 [1.19.0]: https://github.com/adi1998/MelSkin/compare/1.18.4...1.19.0
 [1.18.4]: https://github.com/adi1998/MelSkin/compare/1.18.3...1.18.4
 [1.18.3]: https://github.com/adi1998/MelSkin/compare/1.18.2...1.18.3

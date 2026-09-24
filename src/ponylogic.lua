@@ -30,6 +30,12 @@ function mod.OpenDressSelector()
     if game.GameState ~= nil and game.GameState.ModFavoriteDressList == nil then
         game.GameState.ModFavoriteDressList = {}
     end
+    if game.GameState and not game.GameState.CustomCharacterFavoriteDressList then
+        game.GameState.CustomCharacterFavoriteDressList = {}
+    end
+    for characterName, _ in pairs(CharacterData) do
+        game.GameState.CustomCharacterFavoriteDressList[characterName] = game.GameState.CustomCharacterFavoriteDressList[characterName] or {}
+    end
 
     game.OnScreenOpened(screen)
     game.HideCombatUI(screen.Name)
@@ -37,7 +43,8 @@ function mod.OpenDressSelector()
 
     local index = 0
     screen.DressList = {}
-    for _, dressName in ipairs(mod.DressDisplayOrder) do
+    local modDressDisplayOrder = mod.GetModDressDataOrder()
+    for _, dressName in ipairs(modDressDisplayOrder) do
         local rowOffset = 100
         local columnOffset = 285
         local boonsPerRow = 5
@@ -82,6 +89,9 @@ function mod.DressSelectorLoadPage(screen, args)
     -- mod.BoonManagerPageButtons(screen, screen.Name)
     args = args or {}
     local pageDress = screen.DressList[screen.CurrentPage]
+    local currentCharacter = mod.GetCurrentCharacter()
+    local hero = mod["Hero" .. screen.dress_config_suffix] or {}
+    hero[_PLUGIN.guid .. "RandomDressData"] = hero[_PLUGIN.guid .. "RandomDressData"] or {}
     if pageDress then
         for i, dressButtonData in pairs(pageDress) do
             local teleportHere
@@ -125,11 +135,19 @@ function mod.DressSelectorLoadPage(screen, args)
             })
             local text = dressButtonData.key
             local color = game.Color.White
-            if config["dress" .. screen.dress_config_suffix] == text and config.random_each_run == false then
-                teleportHere = true
-                color = game.Color.Orange
+            if screen.dress_config_suffix == "" then
+                if mod.GetCurrentDressConfig() == text and config.random_each_run == false then
+                    teleportHere = true
+                    color = game.Color.Orange
+                end
+            else
+                if config.dress2 == text and config.random_each_run == false then
+                    teleportHere = true
+                    color = game.Color.Orange
+                end
             end
-            if config.random_each_run == true and (mod["Hero" .. screen.dress_config_suffix] or {}).ModDressData == text then
+
+            if config.random_each_run == true and hero[_PLUGIN.guid .. "RandomDressData"][currentCharacter] == text then
                 teleportHere = true
                 color = game.Color.Orange
             end
@@ -187,7 +205,11 @@ function mod.DressMouseOffButton(button)
 end
 
 function mod.SetDress(screen,button)
-    config["dress" .. screen.dress_config_suffix] = button.Dress
+    if screen.dress_config_suffix == "" then
+        mod.SetCurrentDressConfig(button.Dress)
+    elseif screen.dress_config_suffix == "1" then
+        config["dress" .. screen.dress_config_suffix] = button.Dress
+    end
     config.random_each_run = false
     game.SetupCostume()
     game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
@@ -256,7 +278,13 @@ function mod.ToggleFavriteDressSelection(screen, button)
 end
 
 function mod.ResetFavorites(screen, button)
-    game.GameState.ModFavoriteDressList = {}
+    local currentCharacter = mod.GetCurrentCharacter()
+    if currentCharacter == "Default" then
+        game.GameState.ModFavoriteDressList = {}
+    else
+        game.GameState.CustomCharacterFavoriteDressList = game.GameState.CustomCharacterFavoriteDressList or {}
+        game.GameState.CustomCharacterFavoriteDressList[currentCharacter] = {}
+    end
     mod.DressSelectorReloadPage(screen)
 end
 
@@ -301,13 +329,17 @@ function mod.ApplyMenuZoom(screen, id)
 
     local screenScaleOffestXMultiplier = ( 0.5 + game.ScreenScaleX / 2 )
 
+    local characterMenuData = mod.GetCharacterMenuZoomData()
+    local charOffsetY = characterMenuData.OffsetY or 0
+    local charZoom = characterMenuData.ZoomFraction or 1
+
     if game.CurrentHubRoom and game.CurrentHubRoom.Name == "Hub_Main" then
-        game.thread(game.LockCamera,{Id = lockId, OffsetX = - 530 * screenScaleOffestXMultiplier, OffsetY = offsetY, Duration = 0.35})
-        game.AdjustZoom({ Fraction = 1.4, Duration = 0.35 })
+        game.thread(game.LockCamera,{Id = lockId, OffsetX = - 530 * screenScaleOffestXMultiplier / charZoom, OffsetY = offsetY + charOffsetY, Duration = 0.35})
+        game.AdjustZoom({ Fraction = 1.4 * charZoom, Duration = 0.35 })
         game.SetScale({ Id = game.CurrentRun.Hero.ObjectId, Fraction = 1.7 })
     else
-        game.thread(game.LockCamera,{Id = lockId, OffsetX = - 265 * screenScaleOffestXMultiplier, OffsetY = offsetY, Duration = 0.35})
-        game.AdjustZoom({ Fraction = 2.8, Duration = 0.35 })
+        game.thread(game.LockCamera,{Id = lockId, OffsetX = - 265 * screenScaleOffestXMultiplier / charZoom, OffsetY = offsetY + charOffsetY, Duration = 0.35})
+        game.AdjustZoom({ Fraction = 2.8 * charZoom, Duration = 0.35 })
     end
 end
 

@@ -60,11 +60,13 @@ function drawMenu()
     end
 
     rom.ImGui.Text("Select Dress")
-    if rom.ImGui.BeginCombo("###dress", config.dress) then
-        for _, dressName in ipairs(mod.DressDisplayOrder) do
-            if rom.ImGui.Selectable(dressName, (dressName == config.dress)) then
+    local currentDressConfig = mod.GetCurrentDressConfig()
+    if rom.ImGui.BeginCombo("###dress", currentDressConfig) then
+        local modDressDisplayOrder = mod.GetModDressDataOrder()
+        for _, dressName in ipairs(modDressDisplayOrder) do
+            if rom.ImGui.Selectable(dressName, (dressName == currentDressConfig)) then
                 if dressName ~= previousConfig.dress then
-                    config.dress = dressName
+                    mod.SetCurrentDressConfig(dressName)
                     previousConfig.dress = dressName
                     config.random_each_run = false
                     game.SetupCostume()
@@ -367,3 +369,4 @@ function DeletePreset()
     config.current_preset = "Default"
     mod.WritePresetsToFile()
 end
+

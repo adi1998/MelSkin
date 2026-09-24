@@ -2,7 +2,7 @@ function mod.SetAnimationWrap(base,args)
     local origname = args.Name
     local origfilename = mod.PortraitNameFileMap[origname]
     if origfilename then
-        local newname = mod.GetPortraitNameFromCostume(origfilename,origname) or mod.GetPortraitNameFromConfig(origfilename,origname) or origname
+        local newname = mod.GetPortraitNameFromCostume(origfilename, origname) or mod.GetPortraitNameFromConfig(origfilename, origname) or origname
         args.Name = newname
         return base(args)
     end
@@ -10,7 +10,8 @@ function mod.SetAnimationWrap(base,args)
     local zagOrigFileNames = origname and ( mod.ZagMelMap[origname] or mod.ZagMelMap[origname:sub(1,-6)] )
     if zagOrigFileNames then
         local dress = mod.GetCurrentDress()
-        local dressData = mod.DressData[dress or "None"]
+        local modDressData = mod.GetModDressData()
+        local dressData = modDressData[dress or "None"]
         local prefix = ""
         if dressData and dressData.Portraits and dressData.Portraits[zagOrigFileNames[1]] then
             prefix = dress
@@ -22,11 +23,12 @@ function mod.SetAnimationWrap(base,args)
 
     if game.MapState.BabyPolymorph then
         local dress = mod.GetCurrentDress()
-        local dressdata = mod.DressData[dress]
-        if dressdata == nil or dressdata.TyphonRivalsPortraitMap == nil then
+        local modDressData = mod.GetModDressData()
+        local dressData = modDressData[dress]
+        if dressData == nil or dressData.TyphonRivalsPortraitMap == nil then
             return base(args)
         end
-        local newname = dressdata.TyphonRivalsPortraitMap[origname]
+        local newname = dressData.TyphonRivalsPortraitMap[origname]
         args.Name = newname or args.Name
         return base(args)
     end
@@ -45,7 +47,8 @@ modutil.mod.Path.Context.Wrap.Static("CloseUpgradeChoiceScreen", function (scree
     modutil.mod.Path.Wrap("SetAnimation", function (base,args)
         if args.Name == "BoonSelectMelOut" then
             local dress = mod.GetCurrentDress()
-            local dressData = mod.DressData[dress]
+            local modDressData = mod.GetModDressData()
+            local dressData = modDressData[dress]
             local setAlpha = false
             if dressData ~= nil and dressData.BoonPortrait then
                 args.Name = dress .. "_" .. args.Name

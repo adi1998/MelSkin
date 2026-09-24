@@ -34,7 +34,7 @@ Favorites are only available through the ingame menu.
 <br>
 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
   <img src="images/PonyInv.png" alt="PonyInv" width="49.7%">
-  <img src="images/PonyInv.png" alt="PonyInv" width="49.7%">
+  <img src="images/ImguiWindow.png" alt="ImguiWindow" width="49.7%">
 </div>
 
 ## Skins

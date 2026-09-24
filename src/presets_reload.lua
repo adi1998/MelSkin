@@ -41,12 +41,6 @@ function mod.ReadPresetsFromFile()
 end
 
 function mod.WritePresetsToFile(lastApplied)
-    -- local fileHandle = io.open(presetFilePath, "w+")
-    -- if not fileHandle then
-    --     print("Error opening presets file for writing", presetFilePath)
-    --     return
-    -- end
-    -- mod.ReadPresetsFromFile()
     if lastApplied then
         local touchFile = io.open(rom.path.combine(_PLUGIN.plugins_data_mod_folder_path, "update"), "w+")
         if touchFile then
@@ -60,7 +54,6 @@ function mod.WritePresetsToFile(lastApplied)
     else
         print("Failed to save preset file", fileString)
     end
-    -- fileHandle:write(fileString)
 end
 
 function mod.ReloadCustomTexture(lastApplied)

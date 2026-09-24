@@ -66,6 +66,7 @@ function drawMenu()
         for _, dressName in ipairs(modDressDisplayOrder) do
             if rom.ImGui.Selectable(dressName, (dressName == currentDressConfig)) then
                 if dressName ~= previousConfig.dress then
+                    currentDressConfig = dressName
                     mod.SetCurrentDressConfig(dressName)
                     previousConfig.dress = dressName
                     config.random_each_run = false
@@ -78,15 +79,13 @@ function drawMenu()
         rom.ImGui.EndCombo()
     end
     
-    if config.dress == "Custom" then
+    if currentDressConfig == "Custom" then
 
         local value, checked = rom.ImGui.Checkbox("Dress", config.custom_dress)
         if checked and value ~= previousConfig.custom_dress then
             config.custom_dress = value
             previousConfig.custom_dress = value
         end
-
-        
 
         if config.custom_dress then
             rom.ImGui.SameLine()
@@ -97,7 +96,6 @@ function drawMenu()
             end
         end
 
-        -- rom.ImGui.Separator()
         if config.custom_dress_color and config.custom_dress then
             rom.ImGui.PushStyleColor(rom.ImGuiCol.FrameBg , previousConfig.dresscolor.r/255, previousConfig.dresscolor.g/255, previousConfig.dresscolor.b/255, 1)
             rom.ImGui.InputText("###dresspreview", "", 1)
@@ -369,4 +367,3 @@ function DeletePreset()
     config.current_preset = "Default"
     mod.WritePresetsToFile()
 end
-

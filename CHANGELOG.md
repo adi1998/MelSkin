@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Fix ImGui menu
+
 ## [1.19.0] - 2026-09-24
 
 - Add support for custom playable characters

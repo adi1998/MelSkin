@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Add support for custom playable characters
 - Stretch background for non 16:9 aspect ratio displays
 - Fix rare crash
 

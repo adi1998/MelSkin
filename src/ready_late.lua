@@ -1,6 +1,14 @@
 function mod.SetAnimationWrap(base,args)
     local origname = args.Name
     local origfilename = mod.PortraitNameFileMap[origname]
+
+    local modDressData = mod.GetModDressData()
+
+    if modDressData.PortraitAnimSwapMap then
+        args.Name = modDressData.PortraitAnimSwapMap[origname] or args.Name
+        return base(args)
+    end
+
     if origfilename then
         local newname = mod.GetPortraitNameFromCostume(origfilename, origname) or mod.GetPortraitNameFromConfig(origfilename, origname) or origname
         args.Name = newname
@@ -10,7 +18,6 @@ function mod.SetAnimationWrap(base,args)
     local zagOrigFileNames = origname and ( mod.ZagMelMap[origname] or mod.ZagMelMap[origname:sub(1,-6)] )
     if zagOrigFileNames then
         local dress = mod.GetCurrentDress()
-        local modDressData = mod.GetModDressData()
         local dressData = modDressData[dress or "None"]
         local prefix = ""
         if dressData and dressData.Portraits and dressData.Portraits[zagOrigFileNames[1]] then

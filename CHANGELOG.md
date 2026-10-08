@@ -2,7 +2,9 @@
 
 ## [Unreleased]
 
+### Dev
 - Make GetCurrentDress public
+- Add support for custom portrait swaps for dresses
 
 ## [1.19.1] - 2026-09-24
 

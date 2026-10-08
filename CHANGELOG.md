@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Make GetCurrentDress public
+
 ## [1.19.1] - 2026-09-24
 
 - Fix ImGui menu

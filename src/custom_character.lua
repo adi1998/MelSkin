@@ -9,6 +9,7 @@ public.RegisterCustomCharacter = function (characterName, dressData, dressOrder,
     -- add a default skin
     dressOrder = dressOrder or {}
     dressData = game.DeepCopyTable(dressData)
+    -- these are explicitly unsupported
     dressData.Portraits = nil
     dressData.TyphonRivalsPortraitMap = nil
     dressData.PortraitOverlayModifacations = nil
@@ -68,3 +69,6 @@ end
 function mod.GetCharacterMenuZoomData()
     return mod.GetCustomCharacterData().MenuCameraParams or {}
 end
+
+---@return string dress Return dress equipped for the current character.
+public.GetCurrentDress = mod.GetCurrentDress

@@ -20,4 +20,7 @@ function public.AddEntriesToDressData(dressdata, packages) end
 ---@param menuCameraParams table Defines offsets and zoom level for the in-game menu
 function public.RegisterCustomCharacter(characterName, dressData, dressOrder, isActiveFunction, menuCameraParams) end
 
+---@return string dress Return dress equipped for the current character.
+function public.GetCurrentDress() end
+
 return public

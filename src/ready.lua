@@ -206,8 +206,8 @@ function mod.GetPortraitNameFromCostume(filename, name)
     return nil
 end
 
-function mod.GetCurrentDressConfig()
-    local characterName = mod.GetCurrentCharacter()
+function mod.GetCurrentDressConfig(character)
+    local characterName = character or mod.GetCurrentCharacter()
     game.GameState[_PLUGIN.guid .. "CurrentDressConfig"] = game.GameState[_PLUGIN.guid .. "CurrentDressConfig"] or {}
     game.GameState[_PLUGIN.guid .. "CurrentDressConfig"][characterName] = game.GameState[_PLUGIN.guid .. "CurrentDressConfig"][characterName] or "None"
     return game.GameState[_PLUGIN.guid .. "CurrentDressConfig"][characterName]

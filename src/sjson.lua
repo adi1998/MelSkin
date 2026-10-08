@@ -270,7 +270,8 @@ sjson.hook(guiPortraitsVFXFile, function(data)
         end
     end
     for _, entry in ipairs(newdata) do
-        table.insert(data.Animations, sjson.to_object(entry, portraitOrder))
+        local sjson_object = sjson.to_object(entry, portraitOrder)
+        table.insert(data.Animations, sjson_object)
     end
     print(guiPortraitsVFXFile, "after", #data.Animations)
     return data

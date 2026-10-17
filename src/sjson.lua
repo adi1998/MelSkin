@@ -318,7 +318,7 @@ sjson.hook(guiFile, function (data)
 end)
 
 local function AddPreviewSjson()
-    local GUIFile = rom.path.combine(rom.paths.Content, 'Game/Obstacles/GUI.sjson')
+    local GUIFile = rom.path.combine(rom.paths.Content(), 'Game/Obstacles/GUI.sjson')
 
     local gui_order = {
         "Name", "InheritFrom", "DisplayInEditor", "Thing"

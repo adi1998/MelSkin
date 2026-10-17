@@ -2,7 +2,10 @@
 
 ## [Unreleased]
 
+## [1.21.1] - 2026-10-16
+
 ### Dev
+
 - Make GetCurrentDress public
 - Add support for custom portrait swaps for dresses
 
@@ -191,7 +194,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.19.1...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.21.1...HEAD
+[1.21.1]: https://github.com/adi1998/MelSkin/compare/1.19.1...1.21.1
 [1.19.1]: https://github.com/adi1998/MelSkin/compare/1.19.0...1.19.1
 [1.19.0]: https://github.com/adi1998/MelSkin/compare/1.18.4...1.19.0
 [1.18.4]: https://github.com/adi1998/MelSkin/compare/1.18.3...1.18.4

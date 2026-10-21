@@ -5,10 +5,12 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument("-s", type=str, required=True)
 parser.add_argument("-t", type=str, required=True)
+parser.add_argument("-b", type=str, required=False)
 
 args = parser.parse_args()
 source_path = args.s
 target_path = args.t
+basename = args.b
 
 print(source_path, target_path)
 
@@ -17,7 +19,7 @@ pkg_textures = []
 pkg_path = target_path + ".pkg"
 pkg_manifest_path = pkg_path + '_manifest'
 
-prefix = target_path.split("\\")[-1]
+prefix = basename or target_path.split("\\")[-1]
 
 tex_list = os.listdir(source_path)
 

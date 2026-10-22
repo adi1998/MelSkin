@@ -20,7 +20,7 @@ table.insert(mod.skinPackageList, _PLUGIN.guid .. "zerp-MelSkinCustom")
 function mod.GetCurrentDress()
     local costumes = game.GetHeroTraitValues("Costume")
     if costumes[1] ~= nil then
-        local dress = mod.CostumeDressMap[costumes[1]]
+        local dress = mod.CostumeDressMap[costumes[#costumes]]
         if dress ~= nil then
             return dress
         end

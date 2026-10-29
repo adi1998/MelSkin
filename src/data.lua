@@ -54,7 +54,10 @@ mod.DressData = {
         BoonPortrait = true,
         GrannyTexture = "Models/Melinoe/Melinoe_ArachneArmorE",
         Portraits = mod.Portraits,
-        Color = {216, 171, 0, 255}
+        Color = {216, 171, 0, 255},
+        GameStateRequirements = {
+            -- empty
+        }
     },
     Moonlight =
     {

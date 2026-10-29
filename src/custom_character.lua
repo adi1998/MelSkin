@@ -6,9 +6,9 @@ CharacterData = {}
 ---@param isActiveFunction fun(): boolean Returns true whenever the custom character is active
 ---@param menuCameraParams table Defines offsets and zoom level for the in-game menu
 public.RegisterCustomCharacter = function (characterName, dressData, dressOrder, isActiveFunction, menuCameraParams)
-    -- add a default skin
     dressOrder = dressOrder or {}
     dressData = game.DeepCopyTable(dressData)
+
     -- these are explicitly unsupported
     dressData.Portraits = nil
     dressData.TyphonRivalsPortraitMap = nil
@@ -16,6 +16,8 @@ public.RegisterCustomCharacter = function (characterName, dressData, dressOrder,
     dressData.BoonPortrait = nil
     dressData.ArmGlow = nil
     dressData.LaurelCinderHue = nil
+
+    -- add a default skin
     if not dressData.None then
         dressData.None =
         {
@@ -23,6 +25,10 @@ public.RegisterCustomCharacter = function (characterName, dressData, dressOrder,
         }
     end
 
+    -- default skin should always be available
+    dressData.None.GameStateRequirements = nil
+
+    -- chuck every granny texture into a common map, surely nothing goes wrong :)
     for dressName, data in pairs(dressData) do
         if not game.Contains(dressOrder, dressName) then
             table.insert(dressOrder, dressName)
@@ -36,8 +42,11 @@ public.RegisterCustomCharacter = function (characterName, dressData, dressOrder,
     dressData.Custom = nil
     game.RemoveValueAndCollapse(dressOrder, "Custom")
 
-    CharacterData[characterName] = {
-        Name = characterName,
+    local env = envy.getfenv(2)
+	local guid = (env and env._PLUGIN and env._PLUGIN.guid) or (_PLUGIN and _PLUGIN.guid)
+    print("Registering custom character from", guid, ":", characterName)
+    CharacterData[guid .. characterName] = {
+        Name = guid .. characterName,
         DressData = dressData,
         DressOrder = dressOrder,
         IsActiveFunction = isActiveFunction,
@@ -59,7 +68,15 @@ function mod.GetModDressData()
 end
 
 function mod.GetModDressDataOrder()
-    return mod.GetCustomCharacterData().DressOrder or mod.DressDisplayOrder
+    local order = {}
+    local modDressData = mod.GetModDressData()
+    for index, dressName in ipairs(mod.GetCustomCharacterData().DressOrder or mod.DressDisplayOrder) do
+        local dress = modDressData[dressName]
+        if not dress.GameStateRequirements or game.IsGameStateEligible(dress, dress.GameStateRequirements) then
+            table.insert(order, dressName)
+        end
+    end
+    return order
 end
 
 function mod.GetCurrentCharacter()

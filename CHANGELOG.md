@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Dev
+
+- Add support for only showing skins when its requirements(if any) are met.
+
 ## [1.21.1] - 2026-10-16
 
 ### Dev

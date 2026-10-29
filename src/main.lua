@@ -38,6 +38,9 @@ configChalk = chalk.auto 'config.lua'
 -- ^ this updates our `.cfg` file in the config folder!
 -- public.config = config -- so other mods can access our config
 
+---@module 'LuaENVY-ENVY'
+envy = mods['LuaENVY-ENVY']
+
 local function DeepCopyTable( orig )
 	local orig_type = type(orig)
 	local copy

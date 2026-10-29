@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Minor update for MultiDressHelper support
+
 ### Dev
 
 - Add support for only showing skins when its requirements(if any) are met.

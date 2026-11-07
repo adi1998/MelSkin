@@ -2,7 +2,9 @@
 
 ## [Unreleased]
 
-- Minor update for MultiDressHelper support
+- Minor update for MultiDressHelper support.
+- Fix crash in custom character favorite logic.
+- Fix Mel's ArmGlow being active for custom characters.
 
 ### Dev
 

@@ -94,7 +94,7 @@ function mod.SetupExtraAnimations(dress)
         if modDressData[dress].ArmGlow then
             game.CreateAnimation({ Name = dress .. "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
             game.MapState[_PLUGIN.guid .. "PrevArmGlowAnimation"] = dress .. "MelArmGlow"
-        else
+        elseif mod.GetCurrentCharacter() == "Default" then
             game.CreateAnimation({ Name = "MelArmGlow", DestinationId = game.CurrentRun.Hero.ObjectId })
             game.MapState[_PLUGIN.guid .. "PrevArmGlowAnimation"] = "MelArmGlow"
         end
@@ -179,12 +179,6 @@ end)
 
 modutil.mod.Path.Wrap("SetupMap", function(base)
     mod.LoadSkinPackages()
-    if game.GameState ~= nil and game.GameState.ModFavoriteDressList == nil then
-        game.GameState.ModFavoriteDressList = {}
-    end
-    if game.GameState and not game.GameState.CustomCharacterFavoriteDressList then
-        game.GameState.CustomCharacterFavoriteDressList = {}
-    end
     for characterName, _ in pairs(CharacterData) do
         game.GameState.CustomCharacterFavoriteDressList[characterName] = game.GameState.CustomCharacterFavoriteDressList[characterName] or {}
     end
@@ -250,7 +244,7 @@ function mod.SetRandomDress()
     if currentCharacter ~= "Default" then
         modFavoriteList = game.GameState.CustomCharacterFavoriteDressList[currentCharacter]
     end
-    if modFavoriteList and #modFavoriteList > 0 then
+    if not game.IsEmpty(modFavoriteList) then
         numOfFixedDress = #modFavoriteList
         fixedDressList = game.DeepCopyTable(modFavoriteList)
         game.RemoveValueAndCollapse(fixedDressList, "Custom")
@@ -297,12 +291,6 @@ end
 
 modutil.mod.Path.Wrap("StartNewRun", function(base, prevRun, args)
     local retValue = base(prevRun,args)
-    if game.GameState and not game.GameState.ModFavoriteDressList then
-        game.GameState.ModFavoriteDressList = {}
-    end
-    if game.GameState and not game.GameState.CustomCharacterFavoriteDressList then
-        game.GameState.CustomCharacterFavoriteDressList = {}
-    end
     for characterName, _ in pairs(CharacterData) do
         game.GameState.CustomCharacterFavoriteDressList[characterName] = game.GameState.CustomCharacterFavoriteDressList[characterName] or {}
     end
@@ -320,7 +308,7 @@ function mod.CheckDressInFavorite(dressName)
     local modFavoriteList = game.GameState.ModFavoriteDressList
     local currentCharacter = mod.GetCurrentCharacter()
     if currentCharacter ~= "Default" then
-        modFavoriteList = game.GameState.CustomCharacterFavoriteDressList[currentCharacter]
+        modFavoriteList = game.GameState.CustomCharacterFavoriteDressList[currentCharacter] or {}
     end
     return game.Contains(modFavoriteList, dressName)
 end
@@ -329,7 +317,7 @@ function mod.RemoveFavoriteDress(dressName)
     local modFavoriteList = game.GameState.ModFavoriteDressList
     local currentCharacter = mod.GetCurrentCharacter()
     if currentCharacter ~= "Default" then
-        modFavoriteList = game.GameState.CustomCharacterFavoriteDressList[currentCharacter]
+        modFavoriteList = game.GameState.CustomCharacterFavoriteDressList[currentCharacter] or {}
     end
     local index = game.GetIndex(modFavoriteList, dressName)
     if index == 0 then
@@ -419,4 +407,14 @@ modutil.mod.Path.Wrap("SetLightBarColor", function (base, args)
         -- print("Swapped LightBarColor", mod.dump(args.Color))
     end
     return base(args)
+end)
+
+modutil.mod.Path.Wrap("GameStateInit", function (base, ...)
+    (function (retval)
+        if game.GameState then
+            game.GameState.CustomCharacterFavoriteDressList = game.GameState.CustomCharacterFavoriteDressList or {}
+            game.GameState.ModFavoriteDressList = game.GameState.ModFavoriteDressList or {}
+        end
+        return retval
+    end)(base(...))
 end)

@@ -27,12 +27,6 @@ function mod.OpenDressSelector()
         screen.ComponentData.Background.Children.RandomDressButton.TextArgs.Color = game.Color.Orange
     end
 
-    if game.GameState ~= nil and game.GameState.ModFavoriteDressList == nil then
-        game.GameState.ModFavoriteDressList = {}
-    end
-    if game.GameState and not game.GameState.CustomCharacterFavoriteDressList then
-        game.GameState.CustomCharacterFavoriteDressList = {}
-    end
     for characterName, _ in pairs(CharacterData) do
         game.GameState.CustomCharacterFavoriteDressList[characterName] = game.GameState.CustomCharacterFavoriteDressList[characterName] or {}
     end
@@ -282,7 +276,6 @@ function mod.ResetFavorites(screen, button)
     if currentCharacter == "Default" then
         game.GameState.ModFavoriteDressList = {}
     else
-        game.GameState.CustomCharacterFavoriteDressList = game.GameState.CustomCharacterFavoriteDressList or {}
         game.GameState.CustomCharacterFavoriteDressList[currentCharacter] = {}
     end
     mod.DressSelectorReloadPage(screen)

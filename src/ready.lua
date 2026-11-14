@@ -410,7 +410,7 @@ modutil.mod.Path.Wrap("SetLightBarColor", function (base, args)
 end)
 
 modutil.mod.Path.Wrap("GameStateInit", function (base, ...)
-    (function (retval)
+    return (function (retval)
         if game.GameState then
             game.GameState.CustomCharacterFavoriteDressList = game.GameState.CustomCharacterFavoriteDressList or {}
             game.GameState.ModFavoriteDressList = game.GameState.ModFavoriteDressList or {}

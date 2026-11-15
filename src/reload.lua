@@ -14,5 +14,18 @@ function mod.HasUnviewedCostumeItem( source, args )
             end
         end
 	end
+    if CharacterData then
+        for characterName, characterData in pairs(CharacterData) do
+            if characterData.UnlockCondition and IsGameStateEligible( source, characterData.UnlockCondition) then
+                for dressName, dressData in pairs( characterData.DressData ) do
+                    if GameState.zerpCostumeWorn and GameState.zerpCostumeWorn[characterName] and not GameState.zerpCostumeWorn[characterName][dressName] then
+                        if not dressData.GameStateRequirements or dressData.GameStateRequirements == nil or IsGameStateEligible( source, dressData.GameStateRequirements ) then
+                            return true
+                        end
+                    end
+                end
+            end 
+        end
+    end
 	return false
 end

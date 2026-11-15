@@ -50,6 +50,7 @@ public.RegisterCustomCharacter = function (characterName, dressData, dressOrder,
         DressData = dressData,
         DressOrder = dressOrder,
         IsActiveFunction = isActiveFunction,
+		UnlockCondition = UnlockCondition,
         MenuCameraParams = menuCameraParams
     }
 end

@@ -20,6 +20,9 @@ local dressMenuObstacle = {
 }
 
 function mod.SpawnDressObstaclePreRun()
+    if not GameState.zerpCostumeWorn then
+        GameState.zerpCostumeWorn = {}
+    end
     local dressObstacle = game.DeepCopyTable(dressMenuObstacle)
     dressObstacle.InteractOffsetX = -130
     dressObstacle.InteractOffsetY = 100
@@ -44,6 +47,9 @@ function mod.SpawnDressObstaclePreRun()
 end
 
 function mod.SpawnDressObstacleHubMain()
+    if not GameState.zerpCostumeWorn then
+        GameState.zerpCostumeWorn = {}
+    end
     local shelfObstacle = game.DeepCopyTable(dressMenuObstacle)
     shelfObstacle.ObjectId = 566827 -- shelf id
     shelfObstacle.ActivateIds = { shelfObstacle.ObjectId }

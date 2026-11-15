@@ -127,8 +127,11 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
         if not GameState.zerpCostumeWorn then
             GameState.zerpCostumeWorn = {}
         end
-        if not GameState.zerpCostumeWorn[mod.GetCurrentRunDress()] then
-            GameState.zerpCostumeWorn[mod.GetCurrentRunDress()] = true
+        if not GameState.zerpCostumeWorn[mod.GetCurrentCharacter()] then
+            GameState.zerpCostumeWorn[mod.GetCurrentCharacter()] = {}
+            if not  GameState.zerpCostumeWorn[mod.GetCurrentCharacter()][mod.GetCurrentDressConfig()] then
+                GameState.zerpCostumeWorn[mod.GetCurrentCharacter()][mod.GetCurrentDressConfig()] = true
+            end
         end
     end
     base(skipCostume)

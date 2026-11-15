@@ -5,7 +5,7 @@
 -- this file will be reloaded if it changes during gameplay,
 --     so only assign to values or define things here.
 
-function mod.HasUnviewedCostumeItem( source, args )
+function mod.HasUnviewedCostumeItemnoChar( source, args )
 	args = args or {}
 	for dressName, dressData in pairs( mod.DressData ) do
 		if GameState.zerpCostumeWorn and not GameState.zerpCostumeWorn[dressName] then
@@ -14,6 +14,14 @@ function mod.HasUnviewedCostumeItem( source, args )
             end
         end
 	end
+	return false
+end
+
+function mod.HasUnviewedCostumeItem( source, args )
+	args = args or {}
+	if mod.HasUnviewedCostumeItemnoChar( source, args ) then
+        return true
+    end
     if CharacterData then
         for characterName, characterData in pairs(CharacterData) do
             if characterData.UnlockCondition and IsGameStateEligible( source, characterData.UnlockCondition) then

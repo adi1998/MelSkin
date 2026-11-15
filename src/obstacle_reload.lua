@@ -4,6 +4,19 @@ local dressMenuObstacle = {
     UseText = "{I} Change Dress",
     OnUsedFunctionName = _PLUGIN.guid .. '.' .. "OpenDressSelectorFromObstacle",
     Activate = true,
+    SetupEvents =
+    {
+        {
+            FunctionName = "PlayStatusAnimation",
+            Args = { Animation = "StatusIconWantsToTalkImportant" },
+            GameStateRequirements =
+            {
+                {
+                    FunctionName = _PLUGIN.guid .. "." .. "HasUnviewedCostumeItem",
+                },
+            },
+        },
+    },
 }
 
 function mod.SpawnDressObstaclePreRun()

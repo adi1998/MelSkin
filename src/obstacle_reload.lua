@@ -4,7 +4,14 @@ local dressMenuObstacle = {
     UseText = "{I} Change Dress",
     OnUsedFunctionName = _PLUGIN.guid .. '.' .. "OpenDressSelectorFromObstacle",
     Activate = true,
-    SetupEvents =
+}
+
+function mod.SpawnDressObstaclePreRun()
+    if not GameState.zerpCostumeWorn then
+        GameState.zerpCostumeWorn = {}
+    end
+    local dressObstacle = game.DeepCopyTable(dressMenuObstacle)
+    dressObstacle.SetupEvents =
     {
         {
             FunctionName = "PlayStatusAnimation",
@@ -16,14 +23,7 @@ local dressMenuObstacle = {
                 },
             },
         },
-    },
-}
-
-function mod.SpawnDressObstaclePreRun()
-    if not GameState.zerpCostumeWorn then
-        GameState.zerpCostumeWorn = {}
-    end
-    local dressObstacle = game.DeepCopyTable(dressMenuObstacle)
+    }
     dressObstacle.InteractOffsetX = -130
     dressObstacle.InteractOffsetY = 100
     dressObstacle.ObjectId = game.SpawnObstacle({
@@ -51,6 +51,19 @@ function mod.SpawnDressObstacleHubMain()
         GameState.zerpCostumeWorn = {}
     end
     local shelfObstacle = game.DeepCopyTable(dressMenuObstacle)
+    shelfObstacle.SetupEvents =
+    {
+        {
+            FunctionName = "PlayStatusAnimation",
+            Args = { Animation = "StatusIconWantsToTalkImportant" },
+            GameStateRequirements =
+            {
+                {
+                    FunctionName = _PLUGIN.guid .. "." .. "HasUnviewedCostumeItemnoChar",
+                },
+            },
+        },
+    }
     shelfObstacle.ObjectId = 566827 -- shelf id
     shelfObstacle.ActivateIds = { shelfObstacle.ObjectId }
     print("making shelf interactable")

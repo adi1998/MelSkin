@@ -124,6 +124,12 @@ modutil.mod.Path.Wrap("SetupCostume", function (base, skipCostume)
     end
     if (not skipCostume) or game.MapState.BabyPolymorph then
         game.CostumeData.Costume_Default.GrannyTexture = grannyTexture
+        if not GameState.zerpCostumeWorn then
+            GameState.zerpCostumeWorn = {}
+        end
+        if not GameState.zerpCostumeWorn[mod.GetCurrentRunDress()] then
+            GameState.zerpCostumeWorn[mod.GetCurrentRunDress()] = true
+        end
     end
     base(skipCostume)
     game.CostumeData.Costume_Default.GrannyTexture = ""

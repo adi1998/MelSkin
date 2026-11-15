@@ -5,7 +5,7 @@ CharacterData = {}
 ---@param dressOrder table Array defining the order in which the dresses are displayed
 ---@param isActiveFunction fun(): boolean Returns true whenever the custom character is active
 ---@param menuCameraParams table Defines offsets and zoom level for the in-game menu
-public.RegisterCustomCharacter = function (characterName, dressData, dressOrder, isActiveFunction, menuCameraParams)
+public.RegisterCustomCharacter = function (characterName, dressData, dressOrder, isActiveFunction, unlockCondition, menuCameraParams)
     dressOrder = dressOrder or {}
     dressData = game.DeepCopyTable(dressData)
 
@@ -50,7 +50,7 @@ public.RegisterCustomCharacter = function (characterName, dressData, dressOrder,
         DressData = dressData,
         DressOrder = dressOrder,
         IsActiveFunction = isActiveFunction,
-		UnlockCondition = UnlockCondition,
+		UnlockCondition = unlockCondition,
         MenuCameraParams = menuCameraParams
     }
 end

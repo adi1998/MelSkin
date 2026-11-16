@@ -414,6 +414,12 @@ modutil.mod.Path.Wrap("GameStateInit", function (base, ...)
         if game.GameState then
             game.GameState.CustomCharacterFavoriteDressList = game.GameState.CustomCharacterFavoriteDressList or {}
             game.GameState.ModFavoriteDressList = game.GameState.ModFavoriteDressList or {}
+            game.GameState[_PLUGIN.guid .. "CostumeViewRecord"] = game.GameState[_PLUGIN.guid .. "CostumeViewRecord"] or {}
+            for characterName, _ in pairs(CharacterData) do
+                game.GameState[_PLUGIN.guid .. "CostumeViewRecord"][characterName] = game.GameState[_PLUGIN.guid .. "CostumeViewRecord"][characterName] or {}
+                game.GameState.CustomCharacterFavoriteDressList[characterName] = game.GameState.CustomCharacterFavoriteDressList[characterName] or {}
+            end
+            game.GameState[_PLUGIN.guid .. "CostumeViewRecord"]["Default"] = game.GameState[_PLUGIN.guid .. "CostumeViewRecord"]["Default"] or {}
         end
         return retval
     end)(base(...))

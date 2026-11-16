@@ -40,3 +40,11 @@ modutil.mod.Path.Wrap("DeathAreaSwitchRoom", function (base, source, args)
 	end
 	return base(source, args)
 end)
+
+game.OnAnyLoad{
+    function (triggerArgs)
+        if game.CurrentHubRoom and game.CurrentHubRoom.Name == "Hub_PreRun" then
+            game.thread(mod.StatusAnimationPollThread)
+        end
+    end
+}

@@ -1,15 +1,15 @@
-function mod.OpenDressSelectorHorribleCoopHack()
-    game.OpenGameStatsScreen(nil, _PLUGIN.guid .. "." .. "OpenDressSelector")
+function mod.OpenDressSelectorHorribleCoopHack(source)
+    game.OpenGameStatsScreen(source, _PLUGIN.guid .. "." .. "OpenDressSelector")
 end
 
 modutil.mod.Path.Wrap("OpenGameStatsScreen", function (base, usee, modFunc)
     if modFunc then
-        return game.CallFunctionName(modFunc)
+        return game.CallFunctionName(modFunc, usee)
     end
     return base(usee)
 end)
 
-function mod.OpenDressSelector()
+function mod.OpenDressSelector(source)
     if game.IsScreenOpen("DressSelector") then
         return
     end
@@ -21,7 +21,12 @@ function mod.OpenDressSelector()
     screen.LastPage = 0
     screen.CurrentPage = screen.FirstPage
     screen.dress_config_suffix = ((game.CurrentRun.Hero.ObjectId == 39999) and "2") or ""
+    screen.OpenedFrom = source
     local components = screen.Components
+    if source then
+        print(source.Name)
+    end
+    game.StopStatusAnimation(source)
 
     if config.random_each_run then
         screen.ComponentData.Background.Children.RandomDressButton.TextArgs.Color = game.Color.Orange
@@ -167,6 +172,20 @@ function mod.DressSelectorLoadPage(screen, args)
                     OffsetY = -30
                 })
             end
+
+            if not game.GameState[_PLUGIN.guid .. "CostumeViewRecord"][currentCharacter][text] then
+                screen.Components[dressKey .. "NewIcon"] = game.CreateScreenComponent({
+                    Name = "BlankObstacle",
+                    Animation = "MusicPlayerNewTrack",
+                    Alpha = 1,
+                    Scale = 1,
+                    Group = "Combat_Menu_TraitTray",
+                    ToDestroy = true
+                })
+
+                game.Attach({ Id = screen.Components[dressKey .. "NewIcon"].Id, DestinationId = screen.Components[dressKey].Id, OffsetX = 125, OffsetY = -30 })
+            end
+
             if teleportHere and not args.SkipCursorTeleport then
                 game.TeleportCursor({ DestinationId = screen.Components[dressKey].Id, ForceUseCheck = true})
             end
@@ -188,6 +207,14 @@ function mod.DressMouseOverButton(button)
         game.SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = mod.Player1Id})
     else
         game.SetThingProperty({Property = "GrannyTexture", Value = dressGrannyTexture, DestinationId = mod.Player2Id})
+    end
+
+    game.GameState[_PLUGIN.guid .. "CostumeViewRecord"][mod.GetCurrentCharacter()][button.Dress] = true
+
+    local dressKey = "DressKey" .. button.Index
+
+    if screen.Components[dressKey .. "NewIcon"] then
+        game.SetAlpha({Fraction = 0, Duration = 0.2, Id = screen.Components[dressKey .. "NewIcon"].Id})
     end
 end
 
@@ -255,6 +282,9 @@ function mod.CloseDressSelector(screen)
     mod.ResetMenuZoom()
 	game.SetupCostume()
     game.killTaggedThreads(_PLUGIN.guid .. "StartHeroRotation")
+    if screen.OpenedFrom then
+        mod.CheckRestartStatusAnimation(screen.OpenedFrom)
+    end
 end
 
 function mod.ToggleFavriteDressSelection(screen, button)

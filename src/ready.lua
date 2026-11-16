@@ -276,6 +276,7 @@ function mod.SetRandomDress()
     print("Random dress", randomDress)
     game.CurrentRun.Hero[_PLUGIN.guid .. "RandomDressData"] = game.CurrentRun.Hero[_PLUGIN.guid .. "RandomDressData"] or {}
     game.CurrentRun.Hero[_PLUGIN.guid .. "RandomDressData"][currentCharacter] = randomDress
+    game.GameState[_PLUGIN.guid .. "CostumeViewRecord"][currentCharacter][randomDress] = true
     game.SetLightBarColor({ PlayerIndex = 1, Color = game.CurrentRun.Hero.LightBarColor or game.HeroData.LightBarColor })
 end
 

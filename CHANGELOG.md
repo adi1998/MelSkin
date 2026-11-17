@@ -5,7 +5,7 @@
 - Minor update for MultiDressHelper support.
 - Fix crash in custom character favorite logic.
 - Fix Mel's ArmGlow being active for custom characters.
-- Add status a animation for the dress obstacles in the Crossroads.
+- Add status a animation for the dress obstacles in the Crossroads, shows up if there are dresses that haven't been viewed before.
 - Each dress now has an indicator if the dress has never been worn before (the tracking starts with this update so every dress will show up as new).
 
 ### Dev

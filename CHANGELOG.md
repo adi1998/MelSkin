@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.22.0] - 2026-11-22
+
 - Minor update for MultiDressHelper support.
 - Fix crash in custom character favorite logic.
 - Fix Mel's ArmGlow being active for custom characters.
@@ -204,7 +206,8 @@
 
 - First version of the mod!
 
-[unreleased]: https://github.com/adi1998/MelSkin/compare/1.21.1...HEAD
+[unreleased]: https://github.com/adi1998/MelSkin/compare/1.22.0...HEAD
+[1.22.0]: https://github.com/adi1998/MelSkin/compare/1.21.1...1.22.0
 [1.21.1]: https://github.com/adi1998/MelSkin/compare/1.19.1...1.21.1
 [1.19.1]: https://github.com/adi1998/MelSkin/compare/1.19.0...1.19.1
 [1.19.0]: https://github.com/adi1998/MelSkin/compare/1.18.4...1.19.0
